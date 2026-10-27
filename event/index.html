@@ -71,10 +71,9 @@
     <h3 id="r_title"></h3>
     <div class="meta" id="r_meta"></div>
     <div class="link" id="r_link"></div>
-    <div class="btns3">
-      <button type="button" class="b-ghost" id="r_open">미리보기</button>
-      <button type="button" class="b-ghost" id="r_share">공유</button>
-      <button type="button" class="b-main" id="r_copy">링크 복사</button>
+    <div class="btns2">
+      <button type="button" class="b-ghost" id="r_open">당첨자 화면 보기</button>
+      <button type="button" class="b-main" id="r_copy">메시지 복사</button>
     </div>
   </div>
 
@@ -86,6 +85,23 @@
   <div class="foot">AELLELOAH</div>
 </div>
 <div class="toast" id="toast"></div>
+
+<!-- 보낼 메시지 미리보기 · 수정 -->
+<div class="overlay" id="dmOv">
+  <div class="sheet">
+    <h3>보낼 메시지</h3>
+    <p class="desc">고친 문구는 이 이벤트에 저장돼요.</p>
+    <textarea class="dm" id="dmText" maxlength="1000"></textarea>
+    <div class="dm-tools">
+      <button type="button" id="dmReset">기본 문구로</button>
+      <button type="button" id="dmLink">링크만 복사</button>
+    </div>
+    <div class="sheet-btns">
+      <button type="button" class="b-ghost" id="dmShare">공유</button>
+      <button type="button" class="b-main" id="dmCopy">메시지 복사</button>
+    </div>
+  </div>
+</div>
 
 <script>
 (function () {
@@ -107,16 +123,50 @@
     $("toast").textContent = t; $("toast").classList.add("show");
     clearTimeout(toastT); toastT = setTimeout(() => $("toast").classList.remove("show"), 1800);
   }
-  async function copy(text) {
-    try { await navigator.clipboard.writeText(text); toast("링크를 복사했어요"); }
-    catch (e) { prompt("아래 링크를 길게 눌러 복사하세요", text); }
+  async function copy(text, done) {
+    try { await navigator.clipboard.writeText(text); toast(done || "복사했어요"); }
+    catch (e) { prompt("아래 내용을 길게 눌러 복사하세요", text); }
   }
-  async function share(ev) {
-    const url = linkOf(ev);
-    if (navigator.share) {
-      try { await navigator.share({ title: ev.b + " " + ev.e, text: "[" + ev.b + " × " + C.HOST + "] " + ev.e + " 당첨을 축하드려요! 선물 받으실 정보를 입력해 주세요.", url }); } catch (e) {}
-    } else copy(url);
+
+  /* ---------- 보낼 메시지 ---------- */
+  const dmDefault = ev => [
+    "[" + ev.b + " × " + C.HOST + "] " + ev.e,
+    "당첨을 축하드려요! 🎉",
+    "",
+    (ev.g ? "선물(" + ev.g + ")을" : "선물을") + " 보내드리려고 해요.",
+    "아래 링크에서 받으실 정보를 " + (ev.u ? EV.dateLabel(ev.u) + "까지 " : "") + "입력해 주세요.",
+    "",
+    "👉 " + linkOf(ev)
+  ].join("\n");
+  const findEv = id => load().find(x => x.i === id);
+  const saveDm = (id, dm, dmLink) => { const l = load(); l.forEach(x => { if (x.i === id) { x.dm = dm; x.dmLink = dmLink; } }); save(l); };
+
+  let dmEv = null, dmT;
+  function openDm(ev) {
+    dmEv = findEv(ev.i) || ev;
+    const link = linkOf(dmEv);
+    let text = dmEv.dm || dmDefault(dmEv);
+    // 저장된 문구 속 예전 링크(긴 링크)는 지금 링크로 바꿔 줌
+    if (dmEv.dm && dmEv.dmLink && dmEv.dmLink !== link) text = text.split(dmEv.dmLink).join(link);
+    $("dmText").value = text;
+    $("dmOv").classList.add("show");
   }
+  $("dmText").addEventListener("input", () => {
+    clearTimeout(dmT);
+    dmT = setTimeout(() => saveDm(dmEv.i, $("dmText").value, linkOf(dmEv)), 300);
+  });
+  $("dmReset").onclick = () => { $("dmText").value = dmDefault(dmEv); saveDm(dmEv.i, "", ""); };
+  $("dmLink").onclick = () => copy(linkOf(dmEv), "링크를 복사했어요");
+  $("dmCopy").onclick = () => {
+    if (!$("dmText").value.includes(linkOf(dmEv))) toast("메시지에 링크가 빠져 있어요");
+    copy($("dmText").value, "메시지를 복사했어요");
+  };
+  $("dmShare").onclick = async () => {
+    const text = $("dmText").value;
+    if (navigator.share) { try { await navigator.share({ text }); } catch (e) {} }
+    else copy(text, "메시지를 복사했어요");
+  };
+  $("dmOv").addEventListener("click", e => { if (e.target === $("dmOv")) $("dmOv").classList.remove("show"); });
 
   /* ---------- 만들기 ---------- */
   document.querySelectorAll("#form input, #form textarea").forEach(el =>
@@ -156,8 +206,7 @@
     $("result").scrollIntoView({ behavior: "smooth", block: "center" });
   }
   $("r_open").onclick = () => window.open(linkOf(current), "_blank");
-  $("r_copy").onclick = () => copy(linkOf(current));
-  $("r_share").onclick = () => share(current);
+  $("r_copy").onclick = () => openDm(current);
 
   /* ---------- 목록 ---------- */
   function renderList() {
@@ -173,11 +222,11 @@
       const meta = document.createElement("div"); meta.className = "meta";
       meta.textContent = metaOf(ev) + (EV.isClosed(ev.u) ? " (마감됨)" : "");
       const btns = document.createElement("div"); btns.className = "item-btns";
-      [["링크 복사", () => copy(linkOf(ev))], ["공유", () => share(ev)], ["미리보기", () => window.open(linkOf(ev), "_blank")],
+      [["메시지 복사", () => openDm(ev)], ["당첨자 화면", () => window.open(linkOf(ev), "_blank")],
        ["삭제", () => { if (confirm("목록에서 지울까요?\n(이미 보낸 링크와 시트의 정보는 그대로 남아요)")) { const l = load(); l.splice(idx, 1); save(l); renderList(); } }]]
         .forEach(([label, fn], k) => {
           const b = document.createElement("button"); b.type = "button"; b.textContent = label; b.onclick = fn;
-          if (k === 3) b.className = "del";
+          if (k === 2) b.className = "del";
           btns.append(b);
         });
       item.append(top, meta, btns); box.append(item);

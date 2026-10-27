@@ -191,3 +191,10 @@ input[type=date]::-webkit-date-and-time-value { text-align: left; }
 .toast { position: fixed; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 28px); transform: translateX(-50%) translateY(20px); background: var(--ink); color: #fff; font-size: 13px; padding: 11px 18px; border-radius: 999px; opacity: 0; transition: all .25s; pointer-events: none; z-index: 80; white-space: nowrap; }
 .toast.show { opacity: 1; transform: translateX(-50%); }
 .loading { text-align: center; color: var(--mute); font-size: 13px; font-weight: 300; padding: 60px 0; }
+
+/* 보낼 메시지 */
+.btns2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+.btns2 button { font: inherit; font-size: 13.5px; font-weight: 500; border-radius: 12px; padding: 13px 0; cursor: pointer; }
+textarea.dm { min-height: 290px; font-size: 15px; line-height: 1.7; background: var(--paper); }
+.dm-tools { display: flex; justify-content: space-between; margin-top: 8px; }
+.dm-tools button { border: none; background: none; font: inherit; font-size: 12.5px; color: var(--mute); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; padding: 6px 2px; }
