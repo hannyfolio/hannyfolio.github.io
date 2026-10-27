@@ -288,11 +288,12 @@
     data = {
       eventId: ev.i, brand: ev.b, event: ev.e, count: ev.n, gift: ev.g, until: ev.u,
       insta: "@" + val("insta"), name: val("name"), phone: val("phone"),
-      zip: val("zip"), addr: val("addr"), addr2: val("addr2"), memo: val("memo"),
+      zip: val("zip") ? "'" + val("zip") : "", addr: val("addr"), addr2: val("addr2"), memo: val("memo"),
+      // 우편번호 앞 0이 시트에서 지워지지 않게 작은따옴표(텍스트 표시)를 붙여 보냄
       consent1: true, consent2: true, website: $("website").value
     };
     const rows = [["인스타", data.insta], ["이름", data.name], ["연락처", data.phone],
-      ["주소", (data.zip ? "(" + data.zip + ") " : "") + data.addr + " " + data.addr2], ["배송 메모", data.memo || "—"]];
+      ["주소", (val("zip") ? "(" + val("zip") + ") " : "") + data.addr + " " + data.addr2], ["배송 메모", data.memo || "—"]];
     $("review").innerHTML = "";
     rows.forEach(([k, v]) => {
       const div = document.createElement("div"), dt = document.createElement("dt"), dd = document.createElement("dd");
