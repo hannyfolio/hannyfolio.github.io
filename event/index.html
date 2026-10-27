@@ -94,7 +94,7 @@
   const KEY = "aelleloah-events";
   const load = () => { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) { return []; } };
   const save = list => { try { localStorage.setItem(KEY, JSON.stringify(list)); } catch (e) {} };
-  const linkOf = ev => new URL("form.html", location.origin + location.pathname).href + "?c=" + EV.encode(ev);
+  const linkOf = ({ i, b, e, n, g, u, m }) => new URL("form.html", location.origin + location.pathname).href + "?c=" + EV.encode({ i, b, e, n, g, u, m });
   const metaOf = ev => [ev.n ? ev.n + "명 선정" : "", ev.g, ev.u ? EV.dateLabel(ev.u) + " 마감" : "마감일 없음"].filter(Boolean).join(" · ");
 
   if (!EV.connected()) $("warn").classList.remove("hidden");
