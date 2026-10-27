@@ -190,3 +190,4 @@ input[type=date]::-webkit-date-and-time-value { text-align: left; }
 .empty { text-align: center; color: var(--mute); font-size: 13px; font-weight: 300; padding: 18px 0 6px; }
 .toast { position: fixed; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 28px); transform: translateX(-50%) translateY(20px); background: var(--ink); color: #fff; font-size: 13px; padding: 11px 18px; border-radius: 999px; opacity: 0; transition: all .25s; pointer-events: none; z-index: 80; white-space: nowrap; }
 .toast.show { opacity: 1; transform: translateX(-50%); }
+.loading { text-align: center; color: var(--mute); font-size: 13px; font-weight: 300; padding: 60px 0; }

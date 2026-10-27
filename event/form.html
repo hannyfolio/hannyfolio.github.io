@@ -16,6 +16,9 @@
 <div class="wrap">
   <div class="mark"><b>aelleloah</b><i></i></div>
 
+  <!-- 불러오는 중 -->
+  <section id="loadView" class="hidden"><p class="loading">이벤트 정보를 불러오고 있어요…</p></section>
+
   <!-- 입력 폼 -->
   <section id="formView" class="hidden">
     <div class="hero">
@@ -170,11 +173,23 @@
 
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js" async></script>
 <script>
-(function () {
+(async function () {
   const C = window.EVENT_CONFIG;
   const $ = id => document.getElementById(id);
-  const show = id => ["formView", "doneView", "closedView"].forEach(v => $(v).classList.toggle("hidden", v !== id));
-  const ev = EV.decode(new URLSearchParams(location.search).get("c"));
+  const show = id => ["loadView", "formView", "doneView", "closedView"].forEach(v => $(v).classList.toggle("hidden", v !== id));
+
+  // 긴 링크(?c=…)는 링크 안의 정보를, 짧은 링크(?이벤트ID)는 시트의 정보를 사용
+  const qs = new URLSearchParams(location.search);
+  const raw = location.search.slice(1);
+  const id = qs.get("id") || (/^[a-z0-9]{4,12}$/.test(raw) ? raw : "");
+  let ev = null;
+  if (qs.get("c")) ev = EV.decode(qs.get("c"));
+  else if (id && EV.connected()) {
+    show("loadView");
+    for (let t = 0; t < 2 && !ev; t++) {
+      try { ev = await EV.fetchEvent(id); break; } catch (e) { /* 한 번 더 시도 */ }
+    }
+  }
 
   if (!ev) {
     $("closedTitle").textContent = "링크를 확인해 주세요";

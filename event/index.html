@@ -63,7 +63,7 @@
         <textarea id="msg" placeholder="예) 발송은 마감 후 일주일 안에 순차적으로 진행돼요." maxlength="300"></textarea>
       </div>
     </div>
-    <button type="submit" class="submit">링크 만들기</button>
+    <button type="submit" class="submit" id="makeBtn">링크 만들기</button>
   </form>
 
   <div class="result hidden" id="result">
@@ -94,7 +94,10 @@
   const KEY = "aelleloah-events";
   const load = () => { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) { return []; } };
   const save = list => { try { localStorage.setItem(KEY, JSON.stringify(list)); } catch (e) {} };
-  const linkOf = ({ i, b, e, n, g, u, m }) => new URL("form.html", location.origin + location.pathname).href + "?c=" + EV.encode({ i, b, e, n, g, u, m });
+  // 시트에 저장된 이벤트(s)는 짧은 링크, 아니면 정보를 다 담은 긴 링크
+  const longLink = ({ i, b, e, n, g, u, m }) => new URL("form.html", location.origin + location.pathname).href + "?c=" + EV.encode({ i, b, e, n, g, u, m });
+  const linkOf = ev => ev.s ? EV.shortLink(ev.i) : longLink(ev);
+  const mark = id => { const l = load(); l.forEach(x => { if (x.i === id) x.s = true; }); save(l); };
   const metaOf = ev => [ev.n ? ev.n + "명 선정" : "", ev.g, ev.u ? EV.dateLabel(ev.u) + " 마감" : "마감일 없음"].filter(Boolean).join(" · ");
 
   if (!EV.connected()) $("warn").classList.remove("hidden");
@@ -120,7 +123,7 @@
     el.addEventListener("input", () => { const f = el.closest(".field"); if (f) f.classList.remove("invalid"); }));
 
   let current = null;
-  $("form").addEventListener("submit", e => {
+  $("form").addEventListener("submit", async e => {
     e.preventDefault();
     const v = id => $(id).value.trim();
     const bad = [];
@@ -133,6 +136,11 @@
     if (bad.length) { $(bad[0]).focus(); return; }
 
     current = { i: EV.newId(), b: v("brand"), e: v("event"), n, g: v("gift"), u: v("until"), m: v("msg") };
+    const btn = $("makeBtn");
+    btn.disabled = true; btn.textContent = "링크 만드는 중…";
+    try { await EV.register(current); current.s = true; }
+    catch (err) { toast("짧은 링크를 못 만들어서 긴 링크로 만들었어요"); }
+    btn.disabled = false; btn.textContent = "링크 만들기";
     const list = load(); list.unshift(Object.assign({ created: Date.now() }, current)); save(list);
     showResult(current); renderList();
     $("form").reset();
@@ -176,6 +184,15 @@
     });
   }
   renderList();
+
+  // 예전에 만든(긴 링크) 이벤트도 시트에 등록해서 짧은 링크로 바꿔 둠
+  (async () => {
+    let changed = false;
+    for (const ev of load().filter(x => !x.s)) {
+      try { await EV.register(ev); mark(ev.i); changed = true; } catch (e) {}
+    }
+    if (changed) renderList();
+  })();
 })();
 </script>
 </body>

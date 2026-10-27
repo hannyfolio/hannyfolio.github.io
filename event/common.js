@@ -24,7 +24,11 @@ window.EV = {
     try {
       const b64 = String(str).replace(/-/g, "+").replace(/_/g, "/");
       const bin = atob(b64 + "===".slice((b64.length + 3) % 4));
-      const obj = JSON.parse(new TextDecoder().decode(Uint8Array.from(bin, c => c.charCodeAt(0))));
+      return EV.clean(JSON.parse(new TextDecoder().decode(Uint8Array.from(bin, c => c.charCodeAt(0)))));
+    } catch (e) { return null; }
+  },
+  clean(obj) {
+    try {
       if (!obj || typeof obj !== "object" || !obj.b || !obj.e || !/^[a-z0-9]{4,12}$/.test(obj.i || "")) return null;
       const s = (v, n) => String(v == null ? "" : v).slice(0, n);
       return {
@@ -34,6 +38,29 @@ window.EV = {
       };
     } catch (e) { return null; }
   },
+  // 짧은 링크: https://hannyfolio.github.io/gift?이벤트ID
+  shortLink: id => location.origin + "/gift?" + id,
+
+  // 이벤트 정보를 구글 시트에 저장 (짧은 링크용)
+  async register(ev) {
+    if (!EV.connected()) throw new Error("not connected");
+    const res = await fetch(window.EVENT_CONFIG.SHEET_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ action: "create", eventId: ev.i, brand: ev.b, event: ev.e, count: ev.n, gift: ev.g, until: ev.u, message: ev.m })
+    });
+    const j = await res.json();
+    if (!j.ok) throw new Error(j.error || "등록 실패");
+  },
+
+  // 짧은 링크로 들어왔을 때 시트에서 이벤트 정보 읽기
+  async fetchEvent(id) {
+    const res = await fetch(window.EVENT_CONFIG.SHEET_URL + "?id=" + encodeURIComponent(id));
+    const j = await res.json();
+    if (!j.ok || !j.ev) return null;
+    return EV.clean(j.ev);
+  },
+
   newId() {
     const a = "abcdefghijkmnpqrstuvwxyz23456789";
     let s = "";
