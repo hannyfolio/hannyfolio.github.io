@@ -1,0 +1,17 @@
+{
+  "name": "여행 수첩 — 예산·지출·방문지·맛집",
+  "short_name": "여행 수첩",
+  "description": "여행마다 예산과 지출, 방문한 곳, 맛집 별점을 기록하고 갈 곳을 게임으로 정하는 앱",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#eef1f6",
+  "theme_color": "#eef1f6",
+  "lang": "ko",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
