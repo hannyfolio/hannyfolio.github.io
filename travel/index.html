@@ -236,7 +236,7 @@ h1, h2, h3 { text-wrap: balance; margin: 0; }
 .stars.ro .star svg { width: 14px; height: 14px; }
 .rank { font-family: var(--f-code); font-size: 26px; color: var(--accent); width: 28px; text-align: center; flex: none; line-height: 1; }
 .seg { display: flex; background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 3px; gap: 3px; }
-.seg button { flex: 1; border: 0; background: transparent; border-radius: 9px; padding: 8px 10px; font-size: 13.5px; font-weight: 600; color: var(--sub); min-height: 38px; }
+.seg button { white-space: nowrap; flex: 1; border: 0; background: transparent; border-radius: 9px; padding: 8px 10px; font-size: 13.5px; font-weight: 600; color: var(--sub); min-height: 38px; }
 .seg button[aria-pressed="true"] { background: var(--card); color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
 .seg.wrap { flex-wrap: wrap; }
 .seg.wrap button { flex: 1 0 calc(25% - 3px); }
@@ -403,6 +403,13 @@ a.btn, a.map-btn { text-decoration: none; }
 .stop-main b { overflow-wrap: anywhere; }
 .stop.free b { font-weight: 500; color: var(--sub); }
 .stop .map-btn, .icon-btn.sm { width: 36px; height: 36px; font-size: 16px; }
+.add-btn {
+  width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--accent); background: var(--card); color: var(--accent);
+  font-size: 22px; font-weight: 600; line-height: 1; display: grid; place-items: center; flex: none; padding: 0;
+}
+.add-btn.on { background: var(--ok); border-color: var(--ok); color: #fff; }
+.add-btn svg { width: 18px; height: 18px; }
+a.chip { text-decoration: none; color: var(--ink); }
 .foot { margin-top: 24px; display: grid; gap: 8px; justify-items: center; text-align: center; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -1153,18 +1160,410 @@ function expView(t) {
 }
 
 /* 방문지 */
+/* ---------- 도시별 추천 장소 (구글맵에서 많이 찾는 곳 위주, 테마|이름|동네|한 줄 설명) ---------- */
+const THEMES = [['sight', '관광', 'var(--g3)'], ['shop', '쇼핑', 'var(--g6)'], ['food', '맛집', 'var(--g4)'], ['cafe', '카페·디저트', 'var(--g2)'], ['night', '야경·밤', 'var(--g5)']];
+const THEME = Object.fromEntries(THEMES.map(x => [x[0], { n: x[1], g: x[2] }]));
+const THEME_Q = { sight: '관광명소', shop: '쇼핑', food: '맛집', cafe: '카페', night: '야경' };
+const RECS = {
+'도쿄': `sight|센소지|아사쿠사|도쿄에서 가장 오래된 절과 나카미세 상점가
+sight|메이지 신궁|하라주쿠|도심 속 큰 숲에 둘러싸인 신사
+sight|시부야 스크램블 교차로|시부야|한 번에 수천 명이 건너는 유명한 횡단보도
+sight|도쿄 스카이트리|오시아게|높이 634m 전망대와 소라마치 쇼핑몰
+sight|우에노 공원|우에노|박물관·동물원이 모인 공원
+sight|팀랩 플래닛|도요스|물 위를 걷는 몰입형 디지털 아트
+shop|긴자|긴자|백화점과 명품 매장이 모인 거리
+shop|다케시타 거리|하라주쿠|10대 패션·크레이프 가게 골목
+shop|아키하바라 전자상가|아키하바라|전자제품·애니메이션 굿즈
+shop|시모키타자와|시모키타자와|빈티지 옷가게와 작은 카페 동네
+food|츠키지 장외시장|츠키지|초밥·해산물 덮밥·계란말이 먹거리
+food|오모이데 요코초|신주쿠|작은 꼬치구이 가게가 모인 골목
+food|아메요코 시장|우에노|싼 간식과 해산물 노점 시장
+food|몬자 스트리트|츠키시마|도쿄식 철판요리 몬자야키 골목
+cafe|블루보틀 기요스미시라카와|기요스미시라카와|블루보틀 일본 1호점
+cafe|메구로강 산책로|나카메구로|강변 카페와 편집숍, 봄엔 벚꽃
+night|시부야 스카이|시부야|옥상 전망대에서 보는 도쿄 야경
+night|도쿄 타워|시바 공원|불 켜진 빨간 탑과 전망대
+night|롯폰기 힐즈 전망대|롯폰기|도쿄 타워가 정면으로 보이는 야경`,
+'오사카': `sight|오사카성|모리노미야|천수각과 넓은 성 공원
+sight|도톤보리|난바|글리코 간판과 운하가 있는 번화가
+sight|신세카이·츠텐카쿠|신세카이|옛 오사카 분위기의 거리와 전망탑
+sight|유니버설 스튜디오 재팬|유니버설시티|닌텐도 월드·해리포터 테마파크
+sight|나라 공원|나라|사슴과 도다이지, 당일치기 코스
+sight|후시미 이나리 신사|교토|붉은 도리이 터널, 당일치기 코스
+shop|신사이바시스지 상점가|신사이바시|지붕 덮인 긴 쇼핑 거리
+shop|우메다|우메다|백화점·쇼핑몰이 모인 오사카 북쪽 중심가
+shop|아메리카무라|신사이바시|빈티지·스트리트 패션 거리
+shop|덴덴타운|닛폰바시|전자제품·피규어 상점가
+food|구로몬 시장|닛폰바시|오사카의 부엌, 해산물·과일 시장
+food|우라난바|난바|작은 이자카야가 모인 뒷골목
+food|덴진바시스지 상점가|덴진바시|일본에서 가장 긴 상점가 먹거리
+food|쿠시카츠 다루마 신세카이 본점|신세카이|오사카식 꼬치튀김 원조집
+cafe|리쿠로 오지상 치즈케이크|난바|갓 구운 흔들흔들 치즈케이크
+night|우메다 스카이빌딩 공중정원|우메다|원형 옥상 전망대 야경
+night|아베노 하루카스 300|덴노지|오사카에서 가장 높은 전망대
+night|도톤보리 리버크루즈|난바|네온사인 사이를 지나는 운하 유람선`,
+'후쿠오카': `sight|다자이후 텐만구|다자이후|학문의 신 신사와 우메가에모치
+sight|오호리 공원|오호리|호수를 한 바퀴 도는 산책 공원
+sight|구시다 신사|하카타|하카타 마쓰리의 중심 신사
+sight|모모치 해변|모모치|후쿠오카 타워 앞 인공 해변
+shop|캐널시티 하카타|하카타|운하가 흐르는 대형 쇼핑몰
+shop|텐진 지하상가|텐진|유럽풍 지하 쇼핑 거리
+shop|JR 하카타 시티|하카타역|역과 붙은 백화점·식당가
+food|나카스 야타이 거리|나카스|강변 포장마차에서 라멘·꼬치
+food|이치란 본사 총본점|나카스|1인 칸막이 돈코츠 라멘 본점
+food|야나기바시 연합시장|하루요시|해산물·어묵 골목 시장
+food|모츠나베 거리|하카타|곱창전골 모츠나베 맛집이 많은 곳
+cafe|스타벅스 오호리 공원점|오호리|호수 바로 앞 통유리 카페
+night|후쿠오카 타워|모모치|바다와 도시가 함께 보이는 전망대
+night|나카스 강변|나카스|불빛 비친 강과 포장마차 거리`,
+'삿포로': `sight|오도리 공원|오도리|도심을 가로지르는 공원, 겨울엔 눈축제
+sight|삿포로 시계탑|오도리|삿포로의 상징 같은 옛 건물
+sight|홋카이도 신궁|마루야마|숲길을 걷는 신사
+sight|오타루 운하|오타루|옛 창고와 가스등 운하, 당일치기
+sight|삿포로 맥주 박물관|히가시구|맥주 역사와 시음
+shop|다누키코지 상점가|스스키노|지붕 덮인 긴 상점가와 드럭스토어
+shop|삿포로역 스텔라 플레이스|삿포로역|역과 이어진 쇼핑몰
+shop|오타루 사카이마치 거리|오타루|유리공예·오르골 가게 거리
+food|니조 시장|오도리|게·성게 덮밥 해산물 시장
+food|라멘 요코초|스스키노|미소 라멘 가게가 모인 골목
+food|징기스칸 다루마|스스키노|양고기 철판구이 노포
+food|수프카레|삿포로 시내|삿포로 명물, 가게마다 맛이 달라요
+cafe|롯카테이 삿포로 본점|삿포로역|버터샌드로 유명한 디저트 가게
+cafe|르타오 본점|오타루|더블 치즈케이크 본점
+night|모이와산 로프웨이|모이와산|일본 신 3대 야경 전망대
+night|삿포로 TV 타워|오도리|오도리 공원이 내려다보이는 전망대
+night|스스키노|스스키노|네온사인 가득한 번화가`,
+'타이베이': `sight|국립고궁박물원|스린|중국 황실 보물 박물관
+sight|중정기념당|중정구|넓은 광장과 근위병 교대식
+sight|용산사|완화|타이베이에서 가장 오래된 절
+sight|지우펀 옛거리|지우펀|홍등 걸린 산동네 찻집 거리, 당일치기
+sight|스펀 천등 날리기|스펀|기찻길에서 소원 천등 날리기
+sight|베이터우 온천|베이터우|지열곡과 온천 박물관
+shop|시먼딩|완화|타이베이의 명동 같은 번화가
+shop|융캉제|다안|맛집·소품 가게 골목
+shop|디화제|다퉁|옛 건물의 건어물·차·소품 거리
+shop|신광미츠코시 신이|신이|101 근처 백화점 거리
+food|스린 야시장|스린|가장 큰 야시장, 지파이·굴전
+food|라오허제 야시장|쑹산|후추빵이 유명한 야시장
+food|딘타이펑 본점|신이로|샤오롱바오 본점
+food|융캉 우육면|다안|진한 국물 소고기면
+cafe|스무시 하우스|융캉제|망고 빙수 맛집
+night|타이베이 101 전망대|신이|도시 한가운데 고층 전망대
+night|샹산(코끼리산)|신이|101이 정면으로 보이는 야경 등산로`,
+'방콕': `sight|왕궁·왓 프라깨우|프라나콘|에메랄드 불상이 있는 왕실 사원
+sight|왓 아룬|톤부리|강변의 새벽 사원
+sight|왓 포|프라나콘|거대한 와불과 타이 마사지 학교
+sight|담넌사두악 수상시장|랏차부리|배 위에서 사고파는 시장
+sight|아유타야 유적|아유타야|옛 왕국 사원 유적, 당일치기
+shop|짜뚜짝 주말시장|짜뚜짝|1만 개가 넘는 가게, 주말에만
+shop|시암 파라곤|시암|시암 일대 대형 쇼핑몰
+shop|아이콘시암|짜오프라야 강변|강변 초대형 쇼핑몰과 실내 수상시장
+shop|터미널21|아속|층마다 도시 테마인 쇼핑몰
+food|야오와랏 차이나타운|야오와랏|밤에 열리는 길거리 음식 거리
+food|쩟페어 야시장|라마9|랭쌥(돼지등뼈탕)으로 유명
+food|팁싸마이|프라나콘|팟타이 원조로 알려진 집
+cafe|애프터 유|시암|망고 빙수·토스트 디저트 카페
+night|마하나콘 스카이워크|실롬|유리 바닥 전망대
+night|아시아티크|짜오프라야 강변|대관람차가 있는 강변 야시장
+night|카오산 로드|바람푸|여행자 거리 밤 분위기`,
+'다낭': `sight|바나힐|바나산|골든브릿지와 테마파크
+sight|오행산(마블 마운틴)|응우한선|동굴 사원과 전망
+sight|미케 비치|미케|길고 넓은 도심 해변
+sight|린응사|손짜 반도|해수관음상과 바다 전망
+sight|다낭 대성당|하이쩌우|분홍색 성당
+sight|호이안 구시가지|호이안|등불 거리 옛 마을, 당일치기
+shop|한 시장|하이쩌우|기념품·건과일·옷 맞춤
+shop|꼰 시장|하이쩌우|현지인 시장과 먹거리
+shop|롯데마트 다낭|하이쩌우|기념품·간식 한 번에 사기
+food|미꽝 1A|하이쩌우|다낭식 비빔국수 미꽝
+food|반쎄오 바즈엉|하이쩌우|골목 안 반쎄오 맛집
+food|반미 프엉|호이안|유명한 바게트 샌드위치
+cafe|콩 카페|하이쩌우|코코넛 스무디 커피
+night|용다리 불쇼|한강|주말 밤 용 머리에서 불·물 뿜는 쇼
+night|선짜 야시장|선짜|강변 야시장 먹거리
+night|호이안 등불 야경|호이안|소원 등 띄우는 투본강`,
+'나트랑': `sight|뽀나가르 참탑|빈프억|참파 왕국 붉은 벽돌 사원
+sight|빈원더스|혼째섬|케이블카로 가는 섬 테마파크
+sight|나트랑 해변|쩐푸|도심을 따라 이어진 해변
+sight|롱선사|프엉선|큰 백색 불상이 있는 절
+sight|머드 온천|빈응옥|진흙 온천 체험
+shop|나트랑 야시장|쩐푸|기념품·먹거리 야시장
+shop|담 시장|떤럽|현지 재래시장, 건어물
+shop|롯데마트 골드코스트|쩐푸|기념품·간식 쇼핑
+food|락깐|떤럽|숯불 고기구이 노포
+food|넴느엉 당반꾸옌|떤럽|구운 돼지고기 쌈 넴느엉
+cafe|레인포레스트 카페|쩐푸|정글처럼 꾸민 나무 카페
+night|스카이라이트 루프탑|쩐푸|해변 앞 루프탑 바`,
+'세부': `sight|산토 니뇨 성당|세부시티|필리핀에서 가장 오래된 성당
+sight|마젤란 십자가|세부시티|1521년 마젤란이 세운 십자가
+sight|산페드로 요새|세부시티|스페인 시대 요새
+sight|오슬롭 고래상어|오슬롭|고래상어와 수영, 당일치기
+sight|가와산 폭포|바디안|에메랄드빛 폭포 캐녀닝
+sight|템플 오브 레아|부사이|언덕 위 그리스풍 신전
+shop|SM 시티 세부|세부시티|대형 쇼핑몰
+shop|아얄라 센터 세부|세부 비즈니스 파크|쇼핑몰과 식당가
+food|수투킬|막탄|해산물을 골라 굽고 끓이는 식당가
+food|하우스 오브 레촌|세부시티|통돼지 바비큐 레촌
+cafe|아바카 베이킹 컴퍼니|세부시티|브런치·빵 카페
+night|탑스 전망대|부사이|세부 시내 야경
+night|아얄라 테라스|세부 비즈니스 파크|야외 레스토랑·바 거리`,
+'싱가포르': `sight|가든스 바이 더 베이|마리나 베이|슈퍼트리와 플라워돔
+sight|마리나 베이 샌즈|마리나 베이|스카이파크 전망대와 쇼핑몰
+sight|머라이언 공원|마리나 베이|싱가포르의 상징 동상
+sight|센토사|센토사섬|유니버설 스튜디오와 해변
+sight|차이나타운|차이나타운|사원과 노점 거리
+sight|리틀 인디아|리틀 인디아|알록달록한 인도 거리
+shop|오차드 로드|오차드|쇼핑몰이 줄지은 메인 거리
+shop|하지 레인|캄퐁 글람|벽화와 편집숍 골목
+shop|쥬얼 창이|창이 공항|실내 폭포가 있는 공항 쇼핑몰
+food|맥스웰 푸드센터|차이나타운|티엔티엔 치킨라이스 호커센터
+food|라우파삿|래플스 플레이스|밤엔 사테 거리가 되는 호커센터
+food|점보 시푸드|클락키|칠리크랩 대표 맛집
+food|뉴턴 푸드센터|뉴턴|해산물 바비큐 호커센터
+cafe|바샤 커피|마리나 베이 샌즈|화려한 매장의 커피 하우스
+night|가든 랩소디|마리나 베이|슈퍼트리 빛과 음악 쇼, 무료
+night|스펙트라 쇼|마리나 베이|물과 레이저 쇼, 무료
+night|클락키|클락키|강변 식당·바 거리`,
+'홍콩': `sight|빅토리아 피크|피크|피크트램 타고 오르는 전망대
+sight|스타의 거리|침사추이|빅토리아 항구 산책로
+sight|미드레벨 에스컬레이터|센트럴|세계에서 가장 긴 야외 에스컬레이터
+sight|웡타이신 사원|웡타이신|소원 비는 도교 사원
+sight|옹핑 빅부다|란타우섬|케이블카와 큰 불상
+shop|하버시티|침사추이|항구 앞 초대형 쇼핑몰
+shop|몽콕 레이디스 마켓|몽콕|노점 쇼핑 거리
+shop|타임스스퀘어|코즈웨이베이|코즈웨이베이 대표 쇼핑몰
+food|막스 누들|센트럴|새우 완탕면 노포
+food|팀호완|삼수이포|합리적인 가격의 딤섬
+food|란퐁유엔|센트럴|홍콩식 밀크티와 토스트
+cafe|타이청 베이커리|센트럴|에그타르트 명소
+night|심포니 오브 라이트|침사추이|매일 밤 8시 빌딩 조명 쇼
+night|템플 스트리트 야시장|야우마테이|밤 노점과 해산물 식당
+night|란콰이퐁|센트럴|바·클럽 거리`,
+'상하이': `sight|와이탄|황푸|강변 근대 건축물 거리
+sight|예원|황푸|명나라 정원과 상점가
+sight|톈쯔팡|황푸|골목 공방과 카페 거리
+sight|우캉루|쉬후이|플라타너스 길의 옛 프랑스 조계지
+sight|주자자오 수향 마을|칭푸|운하 물의 마을, 당일치기
+shop|난징동루 보행가|황푸|네온 가득한 쇼핑 거리
+shop|신톈디|황푸|석고문 건물의 쇼핑·식당가
+shop|IFC몰|루자쭈이|강 건너 고층 쇼핑몰
+food|난샹 만두점|예원|샤오롱바오 노포
+food|양스 생지엔|황푸|바닥을 바삭하게 구운 군만두
+food|황허루 미식거리|황푸|중국 각지 음식 골목
+cafe|스타벅스 리저브 로스터리|징안|대형 로스터리 카페
+night|와이탄 야경|황푸|강 건너 루자쭈이 스카이라인
+night|상하이 타워 전망대|루자쭈이|중국에서 가장 높은 전망대
+night|동방명주|루자쭈이|상하이 상징 방송탑`,
+'뉴욕': `sight|센트럴파크|맨해튼|도심 한가운데 거대한 공원
+sight|자유의 여신상|리버티섬|페리 타고 가는 뉴욕 상징
+sight|메트로폴리탄 미술관|어퍼 이스트|세계적인 미술관
+sight|뉴욕 현대미술관 MoMA|미드타운|현대미술 대표 미술관
+sight|브루클린 브리지|덤보|걸어서 건너는 다리와 덤보 포토존
+sight|하이라인|첼시|옛 철길 위 공중 공원
+shop|5번가|미드타운|플래그십 매장 거리
+shop|소호|소호|편집숍·브랜드 매장 동네
+shop|첼시 마켓|첼시|실내 푸드홀과 상점
+shop|우드버리 커먼 아울렛|센트럴 밸리|대형 아울렛, 당일치기
+food|카츠 델리카트슨|로어 이스트|파스트라미 샌드위치
+food|조스 피자|그리니치 빌리지|뉴욕 조각 피자
+food|쉐이크쉑 매디슨스퀘어파크|플랫아이언|쉐이크쉑 1호점
+food|피터 루거 스테이크하우스|윌리엄스버그|드라이에이징 스테이크
+cafe|르뱅 베이커리|어퍼 웨스트|두툼한 쿠키
+cafe|매그놀리아 베이커리|웨스트 빌리지|바나나 푸딩·컵케이크
+night|엠파이어 스테이트 빌딩|미드타운|클래식 야경 전망대
+night|탑 오브 더 락|미드타운|엠파이어가 보이는 전망대
+night|타임스스퀘어|미드타운|전광판 가득한 밤거리`,
+'하와이': `sight|와이키키 해변|와이키키|호놀룰루 대표 해변
+sight|다이아몬드 헤드|와이키키|분화구 정상 트레킹
+sight|하나우마 베이|하와이 카이|스노클링 명소, 예약 필요
+sight|노스쇼어 할레이바|할레이바|서핑 마을과 거북이 해변
+sight|진주만 국립기념관|펄하버|애리조나 기념관
+sight|쿠알로아 랜치|카네오헤|쥬라기공원 촬영지 투어
+shop|알라모아나 센터|알라모아나|하와이 최대 쇼핑몰
+shop|와이켈레 프리미엄 아울렛|와이파후|아울렛 쇼핑
+shop|인터내셔널 마켓플레이스|와이키키|와이키키 중심 쇼핑몰
+food|지오반니 새우 트럭|카후쿠|갈릭 새우 플레이트
+food|헬레나스 하와이안 푸드|칼리히|하와이 전통 음식
+food|마루가메 우동 와이키키|와이키키|줄 서는 우동집
+food|오노 시푸드|카파훌루|포케 맛집
+cafe|레오나즈 베이커리|카파훌루|말라사다 도넛
+cafe|코나 커피 퍼베이어스|와이키키|코나 커피와 페이스트리
+night|와이키키 선셋|와이키키|해변에서 보는 노을
+night|힐튼 하와이안 빌리지 불꽃놀이|와이키키|금요일 밤 불꽃놀이`,
+'파리': `sight|에펠탑|샹드마르스|파리의 상징, 전망대
+sight|루브르 박물관|1구|모나리자가 있는 박물관
+sight|오르세 미술관|7구|인상파 그림 미술관
+sight|몽마르트르·사크레쾨르|18구|언덕 위 성당과 화가 거리
+sight|노트르담 대성당|시테섬|복원된 고딕 성당
+sight|베르사유 궁전|베르사유|거울의 방과 정원, 당일치기
+shop|갤러리 라파예트|오스만|돔 천장 백화점, 옥상 전망
+shop|마레 지구|3·4구|편집숍과 빈티지 골목
+shop|샹젤리제 거리|8구|개선문까지 이어진 쇼핑 거리
+shop|라 발레 빌리지|세리|명품 아울렛, 당일치기
+food|르 를레 드 랑트르코트|생제르맹|감자튀김 스테이크 한 메뉴
+food|부이용 샤르티에|9구|합리적인 가격의 옛 프랑스 식당
+food|마르셰 데 앙팡 루주|마레|파리에서 가장 오래된 실내 시장
+cafe|카페 드 플로르|생제르맹|문인들이 사랑한 카페
+cafe|앙젤리나|1구|몽블랑과 진한 핫초코
+cafe|피에르 에르메|생제르맹|마카롱 명소
+night|트로카데로 광장|16구|에펠탑 반짝임 보는 명당
+night|센강 유람선|센강|밤에 타는 바토 무슈
+night|몽파르나스 타워|14구|에펠탑이 보이는 전망대`,
+'로마': `sight|콜로세움|몬티|고대 원형경기장
+sight|포로 로마노|몬티|고대 로마 광장 유적
+sight|바티칸 박물관·시스티나 성당|바티칸|미켈란젤로 천장화
+sight|성 베드로 대성당|바티칸|세계 최대 성당과 돔 전망
+sight|트레비 분수|트레비|동전 던지는 분수
+sight|판테온|나보나|2천 년 된 돔 신전
+shop|콘도티 거리|스페인 광장|명품 매장 거리
+shop|코르소 거리|스페인 광장|브랜드 매장 쇼핑 거리
+shop|캄포 데 피오리 시장|나보나|아침 시장
+food|다 엔초 알 29|트라스테베레|카르보나라·로마 가정식
+food|로쇼리|나보나|와인바 겸 식당
+food|트라스테베레 골목 식당가|트라스테베레|트라토리아가 모인 동네
+cafe|젤라테리아 지올리티|판테온|오래된 젤라토 가게
+cafe|타짜 도로|판테온|그라니타 디 카페
+cafe|산 테우스타키오 일 카페|판테온|로마에서 유명한 에스프레소
+night|산탄젤로 성 야경|바티칸|다리와 성이 비치는 강변
+night|스페인 계단|스페인 광장|밤 산책 명소`,
+'바르셀로나': `sight|사그라다 파밀리아|에샴플레|가우디의 미완성 성당, 예약 필수
+sight|구엘 공원|그라시아|모자이크 벤치와 도시 전망
+sight|카사 바트요|에샴플레|뼈를 닮은 가우디 건물
+sight|카사 밀라|에샴플레|물결 모양 건물과 옥상
+sight|고딕 지구|시우타트 베야|중세 골목과 대성당
+sight|몬주익 언덕|몬주익|성과 미술관, 케이블카
+shop|그라시아 거리|에샴플레|가우디 건물 사이 명품 거리
+shop|라 람블라 거리|시우타트 베야|산책·노점 거리
+shop|라 로카 빌리지|라 로카|명품 아울렛, 당일치기
+food|라 보케리아 시장|라 람블라|과일 주스·하몽·타파스 시장
+food|엘 샴파네트|보른|카바와 타파스 바
+food|시우다드 콘달|에샴플레|현지인도 줄 서는 타파스 집
+cafe|그란하 라 파야레사|고딕 지구|추로스와 진한 초콜릿
+night|몬주익 마법의 분수|몬주익|음악 분수 쇼 (운영일 확인)
+night|벙커 델 카르멜|카르멜|도시 전체가 보이는 야경
+night|바르셀로네타 해변|바르셀로네타|해변 산책과 바`,
+'런던': `sight|대영박물관|블룸즈버리|무료 세계 문명 박물관
+sight|버킹엄 궁전|웨스트민스터|근위병 교대식
+sight|빅벤·웨스트민스터 사원|웨스트민스터|국회의사당 시계탑
+sight|타워 브리지·런던탑|타워 힐|도개교와 왕관 보석
+sight|내셔널 갤러리|트라팔가 광장|무료 명화 미술관
+sight|노팅힐|노팅힐|알록달록 집과 포토벨로 마켓
+shop|코벤트 가든|코벤트 가든|마켓·공연·쇼핑
+shop|옥스퍼드 스트리트|소호|대형 매장 쇼핑 거리
+shop|해롯|나이츠브리지|고급 백화점과 푸드홀
+shop|비스터 빌리지|비스터|명품 아울렛, 당일치기
+food|버로우 마켓|런던 브리지|런던 대표 먹거리 시장
+food|디슘|코벤트 가든|봄베이식 인도 카페
+food|더 울슬리|피카딜리|클래식 아침·브런치
+cafe|포트넘 앤 메이슨|피카딜리|애프터눈티와 홍차
+cafe|몬머스 커피|코벤트 가든|런던 대표 스페셜티 커피
+night|런던 아이|사우스뱅크|템스강 대관람차
+night|스카이 가든|시티|무료 실내 정원 전망대 (예약)
+night|웨스트엔드 뮤지컬|소호|뮤지컬 극장가`,
+'시드니': `sight|시드니 오페라하우스|서큘러 키|조개 모양 공연장
+sight|하버 브리지|서큘러 키|다리 걷기·브리지 클라임
+sight|본다이 비치|본다이|해안 산책로와 서핑
+sight|블루마운틴|카툼바|세자매봉 국립공원, 당일치기
+sight|타롱가 동물원|모스만|페리 타고 가는 항구 전망 동물원
+sight|더 록스|서큘러 키|옛 골목과 주말 마켓
+shop|퀸 빅토리아 빌딩|시티|아름다운 옛 쇼핑 아케이드
+shop|패딩턴 마켓|패딩턴|토요일 디자이너 마켓
+shop|피트 스트리트 몰|시티|도심 쇼핑 거리
+food|시드니 피시마켓|피어몬트|굴·해산물 플래터
+food|해리스 카페 드 휠스|울루물루|명물 미트파이 트럭
+cafe|블랙스타 페이스트리|뉴타운|수박 케이크 디저트
+night|달링하버|달링하버|항구 식당가와 야경
+night|오페라 바|서큘러 키|오페라하우스 옆 야외 바
+night|밀슨스 포인트|키리빌리|하버브리지와 오페라하우스 야경 명당`,
+'제주': `sight|성산일출봉|성산|해돋이 오름, 유네스코 자연유산
+sight|우도|우도|배 타고 가는 섬, 땅콩 아이스크림
+sight|한라산|한라산|성판악·관음사 정상 코스, 예약 필요
+sight|만장굴|구좌|용암 동굴
+sight|섭지코지|성산|해안 산책로
+sight|협재해수욕장|한림|에메랄드 바다와 비양도
+shop|동문재래시장|제주시|기념품·귤·해산물 시장
+shop|서귀포 매일올레시장|서귀포|먹거리 많은 재래시장
+food|흑돼지 거리|제주시|제주 흑돼지 구이 골목
+food|고기국수 거리|제주시|돼지고기 국수 맛집 거리
+food|동문시장 야시장|제주시|저녁 먹거리 노점
+cafe|오설록 티 뮤지엄|안덕|녹차밭과 녹차 디저트
+cafe|애월 해안 카페 거리|애월|바다 보이는 카페들
+night|용두암·용연 야경|제주시|바닷가 밤 산책
+night|이호테우 해변 말 등대|이호|빨간·하얀 말 모양 등대 노을`
+};
+const CITY_ALIAS = {
+  '동경': '도쿄', 'tokyo': '도쿄', 'osaka': '오사카', '하카타': '후쿠오카', 'fukuoka': '후쿠오카', '홋카이도': '삿포로', 'sapporo': '삿포로',
+  '타이페이': '타이베이', '대만': '타이베이', 'taipei': '타이베이', 'bangkok': '방콕', '방콕크룽텝': '방콕', '호이안': '다낭', 'danang': '다낭',
+  '냐짱': '나트랑', 'nhatrang': '나트랑', '막탄': '세부', 'cebu': '세부', 'singapore': '싱가포르', 'hongkong': '홍콩', '상해': '상하이', 'shanghai': '상하이',
+  'newyork': '뉴욕', '뉴욕시티': '뉴욕', '호놀룰루': '하와이', '오아후': '하와이', '와이키키': '하와이', 'hawaii': '하와이', 'honolulu': '하와이',
+  'paris': '파리', 'rome': '로마', 'roma': '로마', 'barcelona': '바르셀로나', 'london': '런던', 'sydney': '시드니', '제주도': '제주', 'jeju': '제주', '서귀포': '제주'
+};
+function recCity(t) {
+  const k = String(t.city || '').toLowerCase().replace(/\s+/g, '');
+  const k2 = k.replace(/(시|도|섬)$/, '');
+  return [k, k2].map(x => RECS[x] ? x : CITY_ALIAS[x]).find(Boolean) || null;
+}
+const recCache = {};
+function recsFor(t) {
+  const c = recCity(t);
+  if (!c) return null;
+  if (!recCache[c]) recCache[c] = RECS[c].trim().split('\n').map((l, i) => { const [theme, name, area, desc] = l.split('|'); return { id: c + '-' + i, theme, name, area, desc }; });
+  return recCache[c];
+}
+const normName = s => String(s || '').toLowerCase().replace(/\s+/g, '');
+function recSaved(t, r) {
+  const n = normName(r.name);
+  return t.places.some(p => normName(p.name) === n) || t.foods.some(f => normName(f.name) === n);
+}
+function addRec(t, r) {
+  if (recSaved(t, r)) return false;
+  if (r.theme === 'food' || r.theme === 'cafe') t.foods.push({ id: uid(), name: r.name, area: r.area, menu: '', memo: r.desc, visited: false, rating: 0, theme: r.theme });
+  else t.places.push({ id: uid(), name: r.name, area: r.area, memo: r.desc, done: false, theme: r.theme });
+  return true;
+}
+const themeSearch = (t, k) => 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(t.city + ' ' + THEME_Q[k]);
+function recView(t) {
+  const recs = recsFor(t);
+  const more = '<div class="field"><span class="lbl">구글맵에서 더 찾아보기</span><div class="chips">' + THEMES.map(([k, n]) =>
+    '<a class="chip" href="' + esc(themeSearch(t, k)) + '" target="_blank" rel="noopener">' + n + '</a>').join('') + '</div>' +
+    '<p class="hint">마음에 드는 곳은 구글맵에서 공유 → 링크 복사 후 ‘가볼 곳 추가’에 붙여 넣으세요.</p></div>';
+  if (!recs) return '<section class="card stack"><p class="eyebrow">' + esc(t.city) + ' 추천 장소</p><p style="margin:0">아직 ' + esc(t.city) + ' 추천 목록은 준비되지 않았어요. 구글맵에서 테마별로 많이 찾는 곳을 바로 볼 수 있어요.</p>' + more + '</section>';
+  const th = S.recTheme || 'all';
+  const list = th === 'all' ? recs : recs.filter(r => r.theme === th);
+  const unsaved = list.filter(r => !recSaved(t, r));
+  let h = '<section class="card stack"><div><p class="eyebrow">' + esc(t.city) + ' 추천 장소 ' + recs.length + '곳</p>' +
+    '<p class="hint">구글맵에서 많이 찾는 곳 위주로 골랐어요. + 를 누르면 가볼 곳에 담겨요 (맛집·카페는 맛집 위시리스트로). 영업시간은 지도에서 확인하세요.</p></div>' +
+    '<div class="chips scroll">' + [['all', '전체 ' + recs.length]].concat(THEMES.map(([k, n]) => [k, n + ' ' + recs.filter(r => r.theme === k).length])).filter(x => !/ 0$/.test(x[1])).map(([k, n]) =>
+      '<button class="chip" data-act="rec-theme" data-v="' + k + '" aria-pressed="' + (th === k) + '">' + n + '</button>').join('') + '</div>' +
+    (unsaved.length > 1 ? '<button class="btn small" data-act="rec-add-all">' + (th === 'all' ? '전체' : THEME[th].n) + ' ' + unsaved.length + '곳 모두 담기</button>' : '') +
+  '</section>';
+  h += '<div class="list">' + list.map(r => {
+    const saved = recSaved(t, r);
+    return '<div class="item"><span class="cat-dot" style="background:' + THEME[r.theme].g + '" title="' + THEME[r.theme].n + '">' + THEME[r.theme].n[0] + '</span>' +
+      '<span class="item-main"><span class="item-title" style="display:block">' + esc(r.name) + '</span><span class="item-sub" style="display:block">' + esc(r.area + ' · ' + r.desc) + '</span></span>' +
+      mapBtn({ name: r.name, area: r.area }, t) +
+      (saved ? '<span class="add-btn on" aria-label="담음">' + ICON.check + '</span>'
+             : '<button class="add-btn" data-act="rec-add" data-id="' + r.id + '" aria-label="' + esc(r.name) + ' 담기">+</button>') + '</div>';
+  }).join('') + '</div>';
+  return h + '<section class="card">' + more + '</section>';
+}
+
 function placeView(t) {
   const done = t.places.filter(p => p.done).length;
   const total = t.places.length;
   let h = '<section class="card stack"><p class="eyebrow">방문 체크</p><div class="hero-num" style="font-size:32px">' + done + '<span class="muted" style="font-size:18px"> / ' + total + '곳</span></div>' +
     '<div class="meter ok"><i style="width:' + (total ? done / total * 100 : 0).toFixed(1) + '%"></i></div></section>';
-  h += '<div class="seg" role="group">' + [['todo', '가볼 곳 ' + (total - done)], ['done', '다녀온 곳 ' + done], ['all', '전체']].map(([k, n]) =>
-    '<button data-act="place-filter" data-v="' + k + '" aria-pressed="' + (S.placeFilter === k) + '">' + n + '</button>').join('') + '</div>';
+  // 아직 담은 곳이 없으면 추천부터 보여 줘요
+  if (!S.pfTouched && !total) S.placeFilter = 'rec';
+  const pf = S.placeFilter;
+  h += '<div class="seg" role="group">' + [['rec', '추천'], ['todo', '가볼 곳 ' + (total - done)], ['done', '다녀옴 ' + done], ['all', '전체']].map(([k, n]) =>
+    '<button data-act="place-filter" data-v="' + k + '" aria-pressed="' + (pf === k) + '">' + n + '</button>').join('') + '</div>';
+  if (pf === 'rec') return h + recView(t);
   let list = t.places.slice();
-  if (S.placeFilter === 'todo') list = list.filter(p => !p.done);
-  if (S.placeFilter === 'done') list = list.filter(p => p.done).sort((a, b) => (b.doneAt || '').localeCompare(a.doneAt || ''));
+  if (pf === 'todo') list = list.filter(p => !p.done);
+  if (pf === 'done') list = list.filter(p => p.done).sort((a, b) => (b.doneAt || '').localeCompare(a.doneAt || ''));
   if (!list.length) {
-    h += '<div class="card empty"><p>' + (total ? (S.placeFilter === 'todo' ? '가볼 곳을 모두 다녀왔어요!' : '아직 다녀온 곳이 없어요.') : '가고 싶은 지역이나 명소를 적어 두고, 다녀오면 체크하세요.') + '</p></div>';
+    h += '<div class="card empty"><p>' + (total ? (pf === 'todo' ? '가볼 곳을 모두 다녀왔어요!' : '아직 다녀온 곳이 없어요.') : '가고 싶은 곳을 ‘추천’에서 담거나 직접 추가하고, 다녀오면 체크하세요.') + '</p></div>';
     return h;
   }
   h += '<div class="list">' + list.map(p =>
@@ -1484,12 +1883,12 @@ function courseItems(t, cands) {
   return cands.map(c => {
     if (c.kind === 'place') {
       const p = itemOf(t, 'place', c.id) || {};
-      return Object.assign({}, c, { area: p.area || '', type: 'place', night: NIGHT_RE.test(c.label + ' ' + (p.memo || '')) });
+      return Object.assign({}, c, { area: p.area || '', type: 'place', night: p.theme === 'night' || NIGHT_RE.test(c.label + ' ' + (p.memo || '')) });
     }
     if (c.kind === 'food') {
       const f = itemOf(t, 'food', c.id) || {};
       const txt = c.label + ' ' + (f.menu || '');
-      return Object.assign({}, c, { area: f.area || '', type: SNACK_RE.test(txt) ? 'snack' : 'meal', night: NIGHT_RE.test(txt) });
+      return Object.assign({}, c, { area: f.area || '', type: f.theme === 'cafe' || SNACK_RE.test(txt) ? 'snack' : 'meal', night: NIGHT_RE.test(txt) });
     }
     return Object.assign({}, c, { area: '', type: 'any', night: false });
   });
@@ -1508,7 +1907,7 @@ function fillSlot(C, i, avoid) {
   let it = any.length && Math.random() < .25 ? pick(any) : null;
   if (!it) {
     if (s.want === 'night') it = pick(free.filter(x => x.night)) || pick(free.filter(x => x.type === 'place'));
-    else if (s.want === 'place') { const day = free.filter(x => x.type === 'place' && !x.night); it = pick(day.length ? day : free.filter(x => x.type === 'place')); }
+    else if (s.want === 'place') it = pick(free.filter(x => x.type === 'place' && !x.night)); // 야경 명소는 밤 시간에만
     else it = pick(free.filter(x => x.type === s.want));
   }
   if (!it) it = pick(any);
@@ -1707,7 +2106,7 @@ function tripSheet(t) {
         code: f('t-code').value.trim().toUpperCase().slice(0, 4), flag: f('t-flag').value.trim() };
       if (isNew) {
         const nt = normTrip(Object.assign({ id: uid(), createdAt: Date.now() }, data));
-        S.trips[nt.id] = nt; S.tripId = nt.id; S.view = 'trip'; S.tab = 'sum'; S.game = freshGame();
+        S.trips[nt.id] = nt; S.tripId = nt.id; S.view = 'trip'; S.tab = 'sum'; S.game = freshGame(); S.pfTouched = false; S.placeFilter = 'todo'; S.recTheme = 'all';
         if (rm === 'live' && liveHit) S.rateState[nt.id] = 'ok';
         closeSheet(); commit(nt); window.scrollTo(0, 0); toast('좋은 여행 되세요!'); refreshRate(nt);
       } else {
@@ -1949,7 +2348,7 @@ function createSample() {
       { id: uid(), name: '홉 슈크림', menu: '슈크림', area: '우메다', rating: 0, visited: false }
     ]
   });
-  S.trips[t.id] = t; S.tripId = t.id; S.view = 'trip'; S.tab = 'sum'; S.game = freshGame();
+  S.trips[t.id] = t; S.tripId = t.id; S.view = 'trip'; S.tab = 'sum'; S.game = freshGame(); S.pfTouched = false; S.placeFilter = 'todo'; S.recTheme = 'all';
   commit(t); window.scrollTo(0, 0); toast('예시 여행이에요. 다 보면 편집에서 지울 수 있어요'); refreshRate(t);
 }
 
@@ -1970,7 +2369,7 @@ const ACT = {
     if (navigator.share) { navigator.share({ title: '여행 수첩', text: '여행 예산·지출·방문지·맛집 기록 앱', url }).catch(() => {}); return; }
     try { navigator.clipboard.writeText(url).then(() => toast('앱 링크를 복사했어요'), () => toast(url)); } catch (e) { toast(url); }
   },
-  'open-trip': (a, id) => { S.tripId = id; S.view = 'trip'; S.tab = 'sum'; S.game = freshGame(); window.scrollTo(0, 0); render(); refreshRate(cur()); },
+  'open-trip': (a, id) => { S.pfTouched = false; S.recTheme = 'all'; S.placeFilter = 'todo'; S.tripId = id; S.view = 'trip'; S.tab = 'sum'; S.game = freshGame(); window.scrollTo(0, 0); render(); refreshRate(cur()); },
   'rate-refresh': () => refreshRate(cur(), true),
   'home': () => { if (S.game.busy) return; S.view = 'home'; render(); window.scrollTo(0, 0); },
   'edit-trip': () => tripSheet(cur()),
@@ -1984,7 +2383,18 @@ const ACT = {
     commit(t); if (p.done) toast('‘' + p.name + '’ 방문 완료!');
   },
   'place-edit': (a, id) => placeSheet(cur(), id),
-  'place-filter': a => { S.placeFilter = a.dataset.v; render(); },
+  'place-filter': a => { S.placeFilter = a.dataset.v; S.pfTouched = true; render(); },
+  'rec-theme': a => { S.recTheme = a.dataset.v; render(); },
+  'rec-add': (a, id) => {
+    const t = cur(), r = (recsFor(t) || []).find(x => x.id === id); if (!r) return;
+    if (addRec(t, r)) { commit(t); toast('‘' + r.name + '’을 ' + (r.theme === 'food' || r.theme === 'cafe' ? '맛집 위시' : '가볼 곳') + '에 담았어요'); }
+  },
+  'rec-add-all': () => {
+    const t = cur(), th = S.recTheme || 'all';
+    const list = (recsFor(t) || []).filter(r => th === 'all' || r.theme === th);
+    let n = 0; list.forEach(r => { if (addRec(t, r)) n++; });
+    if (n) { commit(t); toast(n + '곳을 담았어요'); }
+  },
   'food-tab': a => { S.foodTab = a.dataset.v; render(); },
   'food-edit': (a, id) => foodSheet(cur(), id),
   'food-went': (a, id) => foodSheet(cur(), id, { visited: true }),
