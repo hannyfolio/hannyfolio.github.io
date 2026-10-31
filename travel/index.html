@@ -410,6 +410,64 @@ a.btn, a.map-btn { text-decoration: none; }
 .add-btn.on { background: var(--ok); border-color: var(--ok); color: #fff; }
 .add-btn svg { width: 18px; height: 18px; }
 a.chip { text-decoration: none; color: var(--ink); }
+.duty { border-radius: 12px; background: var(--bg); padding: 12px; display: grid; gap: 8px; }
+.duty.over { background: color-mix(in srgb, var(--danger) 10%, var(--bg)); }
+.duty-main { margin: 0; font-size: 15px; }
+.check-row { display: flex; align-items: center; gap: 8px; font-size: 14px; flex-wrap: wrap; }
+.check-row input { width: 20px; height: 20px; accent-color: var(--accent); }
+.chip.sm { padding: 4px 10px; font-size: 12px; }
+.arcade {
+  border-radius: 22px; padding: 14px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; color: #fff; position: relative; overflow: hidden;
+  background: radial-gradient(120% 80% at 50% 0%, #3a4fd6 0%, #1a237e 55%, #0d1240 100%);
+  box-shadow: inset 0 0 0 3px rgba(255, 255, 255, .08), 0 10px 30px rgba(13, 18, 64, .35);
+}
+.arcade > * { min-width: 0; }
+.g-tabs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.g-tab {
+  border: 0; border-radius: 14px; background: rgba(255, 255, 255, .1); color: rgba(255, 255, 255, .78);
+  padding: 10px 2px 8px; display: grid; justify-items: center; gap: 3px; font-size: 12px; font-weight: 700; transition: transform .12s;
+}
+.g-tab svg { width: 30px; height: 30px; }
+.g-tab[aria-pressed="true"] { background: #ffd23f; color: #1a237e; box-shadow: 0 4px 0 #c99a00; transform: translateY(-2px); }
+.stage { min-height: 320px; display: grid; justify-items: center; align-content: center; gap: 14px; }
+.g-empty { display: grid; justify-items: center; gap: 14px; }
+.g-empty .q { font-family: var(--f-code); font-size: 96px; line-height: 1; color: #ffd23f; text-shadow: 0 6px 0 rgba(0, 0, 0, .25); animation: bob 1.6s ease-in-out infinite; }
+@keyframes bob { 50% { transform: translateY(-8px) rotate(-4deg); } }
+.big-btn {
+  border: 0; border-radius: 16px; background: #ffd23f; color: #1a237e; font-family: var(--f-code), var(--f-body); font-size: 28px; letter-spacing: .06em;
+  padding: 10px 34px 8px; box-shadow: 0 6px 0 #c99a00; font-weight: 700;
+}
+.big-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #c99a00; }
+.cand-bar { display: flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, .1); border-radius: 14px; padding: 6px 6px 6px 12px; }
+.cand-bar .n { font-family: var(--f-code); font-size: 24px; color: #ffd23f; line-height: 1; }
+.cand-bar .mini { flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 13px; color: rgba(255, 255, 255, .78); }
+.cand-bar button { border: 0; border-radius: 10px; background: #fff; color: #1a237e; font-weight: 700; padding: 8px 14px; min-height: 38px; }
+.cand-bar .snd { background: rgba(255, 255, 255, .14); padding: 8px 10px; }
+.g-tools { display: flex; gap: 10px; }
+.g-tool { width: 46px; height: 46px; border-radius: 14px; border: 0; background: rgba(255, 255, 255, .14); color: #fff; font-size: 20px; }
+.arcade .wheel-wrap { width: min(100%, 300px); }
+.bulbs { position: absolute; inset: -8px; border-radius: 50%; background: repeating-conic-gradient(#ffd23f 0 6deg, transparent 6deg 30deg); -webkit-mask: radial-gradient(circle, transparent 66%, #000 67%, #000 70%, transparent 71%); mask: radial-gradient(circle, transparent 66%, #000 67%, #000 70%, transparent 71%); opacity: .9; }
+.spinning .bulbs { animation: blink .25s steps(2) infinite; }
+@keyframes blink { 50% { transform: rotate(15deg); } }
+.arcade .hub { background: #ffd23f; color: #1a237e; border-color: #fff; font-size: 24px; }
+.arcade .pointer { border-top-color: #ff3d6e; top: -10px; }
+.arcade .lad-btn { border-color: var(--c); background: transparent; color: #fff; }
+.arcade .lad-btn[aria-pressed="true"] { background: var(--c); color: #1a237e; }
+.arcade .lad-res { background: rgba(255, 255, 255, .1); color: #fff; }
+.arcade .lad-res.hide { color: rgba(255, 255, 255, .55); }
+.arcade .lad-res.hit { background: #ffd23f; color: #1a237e; animation: pop .35s ease; }
+.arcade .pcard .back { background: var(--c); color: #1a237e; font-size: 40px; background-image: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, .35) 0 18%, transparent 19%), repeating-linear-gradient(45deg, transparent 0 8px, rgba(255, 255, 255, .15) 8px 16px); }
+.arcade .pcard .back span { width: 56px; height: 56px; border-radius: 50%; background: #fff; display: grid; place-items: center; }
+.arcade .pcard .front { background: #fff; color: #1a237e; border-color: #fff; }
+.arcade .pcard.chosen .front { border-color: #ffd23f; box-shadow: 0 0 0 4px #ffd23f; color: #1a237e; }
+.arcade .cards:not(.shuffle) .pcard:not(.flip):hover { transform: translateY(-4px) rotate(-2deg); transition: transform .15s; }
+.arcade .course-wrap { background: var(--card); color: var(--ink); border-radius: 16px; padding: 14px; }
+.result { border: 0; background: linear-gradient(135deg, #ffd23f, #ff9f43); color: #1a237e; }
+.result .win { font-family: var(--f-code); font-size: 40px; letter-spacing: .08em; line-height: 1; color: #fff; text-shadow: 0 3px 0 #c95f00; animation: pop .5s ease; }
+.result h3 { font-size: 26px; }
+.result .btn { background: #fff; border-color: #fff; color: #1a237e; }
+.result .btn.primary { background: #1a237e; border-color: #1a237e; color: #fff; }
+.confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 35; }
 .foot { margin-top: 24px; display: grid; gap: 8px; justify-items: center; text-align: center; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -625,7 +683,11 @@ function refreshRate(t, force) {
   }, () => { S.rateState[t.id] = 'fail'; softRender(); });
   softRender();
 }
+function refreshUSD() {
+  RateSvc.get('USD').then(r => { if (Math.abs((S.usdRate || 0) - r.rate) > 1e-6) { S.usdRate = r.rate; softRender(); } }, () => {});
+}
 function refreshActiveRates() {
+  refreshUSD();
   const today = todayISO();
   Object.values(S.trips).forEach(t => { if (t.end >= today) refreshRate(t); });
 }
@@ -932,8 +994,24 @@ function renderViewer() {
 })();
 
 /* ---------- 계산 ---------- */
+const isShopE = e => e.cat === 'shop';
+// 관세 (여행자 휴대품, 1인 기준 추정): 면세 한도 $800, 초과분 일반 물품 간이세율 20%, 자진신고 시 30% 감면(최대 20만 원)
+const DUTY = { freeUSD: 800, rate: 0.2, selfOff: 0.3, selfCap: 200000 };
+function usdKRW(t) { return t.cur === 'USD' && t.rate ? Number(t.rate) : (S.usdRate || RATE.USD); }
+function customs(t) {
+  const krw = t.expenses.filter(e => isShopE(e) && !e.noDuty).reduce((s, e) => s + expKRW(t, e), 0);
+  const fx = usdKRW(t), usd = krw / fx;
+  const overUSD = Math.max(0, usd - DUTY.freeUSD);
+  const tax = Math.round(overUSD * fx * DUTY.rate);
+  const selfTax = Math.round(tax - Math.min(tax * DUTY.selfOff, DUTY.selfCap));
+  return { krw, usd, overUSD, tax, selfTax, leftUSD: Math.max(0, DUTY.freeUSD - usd), fx };
+}
 function stats(t) {
-  const spent = t.expenses.reduce((s, e) => s + expKRW(t, e), 0);
+  const allSpent = t.expenses.reduce((s, e) => s + expKRW(t, e), 0);
+  const shopSpent = t.expenses.filter(isShopE).reduce((s, e) => s + expKRW(t, e), 0);
+  const shopBudget = t.shopBudget ? toKRW(t, Number(t.shopBudget), t.budgetCur || 'KRW') : 0;
+  // 여행비 예산·하루 사용 가능 금액은 쇼핑을 빼고 계산
+  const spent = allSpent - shopSpent;
   const spentLocal = t.expenses.filter(e => e.cur === t.cur).reduce((s, e) => s + e.amt, 0);
   const budget = t.budget ? toKRW(t, Number(t.budget), t.budgetCur || 'KRW') : 0;
   const days = Math.max(1, diffDays(t.start, t.end) + 1);
@@ -943,15 +1021,15 @@ function stats(t) {
   else if (today > t.end) status = 'done';
   else dayIdx = diffDays(t.start, today) + 1;
   const remainDays = status === 'upcoming' ? days : status === 'ongoing' ? days - dayIdx + 1 : 0;
-  const todaySpent = t.expenses.filter(e => e.date === today).reduce((s, e) => s + expKRW(t, e), 0);
-  const spentBeforeToday = t.expenses.filter(e => e.date < today).reduce((s, e) => s + expKRW(t, e), 0);
+  const todaySpent = t.expenses.filter(e => e.date === today && !isShopE(e)).reduce((s, e) => s + expKRW(t, e), 0);
+  const spentBeforeToday = t.expenses.filter(e => e.date < today && !isShopE(e)).reduce((s, e) => s + expKRW(t, e), 0);
   const left = budget - spent;
   // 오늘 포함 남은 날로 나눈 하루 사용 가능 금액 (오늘 쓴 돈은 오늘 몫에서 빠짐)
   const perDay = remainDays > 0 ? (budget - spentBeforeToday) / remainDays : 0;
   const placesDone = t.places.filter(p => p.done).length;
   const rated = t.foods.filter(f => f.visited && f.rating > 0);
   const avgRating = rated.length ? rated.reduce((s, f) => s + f.rating, 0) / rated.length : 0;
-  return { spent, spentLocal, budget, left, days, status, dayIdx, remainDays, todaySpent, perDay, placesDone, rated, avgRating, today };
+  return { spent, allSpent, shopSpent, shopBudget, spentLocal, budget, left, days, status, dayIdx, remainDays, todaySpent, perDay, placesDone, rated, avgRating, today };
 }
 function meterCls(p) { return p >= 1 ? 'over' : p >= .8 ? 'warn' : ''; }
 
@@ -1053,18 +1131,20 @@ function sumView(t) {
   const p = st.budget ? st.spent / st.budget : 0;
   let h = '<section class="card stack">';
   if (st.budget) {
-    h += '<p class="eyebrow">남은 예산 · ' + (st.status === 'upcoming' ? '출발 D-' + diffDays(st.today, t.start) : st.status === 'ongoing' ? 'DAY ' + st.dayIdx + ' / ' + st.days : '여행 끝') + '</p>' +
+    h += '<p class="eyebrow">남은 여행비 · ' + (st.status === 'upcoming' ? '출발 D-' + diffDays(st.today, t.start) : st.status === 'ongoing' ? 'DAY ' + st.dayIdx + ' / ' + st.days : '여행 끝') + '</p>' +
       '<div class="hero-num' + (st.left < 0 ? ' neg' : '') + '">' + (st.left < 0 ? '-' : '') + won(Math.abs(st.left)) + '</div>' +
       '<div class="meter ' + meterCls(p) + '"><i style="width:' + Math.min(100, p * 100).toFixed(1) + '%"></i></div>' +
-      '<div class="pass-figs"><span>예산 <b>' + won(st.budget) + '</b></span><span>사용 <b>' + won(st.spent) + '</b> (' + Math.round(p * 100) + '%)</span></div>';
-    if (st.left < 0) h += '<p class="hint" style="color:var(--danger)">예산을 ' + won(-st.left) + ' 넘었어요.</p>';
+      '<div class="pass-figs"><span>여행비 <b>' + won(st.budget) + '</b></span><span>사용 <b>' + won(st.spent) + '</b> (' + Math.round(p * 100) + '%)</span></div>' +
+      '<p class="hint">쇼핑은 따로 계산해요.</p>';
+    if (st.left < 0) h += '<p class="hint" style="color:var(--danger)">여행비를 ' + won(-st.left) + ' 넘었어요.</p>';
   } else {
-    h += '<p class="eyebrow">총 지출</p><div class="hero-num">' + won(st.spent) + '</div>' +
-      '<p class="hint">예산을 정하면 남은 금액과 하루 사용 가능 금액을 보여 드려요.</p>' +
+    h += '<p class="eyebrow">여행비 지출 (쇼핑 제외)</p><div class="hero-num">' + won(st.spent) + '</div>' +
+      '<p class="hint">여행비 예산을 정하면 남은 금액과 하루 사용 가능 금액을 보여 드려요.</p>' +
       '<button class="btn small" data-act="edit-trip">예산 정하기</button>';
   }
   h += '</section>';
 
+  h += shopCard(t, st);
   h += rateCard(t);
   const localTxt = t.cur !== 'KRW' ? money(st.spentLocal, t.cur) : won(st.spent);
   h += '<div class="stat-row">' +
@@ -1080,18 +1160,18 @@ function sumView(t) {
   else {
     const max = byCat[0].v;
     h += '<div class="hbars">' + byCat.map(x =>
-      '<div class="hbar" title="' + esc(x.c.n) + ' ' + won(x.v) + '"><span>' + x.c.n + '</span><div class="track"><div class="fill" style="width:calc((100% - 96px) * ' + (x.v / max).toFixed(3) + ')"></div><span class="val">' + shortWon(x.v) + '원 · ' + Math.round(x.v / st.spent * 100) + '%</span></div></div>').join('') + '</div>';
+      '<div class="hbar" title="' + esc(x.c.n) + ' ' + won(x.v) + '"><span>' + x.c.n + '</span><div class="track"><div class="fill" style="width:calc((100% - 96px) * ' + (x.v / max).toFixed(3) + ')"></div><span class="val">' + shortWon(x.v) + '원 · ' + Math.round(x.v / st.allSpent * 100) + '%</span></div></div>').join('') + '</div>';
   }
   h += '</section>';
 
   // 일별
   const days = [];
   for (let i = 0; i < st.days && i < 60; i++) days.push(addDays(t.start, i));
-  const dayVals = days.map(d => t.expenses.filter(e => e.date === d).reduce((s, e) => s + expKRW(t, e), 0));
-  const outside = t.expenses.filter(e => e.date < t.start || e.date > t.end).reduce((s, e) => s + expKRW(t, e), 0);
+  const dayVals = days.map(d => t.expenses.filter(e => e.date === d && !isShopE(e)).reduce((s, e) => s + expKRW(t, e), 0));
+  const outside = t.expenses.filter(e => (e.date < t.start || e.date > t.end) && !isShopE(e)).reduce((s, e) => s + expKRW(t, e), 0);
   const avgBudget = st.budget ? (st.budget - outside) / st.days : 0;
   const maxV = Math.max(1, ...dayVals, avgBudget);
-  h += '<section class="card stack"><h3 class="sec">날짜별 지출</h3><div class="cols-wrap"><div class="cols" style="min-width:' + (days.length * 24) + 'px">' +
+  h += '<section class="card stack"><h3 class="sec">날짜별 여행비 (쇼핑 제외)</h3><div class="cols-wrap"><div class="cols" style="min-width:' + (days.length * 24) + 'px">' +
     (avgBudget > 0 ? '<div class="refline" style="bottom:' + (avgBudget / maxV * 122).toFixed(1) + 'px"><span>하루 예산 ' + shortWon(avgBudget) + '</span></div>' : '') +
     days.map((d, i) => '<div class="col' + (d === st.today ? ' today' : '') + '" title="' + fmtMDW(d) + ' ' + won(dayVals[i]) + '"><i style="height:' + (dayVals[i] / maxV * 122).toFixed(1) + 'px"></i></div>').join('') +
     '</div><div class="col-labels" style="min-width:' + (days.length * 24) + 'px">' + days.map(d => '<span' + (d === st.today ? ' class="today"' : '') + '>' + parseD(d).getDate() + '</span>').join('') + '</div></div>' +
@@ -1127,6 +1207,29 @@ function rateCard(t) {
     (live ? '<button class="icon-btn" data-act="rate-refresh" aria-label="환율 새로고침"' + (stt === 'loading' ? ' disabled' : '') + '>↻</button>' : '<button class="btn small" data-act="edit-trip">바꾸기</button>') + '</section>';
 }
 
+function shopCard(t, st) {
+  const abroad = t.cur !== 'KRW' || (t.country && t.country !== '한국');
+  if (!st.shopBudget && !st.shopSpent) {
+    return '<section class="card rate-card"><div class="rate-main"><span class="l">쇼핑비</span><b>' + won(0) + '</b><span class="hint">쇼핑비 예산을 따로 정할 수 있어요' + (abroad ? ' · 관세도 자동 계산' : '') + '</span></div><button class="btn small" data-act="edit-trip">정하기</button></section>';
+  }
+  const p = st.shopBudget ? st.shopSpent / st.shopBudget : 0;
+  let h = '<section class="card stack"><div class="row" style="justify-content:space-between"><h3 class="sec">쇼핑비</h3>' +
+    (st.shopBudget ? '<span class="num" style="font-weight:700' + (st.shopBudget - st.shopSpent < 0 ? ';color:var(--danger)' : '') + '">' + won(Math.abs(st.shopBudget - st.shopSpent)) + (st.shopBudget - st.shopSpent < 0 ? ' 초과' : ' 남음') + '</span>' : '') + '</div>' +
+    (st.shopBudget ? '<div class="meter ' + meterCls(p) + '"><i style="width:' + Math.min(100, p * 100).toFixed(1) + '%"></i></div>' : '') +
+    '<div class="pass-figs"><span>예산 <b>' + (st.shopBudget ? won(st.shopBudget) : '–') + '</b></span><span>사용 <b>' + won(st.shopSpent) + '</b></span></div>';
+  if (abroad) {
+    const c = customs(t);
+    const dp = Math.min(1, c.usd / DUTY.freeUSD);
+    h += '<div class="duty' + (c.overUSD > 0 ? ' over' : '') + '"><div class="row" style="justify-content:space-between"><b>관세 예상</b><span class="num">$' + fmtN(c.usd, 0) + ' / $' + DUTY.freeUSD + '</span></div>' +
+      '<div class="meter ' + (c.overUSD > 0 ? 'over' : 'ok') + '"><i style="width:' + (dp * 100).toFixed(1) + '%"></i></div>' +
+      (c.overUSD > 0
+        ? '<p class="duty-main">약 <b>' + won(c.tax) + '</b> <span class="hint">· 자진신고 시 약 ' + won(c.selfTax) + '</span></p>'
+        : '<p class="duty-main">면세 한도까지 <b>$' + fmtN(c.leftUSD, 0) + '</b> 남았어요</p>') +
+      '<p class="hint">1인 기준 추정 · 한도 $800 초과분에 간이세율 20% · 술·담배·향수는 별도</p></div>';
+  }
+  return h + '</section>';
+}
+
 /* 지출 */
 function expView(t) {
   const st = stats(t);
@@ -1134,7 +1237,7 @@ function expView(t) {
   if (S.expFilter !== 'all') list = list.filter(e => e.cat === S.expFilter);
   const sum = list.reduce((s, e) => s + expKRW(t, e), 0);
   let h = '<section class="card"><p class="eyebrow">' + (S.expFilter === 'all' ? '총 지출' : CAT[S.expFilter].n) + '</p><div class="hero-num" style="font-size:32px">' + won(sum) + '</div>' +
-    (st.budget ? '<p class="hint">예산 ' + won(st.budget) + ' 중 ' + Math.round(st.spent / st.budget * 100) + '% 사용</p>' : '') + '</section>';
+    (S.expFilter === 'all' ? '<p class="hint">여행비 ' + won(st.spent) + ' · 쇼핑 ' + won(st.shopSpent) + '</p>' : '') + '</section>';
   h += '<div class="chips scroll">' + [['all', '전체']].concat(CATS.map(c => [c.k, c.n])).map(([k, n]) =>
     '<button class="chip" data-act="exp-filter" data-v="' + k + '" aria-pressed="' + (S.expFilter === k) + '">' + n + '</button>').join('') + '</div>';
   if (!list.length) {
@@ -1165,331 +1268,511 @@ const THEMES = [['sight', '관광', 'var(--g3)'], ['shop', '쇼핑', 'var(--g6)'
 const THEME = Object.fromEntries(THEMES.map(x => [x[0], { n: x[1], g: x[2] }]));
 const THEME_Q = { sight: '관광명소', shop: '쇼핑', food: '맛집', cafe: '카페', night: '야경' };
 const RECS = {
-'도쿄': `sight|센소지|아사쿠사|도쿄에서 가장 오래된 절과 나카미세 상점가
-sight|메이지 신궁|하라주쿠|도심 속 큰 숲에 둘러싸인 신사
-sight|시부야 스크램블 교차로|시부야|한 번에 수천 명이 건너는 유명한 횡단보도
-sight|도쿄 스카이트리|오시아게|높이 634m 전망대와 소라마치 쇼핑몰
-sight|우에노 공원|우에노|박물관·동물원이 모인 공원
-sight|팀랩 플래닛|도요스|물 위를 걷는 몰입형 디지털 아트
-shop|긴자|긴자|백화점과 명품 매장이 모인 거리
-shop|다케시타 거리|하라주쿠|10대 패션·크레이프 가게 골목
-shop|아키하바라 전자상가|아키하바라|전자제품·애니메이션 굿즈
-shop|시모키타자와|시모키타자와|빈티지 옷가게와 작은 카페 동네
-food|츠키지 장외시장|츠키지|초밥·해산물 덮밥·계란말이 먹거리
-food|오모이데 요코초|신주쿠|작은 꼬치구이 가게가 모인 골목
-food|아메요코 시장|우에노|싼 간식과 해산물 노점 시장
-food|몬자 스트리트|츠키시마|도쿄식 철판요리 몬자야키 골목
-cafe|블루보틀 기요스미시라카와|기요스미시라카와|블루보틀 일본 1호점
-cafe|메구로강 산책로|나카메구로|강변 카페와 편집숍, 봄엔 벚꽃
-night|시부야 스카이|시부야|옥상 전망대에서 보는 도쿄 야경
-night|도쿄 타워|시바 공원|불 켜진 빨간 탑과 전망대
-night|롯폰기 힐즈 전망대|롯폰기|도쿄 타워가 정면으로 보이는 야경`,
-'오사카': `sight|오사카성|모리노미야|천수각과 넓은 성 공원
-sight|도톤보리|난바|글리코 간판과 운하가 있는 번화가
-sight|신세카이·츠텐카쿠|신세카이|옛 오사카 분위기의 거리와 전망탑
-sight|유니버설 스튜디오 재팬|유니버설시티|닌텐도 월드·해리포터 테마파크
-sight|나라 공원|나라|사슴과 도다이지, 당일치기 코스
-sight|후시미 이나리 신사|교토|붉은 도리이 터널, 당일치기 코스
-shop|신사이바시스지 상점가|신사이바시|지붕 덮인 긴 쇼핑 거리
-shop|우메다|우메다|백화점·쇼핑몰이 모인 오사카 북쪽 중심가
-shop|아메리카무라|신사이바시|빈티지·스트리트 패션 거리
-shop|덴덴타운|닛폰바시|전자제품·피규어 상점가
-food|구로몬 시장|닛폰바시|오사카의 부엌, 해산물·과일 시장
-food|우라난바|난바|작은 이자카야가 모인 뒷골목
-food|덴진바시스지 상점가|덴진바시|일본에서 가장 긴 상점가 먹거리
-food|쿠시카츠 다루마 신세카이 본점|신세카이|오사카식 꼬치튀김 원조집
-cafe|리쿠로 오지상 치즈케이크|난바|갓 구운 흔들흔들 치즈케이크
-night|우메다 스카이빌딩 공중정원|우메다|원형 옥상 전망대 야경
-night|아베노 하루카스 300|덴노지|오사카에서 가장 높은 전망대
-night|도톤보리 리버크루즈|난바|네온사인 사이를 지나는 운하 유람선`,
-'후쿠오카': `sight|다자이후 텐만구|다자이후|학문의 신 신사와 우메가에모치
-sight|오호리 공원|오호리|호수를 한 바퀴 도는 산책 공원
-sight|구시다 신사|하카타|하카타 마쓰리의 중심 신사
-sight|모모치 해변|모모치|후쿠오카 타워 앞 인공 해변
-shop|캐널시티 하카타|하카타|운하가 흐르는 대형 쇼핑몰
-shop|텐진 지하상가|텐진|유럽풍 지하 쇼핑 거리
-shop|JR 하카타 시티|하카타역|역과 붙은 백화점·식당가
-food|나카스 야타이 거리|나카스|강변 포장마차에서 라멘·꼬치
-food|이치란 본사 총본점|나카스|1인 칸막이 돈코츠 라멘 본점
-food|야나기바시 연합시장|하루요시|해산물·어묵 골목 시장
-food|모츠나베 거리|하카타|곱창전골 모츠나베 맛집이 많은 곳
-cafe|스타벅스 오호리 공원점|오호리|호수 바로 앞 통유리 카페
-night|후쿠오카 타워|모모치|바다와 도시가 함께 보이는 전망대
-night|나카스 강변|나카스|불빛 비친 강과 포장마차 거리`,
-'삿포로': `sight|오도리 공원|오도리|도심을 가로지르는 공원, 겨울엔 눈축제
-sight|삿포로 시계탑|오도리|삿포로의 상징 같은 옛 건물
-sight|홋카이도 신궁|마루야마|숲길을 걷는 신사
-sight|오타루 운하|오타루|옛 창고와 가스등 운하, 당일치기
-sight|삿포로 맥주 박물관|히가시구|맥주 역사와 시음
-shop|다누키코지 상점가|스스키노|지붕 덮인 긴 상점가와 드럭스토어
-shop|삿포로역 스텔라 플레이스|삿포로역|역과 이어진 쇼핑몰
-shop|오타루 사카이마치 거리|오타루|유리공예·오르골 가게 거리
-food|니조 시장|오도리|게·성게 덮밥 해산물 시장
-food|라멘 요코초|스스키노|미소 라멘 가게가 모인 골목
-food|징기스칸 다루마|스스키노|양고기 철판구이 노포
-food|수프카레|삿포로 시내|삿포로 명물, 가게마다 맛이 달라요
-cafe|롯카테이 삿포로 본점|삿포로역|버터샌드로 유명한 디저트 가게
-cafe|르타오 본점|오타루|더블 치즈케이크 본점
-night|모이와산 로프웨이|모이와산|일본 신 3대 야경 전망대
-night|삿포로 TV 타워|오도리|오도리 공원이 내려다보이는 전망대
-night|스스키노|스스키노|네온사인 가득한 번화가`,
-'타이베이': `sight|국립고궁박물원|스린|중국 황실 보물 박물관
-sight|중정기념당|중정구|넓은 광장과 근위병 교대식
-sight|용산사|완화|타이베이에서 가장 오래된 절
-sight|지우펀 옛거리|지우펀|홍등 걸린 산동네 찻집 거리, 당일치기
-sight|스펀 천등 날리기|스펀|기찻길에서 소원 천등 날리기
-sight|베이터우 온천|베이터우|지열곡과 온천 박물관
-shop|시먼딩|완화|타이베이의 명동 같은 번화가
-shop|융캉제|다안|맛집·소품 가게 골목
-shop|디화제|다퉁|옛 건물의 건어물·차·소품 거리
-shop|신광미츠코시 신이|신이|101 근처 백화점 거리
-food|스린 야시장|스린|가장 큰 야시장, 지파이·굴전
-food|라오허제 야시장|쑹산|후추빵이 유명한 야시장
-food|딘타이펑 본점|신이로|샤오롱바오 본점
-food|융캉 우육면|다안|진한 국물 소고기면
-cafe|스무시 하우스|융캉제|망고 빙수 맛집
-night|타이베이 101 전망대|신이|도시 한가운데 고층 전망대
-night|샹산(코끼리산)|신이|101이 정면으로 보이는 야경 등산로`,
-'방콕': `sight|왕궁·왓 프라깨우|프라나콘|에메랄드 불상이 있는 왕실 사원
-sight|왓 아룬|톤부리|강변의 새벽 사원
-sight|왓 포|프라나콘|거대한 와불과 타이 마사지 학교
-sight|담넌사두악 수상시장|랏차부리|배 위에서 사고파는 시장
-sight|아유타야 유적|아유타야|옛 왕국 사원 유적, 당일치기
-shop|짜뚜짝 주말시장|짜뚜짝|1만 개가 넘는 가게, 주말에만
-shop|시암 파라곤|시암|시암 일대 대형 쇼핑몰
-shop|아이콘시암|짜오프라야 강변|강변 초대형 쇼핑몰과 실내 수상시장
-shop|터미널21|아속|층마다 도시 테마인 쇼핑몰
-food|야오와랏 차이나타운|야오와랏|밤에 열리는 길거리 음식 거리
-food|쩟페어 야시장|라마9|랭쌥(돼지등뼈탕)으로 유명
-food|팁싸마이|프라나콘|팟타이 원조로 알려진 집
-cafe|애프터 유|시암|망고 빙수·토스트 디저트 카페
-night|마하나콘 스카이워크|실롬|유리 바닥 전망대
-night|아시아티크|짜오프라야 강변|대관람차가 있는 강변 야시장
-night|카오산 로드|바람푸|여행자 거리 밤 분위기`,
-'다낭': `sight|바나힐|바나산|골든브릿지와 테마파크
-sight|오행산(마블 마운틴)|응우한선|동굴 사원과 전망
-sight|미케 비치|미케|길고 넓은 도심 해변
-sight|린응사|손짜 반도|해수관음상과 바다 전망
-sight|다낭 대성당|하이쩌우|분홍색 성당
-sight|호이안 구시가지|호이안|등불 거리 옛 마을, 당일치기
-shop|한 시장|하이쩌우|기념품·건과일·옷 맞춤
-shop|꼰 시장|하이쩌우|현지인 시장과 먹거리
-shop|롯데마트 다낭|하이쩌우|기념품·간식 한 번에 사기
-food|미꽝 1A|하이쩌우|다낭식 비빔국수 미꽝
-food|반쎄오 바즈엉|하이쩌우|골목 안 반쎄오 맛집
-food|반미 프엉|호이안|유명한 바게트 샌드위치
-cafe|콩 카페|하이쩌우|코코넛 스무디 커피
-night|용다리 불쇼|한강|주말 밤 용 머리에서 불·물 뿜는 쇼
-night|선짜 야시장|선짜|강변 야시장 먹거리
-night|호이안 등불 야경|호이안|소원 등 띄우는 투본강`,
-'나트랑': `sight|뽀나가르 참탑|빈프억|참파 왕국 붉은 벽돌 사원
-sight|빈원더스|혼째섬|케이블카로 가는 섬 테마파크
-sight|나트랑 해변|쩐푸|도심을 따라 이어진 해변
-sight|롱선사|프엉선|큰 백색 불상이 있는 절
-sight|머드 온천|빈응옥|진흙 온천 체험
-shop|나트랑 야시장|쩐푸|기념품·먹거리 야시장
-shop|담 시장|떤럽|현지 재래시장, 건어물
-shop|롯데마트 골드코스트|쩐푸|기념품·간식 쇼핑
-food|락깐|떤럽|숯불 고기구이 노포
-food|넴느엉 당반꾸옌|떤럽|구운 돼지고기 쌈 넴느엉
-cafe|레인포레스트 카페|쩐푸|정글처럼 꾸민 나무 카페
-night|스카이라이트 루프탑|쩐푸|해변 앞 루프탑 바`,
-'세부': `sight|산토 니뇨 성당|세부시티|필리핀에서 가장 오래된 성당
-sight|마젤란 십자가|세부시티|1521년 마젤란이 세운 십자가
-sight|산페드로 요새|세부시티|스페인 시대 요새
-sight|오슬롭 고래상어|오슬롭|고래상어와 수영, 당일치기
-sight|가와산 폭포|바디안|에메랄드빛 폭포 캐녀닝
-sight|템플 오브 레아|부사이|언덕 위 그리스풍 신전
-shop|SM 시티 세부|세부시티|대형 쇼핑몰
-shop|아얄라 센터 세부|세부 비즈니스 파크|쇼핑몰과 식당가
-food|수투킬|막탄|해산물을 골라 굽고 끓이는 식당가
-food|하우스 오브 레촌|세부시티|통돼지 바비큐 레촌
-cafe|아바카 베이킹 컴퍼니|세부시티|브런치·빵 카페
-night|탑스 전망대|부사이|세부 시내 야경
-night|아얄라 테라스|세부 비즈니스 파크|야외 레스토랑·바 거리`,
-'싱가포르': `sight|가든스 바이 더 베이|마리나 베이|슈퍼트리와 플라워돔
-sight|마리나 베이 샌즈|마리나 베이|스카이파크 전망대와 쇼핑몰
-sight|머라이언 공원|마리나 베이|싱가포르의 상징 동상
-sight|센토사|센토사섬|유니버설 스튜디오와 해변
-sight|차이나타운|차이나타운|사원과 노점 거리
-sight|리틀 인디아|리틀 인디아|알록달록한 인도 거리
-shop|오차드 로드|오차드|쇼핑몰이 줄지은 메인 거리
-shop|하지 레인|캄퐁 글람|벽화와 편집숍 골목
-shop|쥬얼 창이|창이 공항|실내 폭포가 있는 공항 쇼핑몰
-food|맥스웰 푸드센터|차이나타운|티엔티엔 치킨라이스 호커센터
-food|라우파삿|래플스 플레이스|밤엔 사테 거리가 되는 호커센터
-food|점보 시푸드|클락키|칠리크랩 대표 맛집
-food|뉴턴 푸드센터|뉴턴|해산물 바비큐 호커센터
-cafe|바샤 커피|마리나 베이 샌즈|화려한 매장의 커피 하우스
-night|가든 랩소디|마리나 베이|슈퍼트리 빛과 음악 쇼, 무료
-night|스펙트라 쇼|마리나 베이|물과 레이저 쇼, 무료
-night|클락키|클락키|강변 식당·바 거리`,
-'홍콩': `sight|빅토리아 피크|피크|피크트램 타고 오르는 전망대
-sight|스타의 거리|침사추이|빅토리아 항구 산책로
-sight|미드레벨 에스컬레이터|센트럴|세계에서 가장 긴 야외 에스컬레이터
-sight|웡타이신 사원|웡타이신|소원 비는 도교 사원
-sight|옹핑 빅부다|란타우섬|케이블카와 큰 불상
-shop|하버시티|침사추이|항구 앞 초대형 쇼핑몰
-shop|몽콕 레이디스 마켓|몽콕|노점 쇼핑 거리
-shop|타임스스퀘어|코즈웨이베이|코즈웨이베이 대표 쇼핑몰
-food|막스 누들|센트럴|새우 완탕면 노포
-food|팀호완|삼수이포|합리적인 가격의 딤섬
-food|란퐁유엔|센트럴|홍콩식 밀크티와 토스트
-cafe|타이청 베이커리|센트럴|에그타르트 명소
-night|심포니 오브 라이트|침사추이|매일 밤 8시 빌딩 조명 쇼
-night|템플 스트리트 야시장|야우마테이|밤 노점과 해산물 식당
-night|란콰이퐁|센트럴|바·클럽 거리`,
-'상하이': `sight|와이탄|황푸|강변 근대 건축물 거리
-sight|예원|황푸|명나라 정원과 상점가
-sight|톈쯔팡|황푸|골목 공방과 카페 거리
-sight|우캉루|쉬후이|플라타너스 길의 옛 프랑스 조계지
-sight|주자자오 수향 마을|칭푸|운하 물의 마을, 당일치기
-shop|난징동루 보행가|황푸|네온 가득한 쇼핑 거리
-shop|신톈디|황푸|석고문 건물의 쇼핑·식당가
-shop|IFC몰|루자쭈이|강 건너 고층 쇼핑몰
-food|난샹 만두점|예원|샤오롱바오 노포
-food|양스 생지엔|황푸|바닥을 바삭하게 구운 군만두
-food|황허루 미식거리|황푸|중국 각지 음식 골목
-cafe|스타벅스 리저브 로스터리|징안|대형 로스터리 카페
-night|와이탄 야경|황푸|강 건너 루자쭈이 스카이라인
-night|상하이 타워 전망대|루자쭈이|중국에서 가장 높은 전망대
-night|동방명주|루자쭈이|상하이 상징 방송탑`,
-'뉴욕': `sight|센트럴파크|맨해튼|도심 한가운데 거대한 공원
-sight|자유의 여신상|리버티섬|페리 타고 가는 뉴욕 상징
-sight|메트로폴리탄 미술관|어퍼 이스트|세계적인 미술관
-sight|뉴욕 현대미술관 MoMA|미드타운|현대미술 대표 미술관
-sight|브루클린 브리지|덤보|걸어서 건너는 다리와 덤보 포토존
-sight|하이라인|첼시|옛 철길 위 공중 공원
-shop|5번가|미드타운|플래그십 매장 거리
-shop|소호|소호|편집숍·브랜드 매장 동네
-shop|첼시 마켓|첼시|실내 푸드홀과 상점
-shop|우드버리 커먼 아울렛|센트럴 밸리|대형 아울렛, 당일치기
-food|카츠 델리카트슨|로어 이스트|파스트라미 샌드위치
-food|조스 피자|그리니치 빌리지|뉴욕 조각 피자
-food|쉐이크쉑 매디슨스퀘어파크|플랫아이언|쉐이크쉑 1호점
-food|피터 루거 스테이크하우스|윌리엄스버그|드라이에이징 스테이크
-cafe|르뱅 베이커리|어퍼 웨스트|두툼한 쿠키
-cafe|매그놀리아 베이커리|웨스트 빌리지|바나나 푸딩·컵케이크
-night|엠파이어 스테이트 빌딩|미드타운|클래식 야경 전망대
-night|탑 오브 더 락|미드타운|엠파이어가 보이는 전망대
-night|타임스스퀘어|미드타운|전광판 가득한 밤거리`,
-'하와이': `sight|와이키키 해변|와이키키|호놀룰루 대표 해변
-sight|다이아몬드 헤드|와이키키|분화구 정상 트레킹
-sight|하나우마 베이|하와이 카이|스노클링 명소, 예약 필요
-sight|노스쇼어 할레이바|할레이바|서핑 마을과 거북이 해변
-sight|진주만 국립기념관|펄하버|애리조나 기념관
-sight|쿠알로아 랜치|카네오헤|쥬라기공원 촬영지 투어
-shop|알라모아나 센터|알라모아나|하와이 최대 쇼핑몰
-shop|와이켈레 프리미엄 아울렛|와이파후|아울렛 쇼핑
-shop|인터내셔널 마켓플레이스|와이키키|와이키키 중심 쇼핑몰
-food|지오반니 새우 트럭|카후쿠|갈릭 새우 플레이트
-food|헬레나스 하와이안 푸드|칼리히|하와이 전통 음식
-food|마루가메 우동 와이키키|와이키키|줄 서는 우동집
-food|오노 시푸드|카파훌루|포케 맛집
-cafe|레오나즈 베이커리|카파훌루|말라사다 도넛
-cafe|코나 커피 퍼베이어스|와이키키|코나 커피와 페이스트리
-night|와이키키 선셋|와이키키|해변에서 보는 노을
-night|힐튼 하와이안 빌리지 불꽃놀이|와이키키|금요일 밤 불꽃놀이`,
-'파리': `sight|에펠탑|샹드마르스|파리의 상징, 전망대
-sight|루브르 박물관|1구|모나리자가 있는 박물관
-sight|오르세 미술관|7구|인상파 그림 미술관
-sight|몽마르트르·사크레쾨르|18구|언덕 위 성당과 화가 거리
-sight|노트르담 대성당|시테섬|복원된 고딕 성당
-sight|베르사유 궁전|베르사유|거울의 방과 정원, 당일치기
-shop|갤러리 라파예트|오스만|돔 천장 백화점, 옥상 전망
-shop|마레 지구|3·4구|편집숍과 빈티지 골목
-shop|샹젤리제 거리|8구|개선문까지 이어진 쇼핑 거리
-shop|라 발레 빌리지|세리|명품 아울렛, 당일치기
-food|르 를레 드 랑트르코트|생제르맹|감자튀김 스테이크 한 메뉴
-food|부이용 샤르티에|9구|합리적인 가격의 옛 프랑스 식당
-food|마르셰 데 앙팡 루주|마레|파리에서 가장 오래된 실내 시장
-cafe|카페 드 플로르|생제르맹|문인들이 사랑한 카페
-cafe|앙젤리나|1구|몽블랑과 진한 핫초코
-cafe|피에르 에르메|생제르맹|마카롱 명소
-night|트로카데로 광장|16구|에펠탑 반짝임 보는 명당
-night|센강 유람선|센강|밤에 타는 바토 무슈
-night|몽파르나스 타워|14구|에펠탑이 보이는 전망대`,
-'로마': `sight|콜로세움|몬티|고대 원형경기장
-sight|포로 로마노|몬티|고대 로마 광장 유적
-sight|바티칸 박물관·시스티나 성당|바티칸|미켈란젤로 천장화
-sight|성 베드로 대성당|바티칸|세계 최대 성당과 돔 전망
-sight|트레비 분수|트레비|동전 던지는 분수
-sight|판테온|나보나|2천 년 된 돔 신전
-shop|콘도티 거리|스페인 광장|명품 매장 거리
-shop|코르소 거리|스페인 광장|브랜드 매장 쇼핑 거리
-shop|캄포 데 피오리 시장|나보나|아침 시장
-food|다 엔초 알 29|트라스테베레|카르보나라·로마 가정식
-food|로쇼리|나보나|와인바 겸 식당
-food|트라스테베레 골목 식당가|트라스테베레|트라토리아가 모인 동네
-cafe|젤라테리아 지올리티|판테온|오래된 젤라토 가게
-cafe|타짜 도로|판테온|그라니타 디 카페
-cafe|산 테우스타키오 일 카페|판테온|로마에서 유명한 에스프레소
-night|산탄젤로 성 야경|바티칸|다리와 성이 비치는 강변
-night|스페인 계단|스페인 광장|밤 산책 명소`,
-'바르셀로나': `sight|사그라다 파밀리아|에샴플레|가우디의 미완성 성당, 예약 필수
-sight|구엘 공원|그라시아|모자이크 벤치와 도시 전망
-sight|카사 바트요|에샴플레|뼈를 닮은 가우디 건물
-sight|카사 밀라|에샴플레|물결 모양 건물과 옥상
-sight|고딕 지구|시우타트 베야|중세 골목과 대성당
-sight|몬주익 언덕|몬주익|성과 미술관, 케이블카
-shop|그라시아 거리|에샴플레|가우디 건물 사이 명품 거리
-shop|라 람블라 거리|시우타트 베야|산책·노점 거리
-shop|라 로카 빌리지|라 로카|명품 아울렛, 당일치기
-food|라 보케리아 시장|라 람블라|과일 주스·하몽·타파스 시장
-food|엘 샴파네트|보른|카바와 타파스 바
-food|시우다드 콘달|에샴플레|현지인도 줄 서는 타파스 집
-cafe|그란하 라 파야레사|고딕 지구|추로스와 진한 초콜릿
-night|몬주익 마법의 분수|몬주익|음악 분수 쇼 (운영일 확인)
-night|벙커 델 카르멜|카르멜|도시 전체가 보이는 야경
-night|바르셀로네타 해변|바르셀로네타|해변 산책과 바`,
-'런던': `sight|대영박물관|블룸즈버리|무료 세계 문명 박물관
-sight|버킹엄 궁전|웨스트민스터|근위병 교대식
-sight|빅벤·웨스트민스터 사원|웨스트민스터|국회의사당 시계탑
-sight|타워 브리지·런던탑|타워 힐|도개교와 왕관 보석
-sight|내셔널 갤러리|트라팔가 광장|무료 명화 미술관
-sight|노팅힐|노팅힐|알록달록 집과 포토벨로 마켓
-shop|코벤트 가든|코벤트 가든|마켓·공연·쇼핑
-shop|옥스퍼드 스트리트|소호|대형 매장 쇼핑 거리
-shop|해롯|나이츠브리지|고급 백화점과 푸드홀
-shop|비스터 빌리지|비스터|명품 아울렛, 당일치기
-food|버로우 마켓|런던 브리지|런던 대표 먹거리 시장
-food|디슘|코벤트 가든|봄베이식 인도 카페
-food|더 울슬리|피카딜리|클래식 아침·브런치
-cafe|포트넘 앤 메이슨|피카딜리|애프터눈티와 홍차
-cafe|몬머스 커피|코벤트 가든|런던 대표 스페셜티 커피
-night|런던 아이|사우스뱅크|템스강 대관람차
-night|스카이 가든|시티|무료 실내 정원 전망대 (예약)
-night|웨스트엔드 뮤지컬|소호|뮤지컬 극장가`,
-'시드니': `sight|시드니 오페라하우스|서큘러 키|조개 모양 공연장
-sight|하버 브리지|서큘러 키|다리 걷기·브리지 클라임
-sight|본다이 비치|본다이|해안 산책로와 서핑
-sight|블루마운틴|카툼바|세자매봉 국립공원, 당일치기
-sight|타롱가 동물원|모스만|페리 타고 가는 항구 전망 동물원
-sight|더 록스|서큘러 키|옛 골목과 주말 마켓
-shop|퀸 빅토리아 빌딩|시티|아름다운 옛 쇼핑 아케이드
-shop|패딩턴 마켓|패딩턴|토요일 디자이너 마켓
-shop|피트 스트리트 몰|시티|도심 쇼핑 거리
-food|시드니 피시마켓|피어몬트|굴·해산물 플래터
-food|해리스 카페 드 휠스|울루물루|명물 미트파이 트럭
-cafe|블랙스타 페이스트리|뉴타운|수박 케이크 디저트
-night|달링하버|달링하버|항구 식당가와 야경
-night|오페라 바|서큘러 키|오페라하우스 옆 야외 바
-night|밀슨스 포인트|키리빌리|하버브리지와 오페라하우스 야경 명당`,
-'제주': `sight|성산일출봉|성산|해돋이 오름, 유네스코 자연유산
-sight|우도|우도|배 타고 가는 섬, 땅콩 아이스크림
-sight|한라산|한라산|성판악·관음사 정상 코스, 예약 필요
-sight|만장굴|구좌|용암 동굴
-sight|섭지코지|성산|해안 산책로
-sight|협재해수욕장|한림|에메랄드 바다와 비양도
-shop|동문재래시장|제주시|기념품·귤·해산물 시장
-shop|서귀포 매일올레시장|서귀포|먹거리 많은 재래시장
-food|흑돼지 거리|제주시|제주 흑돼지 구이 골목
-food|고기국수 거리|제주시|돼지고기 국수 맛집 거리
-food|동문시장 야시장|제주시|저녁 먹거리 노점
-cafe|오설록 티 뮤지엄|안덕|녹차밭과 녹차 디저트
-cafe|애월 해안 카페 거리|애월|바다 보이는 카페들
-night|용두암·용연 야경|제주시|바닷가 밤 산책
-night|이호테우 해변 말 등대|이호|빨간·하얀 말 모양 등대 노을`
+'도쿄': `# 시부야·하라주쿠
+sight|시부야 스크램블 교차로|한 번에 수천 명이 건너는 횡단보도
+night|시부야 스카이|옥상 전망대 야경, 예약 추천
+sight|메이지 신궁|도심 속 숲길 신사
+shop|미야시타 파크|옥상 공원이 있는 쇼핑몰
+shop|다케시타 거리|크레이프·10대 패션 골목
+shop|오모테산도|건축이 멋진 명품 매장 거리
+food|우오베이 시부야|주문하면 레일로 오는 가성비 초밥
+# 신주쿠
+sight|신주쿠 교엔|넓은 정원, 벚꽃·단풍 명소
+night|도쿄도청 전망대|무료로 보는 도쿄 야경
+food|오모이데 요코초|꼬치구이 가게 골목
+food|후운지|진한 국물 츠케멘 맛집
+night|골든가이|작은 바 200여 곳이 모인 골목
+shop|이세탄 신주쿠|도쿄 대표 백화점
+# 아사쿠사·우에노
+sight|센소지|도쿄에서 가장 오래된 절과 나카미세 거리
+night|도쿄 스카이트리|634m 전망대와 소라마치 쇼핑몰
+sight|우에노 공원|박물관·동물원이 모인 공원
+food|아메요코 시장|간식·해산물 노점 시장
+cafe|카게츠도|아사쿠사 명물 점보 메론빵
+# 긴자·츠키지
+shop|긴자 거리|백화점과 명품 매장
+shop|긴자 식스|대형 쇼핑몰과 옥상 정원
+food|츠키지 장외시장|초밥·해산물 덮밥·계란말이
+food|츠키시마 몬자 스트리트|도쿄식 철판요리 몬자야키 골목
+sight|팀랩 플래닛|물 위를 걷는 디지털 아트 (도요스)
+# 롯폰기·도쿄타워
+night|롯폰기 힐즈 전망대|도쿄 타워가 정면으로 보이는 야경
+sight|모리 미술관|전망대와 함께 보는 현대미술
+night|도쿄 타워|불 켜진 빨간 탑과 전망대
+shop|도쿄 미드타운|쇼핑몰과 디자인 전시
+food|곤파치 니시아자부|영화 킬빌 배경으로 유명한 이자카야
+# 아키하바라
+shop|아키하바라 전자상가|전자제품·피규어·애니 굿즈
+shop|요도바시 아키바|층층이 전자제품 대형 매장
+# 나카메구로·시모키타자와
+cafe|메구로강 산책로|강변 카페와 편집숍, 봄엔 벚꽃
+shop|시모키타자와|빈티지 옷가게와 작은 카페 동네
+cafe|블루보틀 기요스미시라카와|블루보틀 일본 1호점`,
+'오사카': `# 난바·도톤보리
+sight|도톤보리|글리코 간판과 운하가 있는 번화가
+night|도톤보리 리버크루즈|네온사인 사이를 지나는 운하 유람선
+food|앗치치 혼포|겉바속촉 타코야키
+food|킨류 라멘|용 간판의 24시간 라멘집
+food|구로몬 시장|해산물·과일 시장 (닛폰바시)
+food|우라난바|작은 이자카야가 모인 뒷골목
+cafe|리쿠로 오지상 치즈케이크|갓 구운 흔들흔들 치즈케이크
+shop|신사이바시스지 상점가|지붕 덮인 긴 쇼핑 거리
+shop|아메리카무라|빈티지·스트리트 패션 거리
+shop|덴덴타운|전자제품·피규어 상점가
+# 우메다
+night|우메다 스카이빌딩 공중정원|원형 옥상 전망대 야경
+shop|그랜드 프런트 오사카|역과 이어진 대형 쇼핑몰
+shop|한큐 백화점 우메다|지하 식품관이 유명한 백화점
+food|카메스시 총본점|현지인 단골이 많은 초밥집
+# 오사카성·덴마
+sight|오사카성|천수각과 넓은 성 공원
+food|덴진바시스지 상점가|일본에서 가장 긴 상점가 먹거리
+food|하루코마 스시|줄 서는 가성비 초밥
+# 신세카이·덴노지
+sight|츠텐카쿠|옛 오사카 분위기의 전망탑
+food|쿠시카츠 다루마 신세카이 본점|오사카식 꼬치튀김 원조
+night|아베노 하루카스 300|오사카에서 가장 높은 전망대
+# 근교 당일치기
+sight|유니버설 스튜디오 재팬|닌텐도 월드·해리포터 테마파크
+sight|나라 공원|사슴과 도다이지
+sight|후시미 이나리 신사|교토 붉은 도리이 터널
+sight|아라시야마 대나무숲|교토 대나무 숲길과 도게츠교`,
+'후쿠오카': `# 하카타
+shop|캐널시티 하카타|운하가 흐르는 대형 쇼핑몰
+shop|JR 하카타 시티|역과 붙은 백화점·식당가
+sight|구시다 신사|하카타 마쓰리의 중심 신사
+food|모츠나베 오오야마|진한 곱창전골 모츠나베
+# 나카스
+food|나카스 야타이 거리|강변 포장마차 라멘·꼬치
+food|이치란 본사 총본점|1인 칸막이 돈코츠 라멘 본점
+night|나카스 강변|불빛 비친 강과 포장마차
+# 텐진·다이묘
+shop|텐진 지하상가|유럽풍 지하 쇼핑 거리
+shop|다이묘 거리|편집숍·빈티지 골목
+food|잇푸도 다이묘 본점|돈코츠 라멘 본점
+food|신신 라멘 텐진 본점|얇은 면 하카타 라멘
+food|야나기바시 연합시장|해산물·어묵 골목 시장
+# 오호리·모모치
+sight|오호리 공원|호수를 한 바퀴 도는 산책 공원
+cafe|스타벅스 오호리 공원점|호수 바로 앞 통유리 카페
+night|후쿠오카 타워|바다와 도시가 보이는 전망대
+sight|모모치 해변|타워 앞 인공 해변
+# 근교 당일치기
+sight|다자이후 텐만구|학문의 신 신사와 우메가에모치
+sight|유후인|긴린코 호수와 온천 마을`,
+'삿포로': `# 오도리·스스키노
+sight|오도리 공원|도심 공원, 겨울엔 눈축제
+sight|삿포로 시계탑|삿포로의 상징 같은 옛 건물
+night|삿포로 TV 타워|오도리 공원이 내려다보이는 전망대
+shop|다누키코지 상점가|지붕 덮인 상점가와 드럭스토어
+food|니조 시장|게·성게 덮밥 해산물 시장
+food|라멘 요코초|미소 라멘 가게 골목
+food|징기스칸 다루마|양고기 철판구이 노포
+food|스아게 플러스|바삭한 닭다리 수프카레
+night|스스키노|네온사인 번화가
+# 삿포로역 주변
+shop|스텔라 플레이스|역과 이어진 쇼핑몰
+food|삿포로 라멘 공화국|홋카이도 라멘 가게 모음 (에스타 10층)
+cafe|롯카테이 삿포로 본점|버터샌드 디저트 가게
+sight|삿포로 맥주 박물관|맥주 역사와 시음
+# 마루야마·모이와산
+sight|홋카이도 신궁|숲길을 걷는 신사
+night|모이와산 로프웨이|일본 신 3대 야경 전망대
+# 오타루 당일치기
+sight|오타루 운하|옛 창고와 가스등 운하
+shop|사카이마치 거리|유리공예·오르골 거리
+cafe|르타오 본점|더블 치즈케이크 본점
+food|오타루 삼각시장|해산물 덮밥 시장`,
+'타이베이': `# 신이 (101)
+night|타이베이 101 전망대|도시 한가운데 고층 전망대
+night|샹산(코끼리산)|101이 정면으로 보이는 야경 등산로
+shop|신광미츠코시 신이|101 근처 백화점 거리
+# 다안·융캉제
+food|딘타이펑 본점|샤오롱바오 본점 (신이로)
+food|융캉 우육면|진한 국물 소고기면
+cafe|스무시 하우스|망고 빙수 맛집
+shop|융캉제|맛집·소품 가게 골목
+# 중정·시먼딩
+sight|중정기념당|넓은 광장과 근위병 교대식
+sight|용산사|타이베이에서 가장 오래된 절
+shop|시먼딩|타이베이의 명동 같은 번화가
+food|아종면선|곱창 국수 노포
+# 다퉁·닝샤
+shop|디화제|옛 건물의 건어물·차·소품 거리
+food|닝샤 야시장|현지인이 많이 가는 야시장
+# 스린·쑹산·베이터우
+sight|국립고궁박물원|중국 황실 보물 박물관
+food|스린 야시장|가장 큰 야시장, 지파이·굴전
+food|라오허제 야시장|후추빵이 유명한 야시장
+sight|베이터우 온천|지열곡과 온천 박물관
+# 근교 당일치기
+sight|지우펀 옛거리|홍등 걸린 산동네 찻집 거리
+sight|스펀 천등|기찻길에서 소원 천등 날리기
+sight|예류 지질공원|여왕머리 바위 해안`,
+'방콕': `# 왕궁·라따나꼬신
+sight|왕궁·왓 프라깨우|에메랄드 불상이 있는 왕실 사원
+sight|왓 포|거대한 와불과 타이 마사지
+sight|왓 아룬|강변의 새벽 사원
+food|팁싸마이|팟타이로 유명한 집
+night|카오산 로드|여행자 거리 밤 분위기
+# 시암·칫롬
+shop|시암 파라곤|시암 대표 쇼핑몰
+shop|센트럴월드|초대형 쇼핑몰
+cafe|애프터 유|망고 빙수·토스트 디저트
+# 수쿰빗·아속
+shop|터미널21|층마다 도시 테마인 쇼핑몰
+shop|엠쿼티어|고급 쇼핑몰과 식당가
+food|쿠아 끌링 팍 쏫|맵고 진한 남부 태국 요리
+night|옥타브 루프탑 바|360도 도시 야경 루프탑
+# 실롬·사톤
+night|마하나콘 스카이워크|유리 바닥 전망대
+night|르부아 스카이바|영화 행오버 촬영지 루프탑 바
+# 차이나타운·강변
+food|야오와랏|밤에 열리는 길거리 음식 거리
+shop|아이콘시암|강변 쇼핑몰과 실내 수상시장
+night|아시아티크|대관람차가 있는 강변 야시장
+# 짜뚜짝·근교
+shop|짜뚜짝 주말시장|1만 개가 넘는 가게, 주말만
+food|쩟페어 야시장|랭쌥(돼지등뼈탕)으로 유명
+sight|담넌사두악 수상시장|배 위에서 사고파는 시장
+sight|아유타야 유적|옛 왕국 사원 유적`,
+'다낭': `# 하이쩌우 (시내)
+sight|다낭 대성당|분홍색 성당
+shop|한 시장|기념품·건과일·옷 맞춤
+food|미꽝 1A|다낭식 비빔국수 미꽝
+food|반쎄오 바즈엉|골목 안 반쎄오 맛집
+cafe|콩 카페|코코넛 스무디 커피
+night|용다리 불쇼|주말 밤 용 머리에서 불·물 뿜는 쇼
+# 미케 해변·손짜
+sight|미케 비치|길고 넓은 도심 해변
+sight|린응사|해수관음상과 바다 전망
+food|베만 해산물|현지인도 많은 해산물 식당
+night|선짜 야시장|강변 야시장 먹거리
+# 오행산·바나힐
+sight|오행산(마블 마운틴)|동굴 사원과 전망
+sight|바나힐 골든브릿지|거대한 손 다리와 테마파크
+# 호이안
+sight|호이안 구시가지|등불 거리 옛 마을
+food|반미 프엉|유명한 바게트 샌드위치
+night|호이안 등불 야경|소원 등 띄우는 투본강`,
+'나트랑': `# 해변 시내
+sight|나트랑 해변|도심을 따라 이어진 해변
+shop|나트랑 야시장|기념품·먹거리 야시장
+shop|롯데마트 골드코스트|기념품·간식 쇼핑
+cafe|레인포레스트 카페|정글처럼 꾸민 나무 카페
+night|스카이라이트 루프탑|해변 앞 루프탑 바
+# 구시가 (담 시장)
+shop|담 시장|현지 재래시장, 건어물
+food|락깐|숯불 고기구이 노포
+food|넴느엉 당반꾸옌|구운 돼지고기 쌈 넴느엉
+sight|롱선사|큰 백색 불상이 있는 절
+# 북부
+sight|뽀나가르 참탑|참파 왕국 붉은 벽돌 사원
+sight|머드 온천|진흙 온천 체험
+# 혼째섬
+sight|빈원더스|케이블카로 가는 섬 테마파크`,
+'세부': `# 세부시티 구시가
+sight|산토 니뇨 성당|필리핀에서 가장 오래된 성당
+sight|마젤란 십자가|1521년 마젤란이 세운 십자가
+sight|산페드로 요새|스페인 시대 요새
+food|주부촌|바삭한 껍질의 통돼지 레촌
+# IT파크·아얄라
+shop|아얄라 센터 세부|쇼핑몰과 식당가
+shop|SM 시티 세부|대형 쇼핑몰
+night|아얄라 테라스|야외 레스토랑·바 거리
+cafe|아바카 베이킹 컴퍼니|브런치·빵 카페
+# 부사이 언덕
+sight|템플 오브 레아|언덕 위 그리스풍 신전
+night|탑스 전망대|세부 시내 야경
+# 막탄
+food|수투킬|해산물을 골라 굽고 끓이는 식당가
+sight|아일랜드 호핑|날루수안·힐루뚱안 섬 스노클링
+# 남부 당일치기
+sight|오슬롭 고래상어|고래상어와 수영
+sight|가와산 폭포|에메랄드빛 폭포 캐녀닝
+sight|모알보알 정어리떼|바다 거북과 정어리떼 스노클링`,
+'싱가포르': `# 마리나 베이
+sight|가든스 바이 더 베이|슈퍼트리와 플라워돔
+sight|마리나 베이 샌즈 스카이파크|도시 전망대
+sight|머라이언 공원|싱가포르의 상징 동상
+night|가든 랩소디|슈퍼트리 빛과 음악 쇼, 무료
+night|스펙트라 쇼|물과 레이저 쇼, 무료
+cafe|바샤 커피|화려한 매장의 커피 하우스
+food|라우파삿|밤엔 사테 거리가 되는 호커센터
+# 차이나타운
+sight|불아사|부처 치아 사리 사원
+food|맥스웰 푸드센터|티엔티엔 치킨라이스 호커센터
+food|랴오판 홍콩 소야소스 치킨|간장 치킨라이스
+# 오차드
+shop|오차드 로드|쇼핑몰이 줄지은 메인 거리
+shop|아이온 오차드|대표 쇼핑몰과 전망대
+# 클락키
+night|클락키|강변 식당·바 거리
+food|점보 시푸드 리버사이드|칠리크랩 대표 맛집
+# 캄퐁 글람·리틀 인디아
+shop|하지 레인|벽화와 편집숍 골목
+sight|술탄 모스크|황금 돔 모스크
+sight|리틀 인디아|알록달록한 인도 거리
+# 센토사·창이
+sight|유니버설 스튜디오 싱가포르|센토사섬 테마파크
+shop|쥬얼 창이|실내 폭포가 있는 공항 쇼핑몰`,
+'홍콩': `# 센트럴·소호
+sight|빅토리아 피크|피크트램 타고 오르는 전망대
+sight|미드레벨 에스컬레이터|세계에서 가장 긴 야외 에스컬레이터
+food|막스 누들|새우 완탕면 노포
+food|란퐁유엔|홍콩식 밀크티와 토스트
+cafe|타이청 베이커리|에그타르트 명소
+night|란콰이퐁|바·클럽 거리
+# 침사추이
+sight|스타의 거리|빅토리아 항구 산책로
+night|심포니 오브 라이트|매일 밤 8시 빌딩 조명 쇼
+shop|하버시티|항구 앞 초대형 쇼핑몰
+shop|K11 뮤제아|예술 쇼핑몰
+food|딤딤섬|가성비 딤섬
+# 몽콕·야우마테이
+shop|몽콕 레이디스 마켓|노점 쇼핑 거리
+night|템플 스트리트 야시장|밤 노점과 해산물 식당
+food|오스트레일리아 데어리 컴퍼니|스크램블 에그 토스트 차찬텡
+# 코즈웨이베이
+shop|타임스스퀘어|코즈웨이베이 대표 쇼핑몰
+food|호흥키|미쉐린 완탕면
+# 삼수이포
+food|팀호완 삼수이포|미쉐린 딤섬 원조
+# 란타우
+sight|옹핑 빅부다|케이블카와 큰 불상
+sight|홍콩 디즈니랜드|디즈니 테마파크`,
+'상하이': `# 와이탄·난징동루
+sight|와이탄|강변 근대 건축물 거리
+night|와이탄 야경|강 건너 루자쭈이 스카이라인
+shop|난징동루 보행가|네온 가득한 쇼핑 거리
+food|양스 생지엔|바닥을 바삭하게 구운 군만두
+# 예원
+sight|예원|명나라 정원과 상점가
+food|난샹 만두점|샤오롱바오 노포
+# 신톈디·톈쯔팡
+shop|신톈디|석고문 건물의 쇼핑·식당가
+sight|톈쯔팡|골목 공방과 카페 거리
+# 루자쭈이
+night|상하이 타워 전망대|중국에서 가장 높은 전망대
+night|동방명주|상하이 상징 방송탑
+shop|IFC몰|고층 쇼핑몰
+# 징안·옛 프랑스 조계지
+cafe|스타벅스 리저브 로스터리|대형 로스터리 카페
+sight|우캉루|플라타너스 길의 옛 조계지
+sight|징안사|빌딩 숲 속 황금 사원
+# 근교 당일치기
+sight|주자자오 수향 마을|운하 물의 마을`,
+'뉴욕': `# 미드타운
+night|탑 오브 더 락|엠파이어가 보이는 전망대
+night|엠파이어 스테이트 빌딩|클래식 야경 전망대
+night|타임스스퀘어|전광판 가득한 밤거리
+sight|뉴욕 현대미술관 MoMA|현대미술 대표 미술관
+shop|5번가|플래그십 매장 거리
+food|할랄 가이즈|53번가 줄 서는 치킨 오버 라이스
+# 센트럴파크·어퍼
+sight|센트럴파크|도심 한가운데 거대한 공원
+sight|메트로폴리탄 미술관|세계적인 미술관
+sight|자연사 박물관|공룡 화석 박물관
+cafe|르뱅 베이커리|두툼한 쿠키
+# 다운타운·소호
+shop|소호|편집숍·브랜드 매장 동네
+food|카츠 델리카트슨|파스트라미 샌드위치
+food|조스 피자|뉴욕 조각 피자
+sight|9/11 메모리얼|추모 공원과 박물관
+sight|자유의 여신상|배터리 파크에서 페리
+# 첼시·허드슨야드
+sight|하이라인|옛 철길 위 공중 공원
+shop|첼시 마켓|실내 푸드홀과 상점
+night|엣지 전망대|하늘로 튀어나온 야외 전망대
+# 브루클린
+sight|브루클린 브리지·덤보|걸어서 건너는 다리와 포토존
+food|피터 루거 스테이크하우스|드라이에이징 스테이크
+# 근교
+shop|우드버리 커먼 아울렛|대형 아울렛`,
+'하와이': `# 와이키키
+sight|와이키키 해변|호놀룰루 대표 해변
+sight|다이아몬드 헤드|분화구 정상 트레킹
+shop|인터내셔널 마켓플레이스|와이키키 중심 쇼핑몰
+food|마루가메 우동 와이키키|줄 서는 우동집
+food|듀크스 와이키키|해변 앞 레스토랑과 훌라파이
+night|와이키키 선셋|해변에서 보는 노을
+night|힐튼 하와이안 빌리지 불꽃놀이|금요일 밤 불꽃놀이
+# 알라모아나·카카아코
+shop|알라모아나 센터|하와이 최대 쇼핑몰
+sight|카카아코 벽화 거리|컬러풀한 벽화 포토존
+# 카파훌루
+cafe|레오나즈 베이커리|말라사다 도넛
+food|오노 시푸드|포케 맛집
+food|레인보우 드라이브인|하와이식 플레이트 런치
+# 동부 해안
+sight|하나우마 베이|스노클링 명소, 예약 필요
+sight|마카푸우 전망대|해안 절벽 트레일
+# 노스쇼어·북동부
+sight|할레이바|서핑 마을과 거북이 해변
+food|지오반니 새우 트럭|갈릭 새우 플레이트
+cafe|마츠모토 셰이브 아이스|무지개 빙수
+sight|쿠알로아 랜치|쥬라기공원 촬영지 투어
+# 진주만·서부
+sight|진주만 국립기념관|애리조나 기념관
+shop|와이켈레 프리미엄 아울렛|아울렛 쇼핑`,
+'파리': `# 에펠탑·트로카데로
+sight|에펠탑|파리의 상징, 전망대
+night|트로카데로 광장|에펠탑 반짝임 보는 명당
+night|센강 유람선|밤에 타는 바토 무슈
+# 루브르·튈르리
+sight|루브르 박물관|모나리자가 있는 박물관
+sight|오랑주리 미술관|모네 수련 연작
+cafe|앙젤리나|몽블랑과 진한 핫초코
+# 생제르맹·오르세
+sight|오르세 미술관|인상파 그림 미술관
+cafe|카페 드 플로르|문인들이 사랑한 카페
+cafe|피에르 에르메|마카롱 명소
+food|르 를레 드 랑트르코트|감자튀김 스테이크 한 메뉴
+# 마레·시테섬
+sight|노트르담 대성당|복원된 고딕 성당
+shop|마레 지구|편집숍과 빈티지 골목
+food|마르셰 데 앙팡 루주|파리에서 가장 오래된 실내 시장
+food|라스 뒤 팔라펠|줄 서는 팔라펠 샌드위치
+# 오페라·샹젤리제
+shop|갤러리 라파예트|돔 천장 백화점, 옥상 전망
+shop|샹젤리제 거리|개선문까지 이어진 쇼핑 거리
+sight|개선문|옥상에서 보는 방사형 거리
+food|부이용 샤르티에|합리적인 가격의 옛 프랑스 식당
+# 몽마르트르
+sight|사크레쾨르 대성당|언덕 위 하얀 성당과 전망
+sight|테르트르 광장|화가들이 그림 그리는 광장
+# 근교 당일치기
+sight|베르사유 궁전|거울의 방과 정원
+shop|라 발레 빌리지|명품 아울렛`,
+'로마': `# 콜로세움·포로
+sight|콜로세움|고대 원형경기장
+sight|포로 로마노|고대 로마 광장 유적
+sight|팔라티노 언덕|황제 궁전 터와 전망
+# 바티칸
+sight|바티칸 박물관·시스티나 성당|미켈란젤로 천장화
+sight|성 베드로 대성당|세계 최대 성당과 돔 전망
+night|산탄젤로 성|다리와 성이 비치는 강변 야경
+food|본치 피자리움|조각 피자 맛집
+# 판테온·나보나
+sight|판테온|2천 년 된 돔 신전
+sight|나보나 광장|분수와 거리 예술가 광장
+cafe|젤라테리아 지올리티|오래된 젤라토 가게
+cafe|타짜 도로|그라니타 디 카페
+cafe|산 테우스타키오 일 카페|로마 대표 에스프레소
+food|로쇼리|와인바 겸 식당
+# 트레비·스페인 광장
+sight|트레비 분수|동전 던지는 분수
+night|스페인 계단|밤 산책 명소
+shop|콘도티 거리|명품 매장 거리
+shop|코르소 거리|브랜드 매장 쇼핑 거리
+# 트라스테베레
+food|다 엔초 알 29|카르보나라·로마 가정식
+food|수플리 로마|로마식 주먹밥 튀김
+night|트라스테베레 골목|밤이 예쁜 식당 골목`,
+'바르셀로나': `# 에샴플레
+sight|사그라다 파밀리아|가우디의 미완성 성당, 예약 필수
+sight|카사 바트요|뼈를 닮은 가우디 건물
+sight|카사 밀라|물결 모양 건물과 옥상
+shop|그라시아 거리|가우디 건물 사이 명품 거리
+food|시우다드 콘달|현지인도 줄 서는 타파스 집
+# 고딕·보른
+sight|고딕 지구 대성당|중세 골목과 대성당
+sight|피카소 미술관|피카소 초기작 미술관
+food|엘 샴파네트|카바와 타파스 바
+food|라 보케리아 시장|과일 주스·하몽·타파스 시장
+cafe|그란하 라 파야레사|추로스와 진한 초콜릿
+shop|라 람블라 거리|산책·노점 거리
+# 그라시아·구엘공원
+sight|구엘 공원|모자이크 벤치와 도시 전망
+night|벙커 델 카르멜|도시 전체가 보이는 야경
+# 몬주익
+sight|몬주익 성|케이블카와 항구 전망
+night|몬주익 마법의 분수|음악 분수 쇼 (운영일 확인)
+# 바르셀로네타
+night|바르셀로네타 해변|해변 산책과 바
+food|라 코바 푸말레타|원조 봄바(감자 크로켓)
+# 근교 당일치기
+sight|몬세라트|톱니 바위산 수도원
+shop|라 로카 빌리지|명품 아울렛`,
+'런던': `# 웨스트민스터
+sight|빅벤·웨스트민스터 사원|국회의사당 시계탑
+sight|버킹엄 궁전|근위병 교대식
+sight|내셔널 갤러리|무료 명화 미술관
+night|런던 아이|템스강 대관람차
+# 소호·코벤트가든·피카딜리
+shop|코벤트 가든|마켓·공연·쇼핑
+shop|리버티 백화점|튜더 양식 백화점
+shop|옥스퍼드 스트리트|대형 매장 쇼핑 거리
+food|디슘|봄베이식 인도 카페
+food|더 울슬리|클래식 아침·브런치
+cafe|포트넘 앤 메이슨|애프터눈티와 홍차
+cafe|몬머스 커피|런던 대표 스페셜티 커피
+night|웨스트엔드 뮤지컬|뮤지컬 극장가
+# 사우스뱅크·런던 브리지
+food|버로우 마켓|런던 대표 먹거리 시장
+sight|테이트 모던|무료 현대미술관
+night|더 샤드 전망대|런던 최고층 전망대
+# 시티·타워
+sight|타워 브리지|도개교와 전시
+sight|런던탑|왕관 보석이 있는 성
+sight|세인트폴 대성당|돔 위 전망
+night|스카이 가든|무료 실내 정원 전망대 (예약)
+# 켄싱턴·블룸즈버리
+sight|대영박물관|무료 세계 문명 박물관
+sight|자연사 박물관|공룡 홀이 있는 무료 박물관
+shop|해롯|고급 백화점과 푸드홀
+sight|노팅힐·포토벨로 마켓|알록달록 집과 앤티크 시장
+# 근교
+shop|비스터 빌리지|명품 아울렛`,
+'시드니': `# 서큘러 키·더 록스
+sight|시드니 오페라하우스|조개 모양 공연장
+sight|하버 브리지|다리 걷기·브리지 클라임
+night|오페라 바|오페라하우스 옆 야외 바
+shop|더 록스 마켓|주말 수공예 마켓
+# 시티
+shop|퀸 빅토리아 빌딩|아름다운 옛 쇼핑 아케이드
+shop|피트 스트리트 몰|도심 쇼핑 거리
+food|해리스 카페 드 휠스|명물 미트파이 트럭 (울루물루)
+# 달링하버·피어몬트
+night|달링하버|항구 식당가와 야경
+food|시드니 피시마켓|굴·해산물 플래터
+# 본다이
+sight|본다이 비치|서핑과 해변
+sight|본다이-쿠지 해안 산책로|절벽 따라 걷는 해안길
+food|본다이 아이스버그스|바다 수영장 앞 레스토랑
+# 북쪽 해안
+night|밀슨스 포인트|하버브리지·오페라하우스 야경 명당
+sight|타롱가 동물원|페리 타고 가는 항구 전망 동물원
+# 뉴타운·근교
+cafe|블랙스타 페이스트리|수박 케이크 디저트
+sight|블루마운틴|세자매봉 국립공원, 당일치기`,
+'제주': `# 제주시
+shop|동문재래시장|기념품·귤·해산물 시장
+food|동문시장 야시장|저녁 먹거리 노점
+food|흑돼지 거리|제주 흑돼지 구이 골목
+food|고기국수 거리|돼지고기 국수 맛집 거리
+night|용두암·용연|바닷가 밤 산책
+night|이호테우 해변 말 등대|빨간·하얀 말 모양 등대 노을
+# 애월·한림 (서쪽)
+sight|협재해수욕장|에메랄드 바다와 비양도
+cafe|애월 해안 카페 거리|바다 보이는 카페들
+sight|한림공원|야자수·동굴 정원
+# 안덕 (남서쪽)
+cafe|오설록 티 뮤지엄|녹차밭과 녹차 디저트
+sight|산방산|바다 앞 종 모양 산
+sight|카멜리아힐|동백 정원
+# 서귀포
+shop|매일올레시장|먹거리 많은 재래시장
+sight|천지연 폭포|밤에도 걷는 폭포 산책로
+sight|정방 폭포|바다로 떨어지는 폭포
+sight|쇠소깍|투명 카약 타는 계곡
+# 성산·구좌 (동쪽)
+sight|성산일출봉|해돋이 오름, 유네스코 자연유산
+sight|섭지코지|해안 산책로
+sight|우도|배 타고 가는 섬, 땅콩 아이스크림
+sight|만장굴|용암 동굴
+# 한라산
+sight|한라산|성판악·관음사 정상 코스, 예약 필요`
 };
 const CITY_ALIAS = {
   '동경': '도쿄', 'tokyo': '도쿄', 'osaka': '오사카', '하카타': '후쿠오카', 'fukuoka': '후쿠오카', '홋카이도': '삿포로', 'sapporo': '삿포로',
@@ -1507,7 +1790,15 @@ const recCache = {};
 function recsFor(t) {
   const c = recCity(t);
   if (!c) return null;
-  if (!recCache[c]) recCache[c] = RECS[c].trim().split('\n').map((l, i) => { const [theme, name, area, desc] = l.split('|'); return { id: c + '-' + i, theme, name, area, desc }; });
+  if (!recCache[c]) {
+    let area = '';
+    recCache[c] = [];
+    RECS[c].trim().split('\n').forEach((l, i) => {
+      if (l.startsWith('# ')) { area = l.slice(2).trim(); return; }
+      const [theme, name, desc] = l.split('|');
+      recCache[c].push({ id: c + '-' + i, theme, name, area, desc });
+    });
+  }
   return recCache[c];
 }
 const normName = s => String(s || '').toLowerCase().replace(/\s+/g, '');
@@ -1521,33 +1812,38 @@ function addRec(t, r) {
   else t.places.push({ id: uid(), name: r.name, area: r.area, memo: r.desc, done: false, theme: r.theme });
   return true;
 }
-const themeSearch = (t, k) => 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(t.city + ' ' + THEME_Q[k]);
+const themeSearch = (t, k) => 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent((S.recArea && S.recArea !== 'all' ? S.recArea.split('·')[0].replace(/ ?\(.*\)$/, '') + ' ' : '') + t.city + ' ' + THEME_Q[k]);
 function recView(t) {
   const recs = recsFor(t);
-  const more = '<div class="field"><span class="lbl">구글맵에서 더 찾아보기</span><div class="chips">' + THEMES.map(([k, n]) =>
-    '<a class="chip" href="' + esc(themeSearch(t, k)) + '" target="_blank" rel="noopener">' + n + '</a>').join('') + '</div>' +
-    '<p class="hint">마음에 드는 곳은 구글맵에서 공유 → 링크 복사 후 ‘가볼 곳 추가’에 붙여 넣으세요.</p></div>';
-  if (!recs) return '<section class="card stack"><p class="eyebrow">' + esc(t.city) + ' 추천 장소</p><p style="margin:0">아직 ' + esc(t.city) + ' 추천 목록은 준비되지 않았어요. 구글맵에서 테마별로 많이 찾는 곳을 바로 볼 수 있어요.</p>' + more + '</section>';
-  const th = S.recTheme || 'all';
-  const list = th === 'all' ? recs : recs.filter(r => r.theme === th);
-  const unsaved = list.filter(r => !recSaved(t, r));
-  let h = '<section class="card stack"><div><p class="eyebrow">' + esc(t.city) + ' 추천 장소 ' + recs.length + '곳</p>' +
-    '<p class="hint">구글맵에서 많이 찾는 곳 위주로 골랐어요. + 를 누르면 가볼 곳에 담겨요 (맛집·카페는 맛집 위시리스트로). 영업시간은 지도에서 확인하세요.</p></div>' +
-    '<div class="chips scroll">' + [['all', '전체 ' + recs.length]].concat(THEMES.map(([k, n]) => [k, n + ' ' + recs.filter(r => r.theme === k).length])).filter(x => !/ 0$/.test(x[1])).map(([k, n]) =>
-      '<button class="chip" data-act="rec-theme" data-v="' + k + '" aria-pressed="' + (th === k) + '">' + n + '</button>').join('') + '</div>' +
-    (unsaved.length > 1 ? '<button class="btn small" data-act="rec-add-all">' + (th === 'all' ? '전체' : THEME[th].n) + ' ' + unsaved.length + '곳 모두 담기</button>' : '') +
-  '</section>';
-  h += '<div class="list">' + list.map(r => {
-    const saved = recSaved(t, r);
-    return '<div class="item"><span class="cat-dot" style="background:' + THEME[r.theme].g + '" title="' + THEME[r.theme].n + '">' + THEME[r.theme].n[0] + '</span>' +
-      '<span class="item-main"><span class="item-title" style="display:block">' + esc(r.name) + '</span><span class="item-sub" style="display:block">' + esc(r.area + ' · ' + r.desc) + '</span></span>' +
-      mapBtn({ name: r.name, area: r.area }, t) +
-      (saved ? '<span class="add-btn on" aria-label="담음">' + ICON.check + '</span>'
-             : '<button class="add-btn" data-act="rec-add" data-id="' + r.id + '" aria-label="' + esc(r.name) + ' 담기">+</button>') + '</div>';
-  }).join('') + '</div>';
-  return h + '<section class="card">' + more + '</section>';
+  const more = '<div class="chips">' + THEMES.map(([k, n]) =>
+    '<a class="chip" href="' + esc(themeSearch(t, k)) + '" target="_blank" rel="noopener">' + n + ' 더보기 ↗</a>').join('') + '</div>';
+  if (!recs) return '<section class="card stack"><p class="eyebrow">' + esc(t.city) + ' 추천</p><p style="margin:0">' + esc(t.city) + ' 추천 목록은 아직 없어요. 구글맵에서 테마별로 찾아보세요.</p>' + more + '</section>';
+  const areas = [...new Set(recs.map(r => r.area))];
+  const th = S.recTheme || 'all', ar = S.recArea && areas.includes(S.recArea) ? S.recArea : 'all';
+  const list = recs.filter(r => (th === 'all' || r.theme === th) && (ar === 'all' || r.area === ar));
+  let h = '<section class="card stack"><p class="eyebrow">' + esc(t.city) + ' · 평점·후기 좋은 곳 ' + recs.length + '</p>' +
+    '<div class="chips scroll">' + [['all', '전체 지역']].concat(areas.map(a => [a, a])).map(([k, n]) =>
+      '<button class="chip" data-act="rec-area" data-v="' + esc(k) + '" aria-pressed="' + (ar === k) + '">' + esc(n) + '</button>').join('') + '</div>' +
+    '<div class="chips scroll">' + [['all', '전체']].concat(THEMES.map(([k, n]) => [k, n])).map(([k, n]) =>
+      '<button class="chip sm" data-act="rec-theme" data-v="' + k + '" aria-pressed="' + (th === k) + '">' + n + '</button>').join('') + '</div></section>';
+  if (!list.length) return h + '<div class="card empty"><p>이 조건의 추천이 없어요.</p></div>';
+  const groups = [];
+  list.forEach(r => { const g = groups[groups.length - 1]; if (g && g.area === r.area) g.items.push(r); else groups.push({ area: r.area, items: [r] }); });
+  groups.forEach(g => {
+    const unsaved = g.items.filter(r => !recSaved(t, r)).length;
+    h += '<div class="day-h"><span><b>' + esc(g.area) + '</b> · ' + g.items.length + '곳</span>' +
+      (unsaved > 1 ? '<button class="text-btn" data-act="rec-add-all" data-v="' + esc(g.area) + '">모두 담기</button>' : '') + '</div>';
+    h += '<div class="list">' + g.items.map(r => {
+      const saved = recSaved(t, r);
+      return '<div class="item"><span class="cat-dot" style="background:' + THEME[r.theme].g + '" title="' + THEME[r.theme].n + '">' + THEME[r.theme].n[0] + '</span>' +
+        '<span class="item-main"><span class="item-title" style="display:block">' + esc(r.name) + '</span><span class="item-sub" style="display:block">' + esc(r.desc) + '</span></span>' +
+        mapBtn({ name: r.name, area: r.area.replace(/ ?\(.*\)$/, '').split('·')[0] }, t) +
+        (saved ? '<span class="add-btn on" aria-label="담음">' + ICON.check + '</span>'
+               : '<button class="add-btn" data-act="rec-add" data-id="' + r.id + '" aria-label="' + esc(r.name) + ' 담기">+</button>') + '</div>';
+    }).join('') + '</div>';
+  });
+  return h + '<section class="card stack"><p class="hint">지도 버튼으로 실제 평점·영업시간을 확인하세요. 더 찾고 싶으면:</p>' + more + '</section>';
 }
-
 function placeView(t) {
   const done = t.places.filter(p => p.done).length;
   const total = t.places.length;
@@ -1615,44 +1911,94 @@ function allCands(t) {
   return out;
 }
 const activeCands = t => allCands(t).filter(c => !S.game.off.has(c.key));
+const GICON = {
+  roulette: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><circle cx="16" cy="17" r="11"/><path d="M16 6v22M5 17h22M8.2 9.2l15.6 15.6M23.8 9.2 8.2 24.8"/><path d="M13 2h6l-3 5z" fill="currentColor"/></svg>',
+  ladder: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M8 4v24M16 4v24M24 4v24M8 10h8M16 16h8M8 22h8"/></svg>',
+  cards: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><rect x="4" y="7" width="13" height="19" rx="2.5" transform="rotate(-10 10 16)"/><rect x="14" y="5" width="13" height="19" rx="2.5" fill="currentColor" fill-opacity=".25" transform="rotate(8 20 15)"/><path d="M20.5 11.5l1.2 2.4 2.6.4-1.9 1.8.5 2.6-2.4-1.3-2.3 1.3.4-2.6-1.9-1.8 2.6-.4z" fill="currentColor" stroke="none"/></svg>',
+  course: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="24" r="3"/><circle cx="24" cy="8" r="3"/><path d="M11 24h8a4 4 0 0 0 0-8h-6a4 4 0 0 1 0-8h8"/></svg>'
+};
+// 게임 효과음·진동 (스피커 버튼으로 끄기)
+const Sound = {
+  ctx: null,
+  on: (() => { try { return localStorage.getItem('travel-sound') !== 'off'; } catch (e) { return true; } })(),
+  beep(f, d, v, type) {
+    if (!this.on) return;
+    try {
+      this.ctx = this.ctx || new (window.AudioContext || window.webkitAudioContext)();
+      const o = this.ctx.createOscillator(), g = this.ctx.createGain(), t0 = this.ctx.currentTime;
+      o.type = type || 'square'; o.frequency.value = f || 880;
+      g.gain.setValueAtTime(v || .04, t0); g.gain.exponentialRampToValueAtTime(.0001, t0 + (d || .04));
+      o.connect(g); g.connect(this.ctx.destination); o.start(t0); o.stop(t0 + (d || .04) + .02);
+    } catch (e) {}
+  },
+  tick() { this.beep(1400, .025, .03); },
+  win() { [523, 659, 784, 1047].forEach((f, i) => setTimeout(() => this.beep(f, .16, .05, 'triangle'), i * 110)); try { navigator.vibrate && navigator.vibrate([30, 40, 60]); } catch (e) {} },
+  toggle() { this.on = !this.on; try { localStorage.setItem('travel-sound', this.on ? 'on' : 'off'); } catch (e) {} }
+};
+function confetti() {
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const cv = document.createElement('canvas'); cv.className = 'confetti'; document.body.appendChild(cv);
+  const dpr = window.devicePixelRatio || 1, W = innerWidth, H = innerHeight;
+  cv.width = W * dpr; cv.height = H * dpr;
+  const ctx = cv.getContext('2d'); ctx.scale(dpr, dpr);
+  const cols = ['#ffd23f', '#ff6b6b', '#4ecdc4', '#a78bfa', '#ff9f43', '#54a0ff'];
+  const parts = Array.from({ length: 110 }, () => ({ x: W / 2, y: H * .45, vx: (Math.random() - .5) * 14, vy: -Math.random() * 15 - 4, r: Math.random() * 6 + 4, c: cols[Math.floor(Math.random() * cols.length)], a: Math.random() * 6, va: (Math.random() - .5) * .4 }));
+  const t0 = performance.now();
+  const step = now => {
+    const k = (now - t0) / 1600;
+    ctx.clearRect(0, 0, W, H);
+    parts.forEach(q => { q.vy += .45; q.vx *= .99; q.x += q.vx; q.y += q.vy; q.a += q.va; ctx.save(); ctx.globalAlpha = Math.max(0, 1 - k); ctx.translate(q.x, q.y); ctx.rotate(q.a); ctx.fillStyle = q.c; ctx.fillRect(-q.r / 2, -q.r / 4, q.r, q.r / 2); ctx.restore(); });
+    if (k < 1) requestAnimationFrame(step); else cv.remove();
+  };
+  requestAnimationFrame(step);
+}
 function gameView(t) {
-  const all = allCands(t);
-  const g = S.game;
+  const g = S.game, n = activeCands(t).length;
+  const names = activeCands(t).map(c => c.label);
+  return '<section class="arcade">' +
+    '<div class="g-tabs" role="group" aria-label="게임 고르기">' + [['roulette', '룰렛'], ['ladder', '사다리'], ['cards', '카드'], ['course', '코스']].map(([k, nm]) =>
+      '<button class="g-tab" data-act="game-type" data-v="' + k + '" aria-pressed="' + (g.type === k) + '">' + GICON[k] + '<span>' + nm + '</span></button>').join('') + '</div>' +
+    '<div class="stage" id="stage"></div>' +
+    '<div class="cand-bar"><span class="n">' + n + '</span><span class="mini">' + (names.length ? esc(names.join(' · ')) : '후보 없음') + '</span>' +
+      '<button class="snd" data-act="sound" aria-label="효과음 ' + (Sound.on ? '끄기' : '켜기') + '">' + (Sound.on ? '🔊' : '🔇') + '</button>' +
+      '<button data-act="cand-edit">후보</button></div>' +
+  '</section><div id="gameResult"></div>';
+}
+function candSheetBody(t) {
+  const g = S.game, all = allCands(t);
   const np = t.places.filter(p => !p.done).length, nf = t.foods.filter(f => !f.visited).length;
-  let h = '<section class="card stack"><div><p class="eyebrow">고민될 땐 게임으로</p><h2 style="font-size:20px">어디 갈지 정해 드릴게요</h2></div>' +
-    '<div class="seg" role="group" aria-label="게임 종류">' + [['roulette', '룰렛'], ['ladder', '사다리'], ['cards', '카드 뽑기'], ['course', '추천 코스']].map(([k, n]) =>
-      '<button data-act="game-type" data-v="' + k + '" aria-pressed="' + (g.type === k) + '">' + n + '</button>').join('') + '</div>' +
-    '<div class="field"><span class="lbl">후보 가져오기</span><div class="chips">' +
+  return '<div class="stack"><div class="chips">' +
       '<button class="chip" data-act="game-src" data-v="place" aria-pressed="' + g.src.place + '">가볼 곳 ' + np + '</button>' +
       '<button class="chip" data-act="game-src" data-v="food" aria-pressed="' + g.src.food + '">맛집 위시 ' + nf + '</button>' +
-      '<button class="chip" data-act="menu-set">메뉴 고민 세트</button></div></div>' +
-    '<div class="field"><span class="lbl">후보 ' + activeCands(t).length + '개 · 눌러서 빼거나 넣기</span>' +
-      (all.length ? '<div class="chips">' + all.map(c => '<button class="chip' + (g.off.has(c.key) ? ' off' : '') + '" data-act="cand-toggle" data-v="' + esc(c.key) + '">' + esc(c.label) +
-        (c.kind === 'custom' ? '<span class="x" data-act="cand-remove" data-v="' + esc(c.label) + '" aria-label="삭제">×</span>' : '') + '</button>').join('') + '</div>'
-        : '<p class="hint">가볼 곳·맛집 위시리스트에서 가져오거나, 아래에 직접 적어 주세요.</p>') +
-    '</div>' +
-    '<form class="addrow" id="candForm"><input id="candIn" placeholder="후보 직접 추가 (예: 야경 보러 가기)" maxlength="40" autocomplete="off"><button class="btn" type="submit">추가</button></form>' +
-  '</section>' +
-  '<section class="card game-stage" id="stage"></section><div id="gameResult"></div>';
-  return h;
+      '<button class="chip" data-act="menu-set">+ 메뉴 세트</button></div>' +
+    (all.length ? '<div class="chips">' + all.map(c => '<button class="chip' + (g.off.has(c.key) ? ' off' : '') + '" data-act="cand-toggle" data-v="' + esc(c.key) + '">' + esc(c.label) +
+      (c.kind === 'custom' ? '<span class="x" data-act="cand-remove" data-v="' + esc(c.label) + '" aria-label="삭제">×</span>' : '') + '</button>').join('') + '</div>' : '') +
+    '<form class="addrow" id="candForm"><input id="candIn" placeholder="직접 추가" maxlength="40" autocomplete="off"><button class="btn" type="submit">추가</button></form>' +
+    '<button class="btn primary block" type="button" data-act="close-sheet">완료</button></div>';
 }
-function mountGame(t) {
-  const stage = $('#stage');
-  if (!stage) return;
-  const c = activeCands(t);
-  const form = $('#candForm');
+function refreshCandSheet() {
+  const box = $('#candBox'); if (!box) return;
+  box.innerHTML = candSheetBody(cur()); wireCandForm();
+}
+function wireCandForm() {
+  const form = $('#candForm'); if (!form) return;
   form.onsubmit = e => {
     e.preventDefault();
     const v = $('#candIn').value.trim();
     if (!v) return;
     if (!S.game.custom.includes(v)) S.game.custom.push(v);
-    S.game.off.delete('c:' + v);
-    render();
+    S.game.off.delete('c:' + v); S.game.result = null;
+    render(); refreshCandSheet();
     const inp = $('#candIn'); if (inp) inp.focus();
   };
+}
+function mountGame(t) {
+  const stage = $('#stage');
+  if (!stage) return;
+  const c = activeCands(t);
   if (S.game.type === 'course') { mountCourse(stage, c, t); $('#gameResult').innerHTML = ''; return; }
   if (c.length < 2) {
-    stage.innerHTML = '<div class="empty"><div class="big">?</div><p>후보가 2개 이상 있어야 게임을 할 수 있어요.</p></div>';
+    stage.innerHTML = '<div class="g-empty"><div class="q">?</div><button class="big-btn" data-act="cand-edit">후보 담기</button></div>';
     $('#gameResult').innerHTML = '';
     return;
   }
@@ -1674,9 +2020,8 @@ function pickSubset(list, n, slot) {
 /* 룰렛 */
 function mountRoulette(stage, c) {
   const items = pickSubset(c, 12, 'wheelSet');
-  stage.innerHTML = '<div class="wheel-wrap"><canvas id="wheel" aria-label="룰렛"></canvas><div class="pointer"></div><button class="hub" data-act="spin" aria-label="룰렛 돌리기">SPIN</button></div>' +
-    (c.length > 12 ? '<p class="hint">룰렛은 12개까지 쓸 수 있어 무작위로 12개를 골랐어요.</p>' : '') +
-    '<button class="btn primary" data-act="spin">룰렛 돌리기</button>';
+  stage.innerHTML = '<div class="wheel-wrap"><div class="bulbs"></div><canvas id="wheel" aria-label="룰렛"></canvas><div class="pointer"></div><button class="hub" data-act="spin" aria-label="룰렛 돌리기">GO</button></div>' +
+    '<button class="big-btn" data-act="spin">SPIN!</button>';
   S.game.wheelItems = items;
   drawWheel();
 }
@@ -1689,8 +2034,8 @@ function drawWheel() {
   const ctx = cv.getContext('2d');
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   const R = css / 2, n = items.length, a = Math.PI * 2 / n;
-  const cols = ['--g1', '--g2', '--g3', '--g4', '--g5', '--g6'].map(cssVar);
-  const ink = cssVar('--ink'), card = cssVar('--card');
+  const cols = ['#ff6b6b', '#ffd23f', '#4ecdc4', '#a78bfa', '#ff9f43', '#54a0ff'];
+  const ink = '#141c5c', card = '#ffffff';
   ctx.clearRect(0, 0, css, css);
   for (let i = 0; i < n; i++) {
     let ci = i % 6;
@@ -1704,7 +2049,7 @@ function drawWheel() {
     ctx.save(); ctx.translate(R, R); ctx.rotate(s + a / 2 + (flip ? Math.PI : 0));
     ctx.fillStyle = ink; ctx.textAlign = flip ? 'left' : 'right'; ctx.textBaseline = 'middle';
     const fs = n > 8 ? 12 : 14;
-    ctx.font = '600 ' + fs + 'px "IBM Plex Sans KR", sans-serif';
+    ctx.font = '700 ' + fs + 'px "IBM Plex Sans KR", sans-serif';
     let label = items[i].label;
     const maxW = R - 50;
     while (label.length > 1 && ctx.measureText(label).width > maxW) label = label.slice(0, -1);
@@ -1712,7 +2057,7 @@ function drawWheel() {
     ctx.fillText(label, flip ? -(R - 14) : R - 14, 0);
     ctx.restore();
   }
-  ctx.beginPath(); ctx.arc(R, R, R - 3, 0, Math.PI * 2); ctx.lineWidth = 4; ctx.strokeStyle = ink; ctx.stroke();
+  ctx.beginPath(); ctx.arc(R, R, R - 3, 0, Math.PI * 2); ctx.lineWidth = 6; ctx.strokeStyle = '#ffffff'; ctx.stroke();
 }
 function spin() {
   if (S.game.busy) return;
@@ -1728,13 +2073,17 @@ function spin() {
   const dur = 4200, t0 = performance.now();
   S.game.busy = true; S.game.result = null; $('#gameResult').innerHTML = '';
   const reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let lastSlice = -1;
+  $$('.wheel-wrap').forEach(w => w.classList.add('spinning'));
   const step = now => {
     const k = reduce ? 1 : Math.min(1, (now - t0) / dur);
     const e = 1 - Math.pow(1 - k, 4);
     S.game.rot = start + (target - start) * e;
+    const under = Math.floor(((((-Math.PI / 2 - S.game.rot) % TAU) + TAU) % TAU) / a);
+    if (under !== lastSlice) { lastSlice = under; Sound.tick(); }
     drawWheel();
     if (k < 1) requestAnimationFrame(step);
-    else { S.game.rot = target % TAU; S.game.busy = false; showResult(items[win]); }
+    else { S.game.rot = target % TAU; S.game.busy = false; $$('.wheel-wrap').forEach(w => w.classList.remove('spinning')); showResult(items[win]); }
   };
   requestAnimationFrame(step);
 }
@@ -1752,6 +2101,7 @@ function genRungs(n) {
   } while (!Array.from({ length: n - 1 }, (_, c) => g.some(row => row[c])).every(Boolean));
   return g;
 }
+const LAD_COLS = ['#ff6b6b', '#ffd23f', '#4ecdc4', '#a78bfa', '#ff9f43', '#54a0ff'];
 function mountLadder(stage, c) {
   const items = pickSubset(c, 6, 'ladSet');
   const n = items.length;
@@ -1760,15 +2110,13 @@ function mountLadder(stage, c) {
     L = S.game.ladder = { src: S.game.ladSet.src, n, rungs: genRungs(n), bottom: shuffle(items), picked: null, end: null, all: false };
   }
   stage.innerHTML = '<div class="ladder" style="--n:' + n + '">' +
-    '<div class="lad-row">' + items.map((_, i) => '<button class="lad-btn" data-act="lad-go" data-i="' + i + '" aria-pressed="' + (L.picked === i) + '" aria-label="' + (i + 1) + '번 출발">' + (i + 1) + '</button>').join('') + '</div>' +
+    '<div class="lad-row">' + items.map((_, i) => '<button class="lad-btn" style="--c:' + LAD_COLS[i] + '" data-act="lad-go" data-i="' + i + '" aria-pressed="' + (L.picked === i) + '" aria-label="' + (i + 1) + '번 출발">' + (i + 1) + '</button>').join('') + '</div>' +
     '<canvas id="lad"></canvas>' +
     '<div class="lad-row">' + L.bottom.map((it, j) => {
       const show = L.all || L.end === j;
       return '<div class="lad-res' + (show ? '' : ' hide') + (L.end === j ? ' hit' : '') + '" id="lr' + j + '">' + (show ? esc(it.label) : '?') + '</div>';
     }).join('') + '</div></div>' +
-    (c.length > 6 ? '<p class="hint">사다리는 6개까지라 무작위로 6개를 골랐어요.</p>' : '') +
-    '<p class="hint">번호를 하나 고르면 사다리를 타고 내려가요.</p>' +
-    '<div class="row"><button class="btn small" data-act="lad-new">사다리 새로 만들기</button><button class="btn small" data-act="lad-all">결과 모두 보기</button></div>';
+    '<div class="g-tools"><button class="g-tool" data-act="lad-new" aria-label="새 사다리">↻</button><button class="g-tool" data-act="lad-all" aria-label="결과 모두 보기">👀</button></div>';
   drawLadder(L.picked != null ? ladderPath(L.picked) : null, 1);
 }
 function ladGeom() {
@@ -1795,7 +2143,7 @@ function drawLadder(path, k) {
   const ctx = G.cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   ctx.clearRect(0, 0, G.W, G.H);
   ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-  ctx.strokeStyle = cssVar('--line'); ctx.lineWidth = 4;
+  ctx.strokeStyle = 'rgba(255,255,255,.28)'; ctx.lineWidth = 5;
   for (let c = 0; c < G.n; c++) { ctx.beginPath(); ctx.moveTo(G.x(c), 0); ctx.lineTo(G.x(c), G.H); ctx.stroke(); }
   for (let r = 0; r < G.R; r++) for (let c = 0; c < G.n - 1; c++) if (L.rungs[r][c]) {
     ctx.beginPath(); ctx.moveTo(G.x(c), G.y(r)); ctx.lineTo(G.x(c + 1), G.y(r)); ctx.stroke();
@@ -1804,7 +2152,8 @@ function drawLadder(path, k) {
   const pts = path.pts;
   let total = 0; for (let i = 1; i < pts.length; i++) total += Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]);
   let left = total * k;
-  ctx.strokeStyle = cssVar('--accent'); ctx.lineWidth = 5;
+  const pc = LAD_COLS[L.picked || 0];
+  ctx.strokeStyle = pc; ctx.lineWidth = 6; ctx.shadowColor = pc; ctx.shadowBlur = 10;
   ctx.beginPath(); ctx.moveTo(pts[0][0], pts[0][1]);
   let last = pts[0];
   for (let i = 1; i < pts.length && left > 0; i++) {
@@ -1813,8 +2162,9 @@ function drawLadder(path, k) {
     else { const f = left / d; last = [pts[i - 1][0] + (pts[i][0] - pts[i - 1][0]) * f, pts[i - 1][1] + (pts[i][1] - pts[i - 1][1]) * f]; ctx.lineTo(last[0], last[1]); left = 0; }
   }
   ctx.stroke();
-  ctx.fillStyle = cssVar('--accent'); ctx.beginPath(); ctx.arc(last[0], last[1], 7, 0, Math.PI * 2); ctx.fill();
-  ctx.lineWidth = 2; ctx.strokeStyle = cssVar('--card'); ctx.stroke();
+  ctx.shadowBlur = 0;
+  ctx.fillStyle = pc; ctx.beginPath(); ctx.arc(last[0], last[1], 8, 0, Math.PI * 2); ctx.fill();
+  ctx.lineWidth = 3; ctx.strokeStyle = '#ffffff'; ctx.stroke();
 }
 function ladGo(i) {
   const L = S.game.ladder; if (!L || S.game.busy) return;
@@ -1824,9 +2174,11 @@ function ladGo(i) {
   const path = ladderPath(i);
   const reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   const dur = 1800, t0 = performance.now();
+  let lastTick = -1;
   S.game.busy = true;
   const step = now => {
     const k = reduce ? 1 : Math.min(1, (now - t0) / dur);
+    if (Math.floor(k * 14) !== lastTick) { lastTick = Math.floor(k * 14); Sound.tick(); }
     drawLadder(path, k);
     if (k < 1) requestAnimationFrame(step);
     else {
@@ -1846,16 +2198,14 @@ function mountCards(stage, c, shuffling) {
   if (!C || C.src !== S.game.cardSet.src) C = S.game.cards = { src: S.game.cardSet.src, order: shuffle(items), picked: null };
   stage.innerHTML = '<div class="cards' + (shuffling ? ' shuffle' : '') + '">' + C.order.map((it, i) =>
     '<button class="pcard' + (C.picked != null ? ' flip' : '') + (C.picked === i ? ' chosen' : C.picked != null ? ' dim' : '') + '" data-act="card-pick" data-i="' + i + '" aria-label="' + (C.picked != null ? esc(it.label) : (i + 1) + '번 카드') + '">' +
-      '<span class="in"><span class="face back">?</span><span class="face front">' + esc(it.label) + '</span></span></button>').join('') + '</div>' +
-    (c.length > 9 ? '<p class="hint">카드는 9장까지라 무작위로 9개를 골랐어요.</p>' : '') +
-    '<p class="hint">카드 한 장을 골라 뒤집어 보세요.</p>' +
-    '<button class="btn small" data-act="card-shuffle">다시 섞기</button>';
+      '<span class="in"><span class="face back" style="--c:' + LAD_COLS[i % 6] + '"><span>?</span></span><span class="face front">' + esc(it.label) + '</span></span></button>').join('') + '</div>' +
+    '<div class="g-tools"><button class="g-tool" data-act="card-shuffle" aria-label="다시 섞기">🔀</button></div>';
 }
 function cardPick(i) {
   const C = S.game.cards; if (!C || C.picked != null) return;
   C.picked = i;
   const cards = $$('.pcard');
-  cards[i].classList.add('flip', 'chosen');
+  cards[i].classList.add('flip', 'chosen'); Sound.beep(660, .08, .05, 'triangle');
   cards[i].setAttribute('aria-label', C.order[i].label);
   showResult(C.order[i]);
   setTimeout(() => cards.forEach((el, j) => { if (j !== i) { el.classList.add('flip', 'dim'); el.setAttribute('aria-label', C.order[j].label); } }), 900);
@@ -1949,11 +2299,9 @@ function mountCourse(stage, c, t) {
   if (!S.game.course || S.game.course.src !== key) { S.game.course = buildCourse(t, c); S.game.course.src = key; }
   const C = S.game.course;
   const dir = courseDirURL(t, C.stops);
-  stage.innerHTML = '<div class="course-wrap"><div><p class="eyebrow">랜덤 추천 코스' + (C.anchor ? ' · ' + esc(C.anchor) + ' 중심' : '') + '</p>' +
-    '<p class="hint">후보에 있는 가볼 곳·맛집으로 하루 일정을 짰어요. ↻로 한 곳씩 바꿀 수 있어요.' + (c.length ? '' : ' 후보가 없어서 자유 일정으로 채웠어요.') + '</p></div>' +
+  stage.innerHTML = '<div class="course-wrap"><p class="eyebrow">오늘의 랜덤 코스' + (C.anchor ? ' · ' + esc(C.anchor) : '') + '</p>' +
     stopsHTML(t, C.stops, true) +
-    (dir ? '<a class="btn block" href="' + esc(dir) + '" target="_blank" rel="noopener">구글맵으로 경로 보기</a>' : '') +
-    '<div class="row"><button class="btn" data-act="course-new" style="flex:1">코스 다시 뽑기</button><button class="btn primary" data-act="course-save" style="flex:1">이 코스 저장</button></div></div>';
+    '<div class="row"><button class="btn" data-act="course-new" style="flex:1">🎲 다시</button>' + (dir ? '<a class="btn" href="' + esc(dir) + '" target="_blank" rel="noopener" style="flex:1">🗺 경로</a>' : '') + '<button class="btn primary" data-act="course-save" style="flex:1">저장</button></div></div>';
 }
 function savedCourseCard(t) {
   const today = todayISO();
@@ -1965,22 +2313,21 @@ function savedCourseCard(t) {
     (dir ? '<a class="btn small" href="' + esc(dir) + '" target="_blank" rel="noopener">구글맵으로 경로 보기</a>' : '') +
     (list.length > 1 ? '<p class="hint">저장한 코스 ' + list.length + '개 중 ' + (c.date === today ? '오늘 코스' : '가장 최근 코스') + '를 보여 드려요.</p>' : '') + '</section>';
 }
-function resFood(r) {
-  const t = cur(), f = t && t.foods.find(x => x.id === r.id);
-  return (f ? '<a class="btn" href="' + esc(mapURL(f, t)) + '" target="_blank" rel="noopener">구글맵에서 보기</a>' : '') +
-    '<button class="btn primary" data-act="res-food" data-id="' + r.id + '">다녀와서 별점 남기기</button>';
-}
 function resultHTML(r) {
-  const rp = r.kind === 'place' ? itemOf(cur(), 'place', r.id) : null;
-  const act = r.kind === 'place' ? (rp ? '<a class="btn" href="' + esc(mapURL(rp, cur())) + '" target="_blank" rel="noopener">구글맵에서 보기</a>' : '') + '<button class="btn primary" data-act="res-place" data-id="' + r.id + '">다녀오면 방문 체크하기</button>'
-    : r.kind === 'food' ? resFood(r) : '';
-  return '<section class="result" aria-live="polite"><p class="eyebrow">오늘은 여기로!</p><h3>' + esc(r.label) + '</h3>' +
-    '<p class="hint">' + (r.kind === 'place' ? '가볼 곳 목록에서 뽑았어요' : r.kind === 'food' ? '맛집 위시리스트에서 뽑았어요' : '직접 넣은 후보예요') + '</p>' + act + '</section>';
+  const t = cur();
+  const it = r.kind === 'place' ? itemOf(t, 'place', r.id) : r.kind === 'food' ? itemOf(t, 'food', r.id) : null;
+  return '<section class="result" aria-live="polite"><div class="win">WIN!</div><h3>' + esc(r.label) + '</h3>' +
+    '<div class="row" style="justify-content:center">' +
+    (it ? '<a class="btn" href="' + esc(mapURL(it, t)) + '" target="_blank" rel="noopener">🗺 지도</a>' : '') +
+    (r.kind === 'place' ? '<button class="btn primary" data-act="res-place" data-id="' + r.id + '">✓ 다녀옴</button>' : '') +
+    (r.kind === 'food' ? '<button class="btn primary" data-act="res-food" data-id="' + r.id + '">★ 별점</button>' : '') +
+    '</div></section>';
 }
 function showResult(r) {
   S.game.result = r;
   const el = $('#gameResult');
   if (el) { el.innerHTML = resultHTML(r); el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+  Sound.win(); confetti();
   if (S.renderPending) setTimeout(render, 1200);
 }
 
@@ -2032,8 +2379,9 @@ function tripSheet(t) {
     '<div class="field" id="rateField"><span class="lbl">환율</span>' + segHTML('t-rmode', [['live', '실시간 환율'], ['manual', '직접 입력']], v.rateMode === 'manual' ? 'manual' : 'live') +
       '<div class="rate-in"><span id="rateLbl">' + unitLabel(v.cur) + ' =</span><input id="t-rate" inputmode="decimal" value="' + rateNum((Number(v.rate) || 0) * unitOf(v.cur)) + '"><span>원</span></div>' +
       '<p class="hint" id="rateHint"></p></div>' +
-    '<div class="field"><span class="lbl">예산</span><div class="row2"><input id="t-budget" inputmode="decimal" placeholder="예: 1,500,000" value="' + (v.budget ? fmtN(v.budget, 2) : '') + '">' +
-      segHTML('t-bcur', [['KRW', '원'], ['LOCAL', v.cur]], v.budgetCur === 'KRW' || !v.budgetCur ? 'KRW' : 'LOCAL') + '</div></div>' +
+    '<div class="field"><span class="lbl">예산 통화</span>' + segHTML('t-bcur', [['KRW', '원'], ['LOCAL', v.cur]], v.budgetCur === 'KRW' || !v.budgetCur ? 'KRW' : 'LOCAL') + '</div>' +
+    '<div class="row2"><label class="field"><span class="lbl">여행비 (숙소·식비·교통 등)</span><input id="t-budget" inputmode="decimal" placeholder="예: 1,200,000" value="' + (v.budget ? fmtN(v.budget, 2) : '') + '"></label>' +
+    '<label class="field"><span class="lbl">쇼핑비 (따로 계산)</span><input id="t-shop" inputmode="decimal" placeholder="예: 500,000" value="' + (v.shopBudget ? fmtN(v.shopBudget, 2) : '') + '"></label></div>' +
     '<div class="row2"><label class="field"><span class="lbl">도시 코드 (영문 3자, 선택)</span><input id="t-code" maxlength="4" value="' + esc(v.code) + '" placeholder="TYO" autocapitalize="characters"></label>' +
     '<label class="field"><span class="lbl">국기 (선택)</span><input id="t-flag" value="' + esc(v.flag) + '" placeholder="🇯🇵" maxlength="8"></label></div>' +
     '<p class="hint" id="tErr" style="color:var(--danger)" hidden></p>' +
@@ -2102,7 +2450,7 @@ function tripSheet(t) {
       const bcur = segVal(sh, 't-bcur') === 'LOCAL' && c !== 'KRW' ? c : 'KRW';
       const data = { country, city, start, end, cur: c, rate, rateMode: rm,
         rateAt: rm === 'live' && liveHit ? liveHit.at : (t && t.cur === c && rm === 'live' ? t.rateAt || '' : ''), rateSrc: rm === 'live' && liveHit ? liveHit.src : (t && t.cur === c && rm === 'live' ? t.rateSrc || '' : ''),
-        budget: num(f('t-budget').value), budgetCur: bcur,
+        budget: num(f('t-budget').value), shopBudget: num(f('t-shop').value), budgetCur: bcur,
         code: f('t-code').value.trim().toUpperCase().slice(0, 4), flag: f('t-flag').value.trim() };
       if (isNew) {
         const nt = normTrip(Object.assign({ id: uid(), createdAt: Date.now() }, data));
@@ -2129,6 +2477,7 @@ function expenseSheet(t, id) {
     (t.cur !== 'KRW' ? segHTML('e-cur', [[t.cur, t.cur + ' ' + (CUR[t.cur] || ['', ''])[0]], ['KRW', '원 (KRW)']], v.cur) : '') +
     '<div class="conv" id="e-conv"></div></div>' +
     '<div class="field"><span class="lbl">분류</span>' + segHTML('e-cat', CATS.map(c => [c.k, c.n]), v.cat) + '</div>' +
+    '<label class="check-row" id="dutyRow"' + (v.cat === 'shop' ? '' : ' hidden') + '><input type="checkbox" id="e-noduty"' + (v.noDuty ? ' checked' : '') + '> 관세 계산에서 빼기 <span class="hint">(현지에서 다 쓴 물건 등)</span></label>' +
     '<div class="row2"><label class="field"><span class="lbl">날짜</span><input type="date" id="e-date" value="' + v.date + '"></label>' +
     '<div class="field"><span class="lbl">결제</span>' + segHTML('e-pay', [['card', '카드'], ['cash', '현금']], v.pay) + '</div></div>' +
     '<label class="field"><span class="lbl">메모 (선택)</span><input id="e-memo" value="' + esc(v.memo) + '" placeholder="예: 스카이트리 입장권" maxlength="60"></label>' +
@@ -2148,7 +2497,10 @@ function expenseSheet(t, id) {
       amt.value = parts.length > 1 ? intPart + '.' + parts.slice(1).join('').slice(0, 2) : intPart;
       conv();
     };
-    sh.addEventListener('click', ev => { if (ev.target.closest('#e-cur')) setTimeout(conv, 0); });
+    sh.addEventListener('click', ev => {
+      if (ev.target.closest('#e-cur')) setTimeout(conv, 0);
+      if (ev.target.closest('#e-cat')) setTimeout(() => { $('#dutyRow', sh).hidden = segVal(sh, 'e-cat') !== 'shop'; }, 0);
+    });
     conv();
     if (!e) setTimeout(() => amt.focus(), 250);
     if (e) $('#delE', sh).onclick = () => { t.expenses = t.expenses.filter(x => x.id !== e.id); closeSheet(); commit(t); toast('지출을 지웠어요'); };
@@ -2157,7 +2509,7 @@ function expenseSheet(t, id) {
       const n = num(amt.value);
       if (!(n > 0)) { const er = $('#eErr', sh); er.textContent = '금액을 적어 주세요.'; er.hidden = false; amt.focus(); return; }
       const c = t.cur === 'KRW' ? 'KRW' : segVal(sh, 'e-cur');
-      const data = { amt: n, cur: c, cat: segVal(sh, 'e-cat') || 'etc', pay: segVal(sh, 'e-pay') || 'card', date: $('#e-date', sh).value || defDate, memo: $('#e-memo', sh).value.trim() };
+      const data = { noDuty: segVal(sh, 'e-cat') === 'shop' && $('#e-noduty', sh).checked, amt: n, cur: c, cat: segVal(sh, 'e-cat') || 'etc', pay: segVal(sh, 'e-pay') || 'card', date: $('#e-date', sh).value || defDate, memo: $('#e-memo', sh).value.trim() };
       S.lastCur = c;
       // 실시간 환율을 받아 온 상태면 지금 환율을 이 지출에 고정해요
       if (c !== 'KRW' && (!e || e.cur !== c)) data.rate = t.rateMode !== 'manual' && S.rateState[t.id] === 'ok' ? t.rate : undefined;
@@ -2320,7 +2672,7 @@ function createSample() {
   const d0 = s, d1 = today;
   const t = normTrip({
     id: uid(), sample: true, createdAt: Date.now(), country: '일본', city: '오사카', code: 'OSA', flag: '🇯🇵',
-    start: s, end: e, cur: 'JPY', rate: 9.3, rateMode: 'live', budget: 1200000, budgetCur: 'KRW',
+    start: s, end: e, cur: 'JPY', rate: 9.3, rateMode: 'live', budget: 1200000, shopBudget: 400000, budgetCur: 'KRW',
     expenses: [
       { id: uid(), ts: 1, date: addDays(s, -20), amt: 289000, cur: 'KRW', cat: 'trans', pay: 'card', memo: '왕복 항공권' },
       { id: uid(), ts: 2, date: d0, amt: 3400, cur: 'JPY', cat: 'trans', pay: 'card', memo: '난카이 라피트' },
@@ -2369,7 +2721,7 @@ const ACT = {
     if (navigator.share) { navigator.share({ title: '여행 수첩', text: '여행 예산·지출·방문지·맛집 기록 앱', url }).catch(() => {}); return; }
     try { navigator.clipboard.writeText(url).then(() => toast('앱 링크를 복사했어요'), () => toast(url)); } catch (e) { toast(url); }
   },
-  'open-trip': (a, id) => { S.pfTouched = false; S.recTheme = 'all'; S.placeFilter = 'todo'; S.tripId = id; S.view = 'trip'; S.tab = 'sum'; S.game = freshGame(); window.scrollTo(0, 0); render(); refreshRate(cur()); },
+  'open-trip': (a, id) => { S.pfTouched = false; S.recTheme = 'all'; S.recArea = 'all'; S.placeFilter = 'todo'; S.tripId = id; S.view = 'trip'; S.tab = 'sum'; S.game = freshGame(); window.scrollTo(0, 0); render(); refreshRate(cur()); },
   'rate-refresh': () => refreshRate(cur(), true),
   'home': () => { if (S.game.busy) return; S.view = 'home'; render(); window.scrollTo(0, 0); },
   'edit-trip': () => tripSheet(cur()),
@@ -2389,9 +2741,10 @@ const ACT = {
     const t = cur(), r = (recsFor(t) || []).find(x => x.id === id); if (!r) return;
     if (addRec(t, r)) { commit(t); toast('‘' + r.name + '’을 ' + (r.theme === 'food' || r.theme === 'cafe' ? '맛집 위시' : '가볼 곳') + '에 담았어요'); }
   },
-  'rec-add-all': () => {
-    const t = cur(), th = S.recTheme || 'all';
-    const list = (recsFor(t) || []).filter(r => th === 'all' || r.theme === th);
+  'rec-area': a => { S.recArea = a.dataset.v; render(); },
+  'rec-add-all': a => {
+    const t = cur(), th = S.recTheme || 'all', area = a.dataset.v;
+    const list = (recsFor(t) || []).filter(r => (th === 'all' || r.theme === th) && r.area === area);
     let n = 0; list.forEach(r => { if (addRec(t, r)) n++; });
     if (n) { commit(t); toast(n + '곳을 담았어요'); }
   },
@@ -2425,19 +2778,21 @@ const ACT = {
   },
   'course-del': (a, id) => { const t = cur(); t.courses = t.courses.filter(x => x.id !== id); commit(t); toast('코스를 지웠어요'); },
   'game-type': a => { if (S.game.busy) return; S.game.type = a.dataset.v; S.game.result = null; render(); },
-  'game-src': a => { if (S.game.busy) return; const k = a.dataset.v; S.game.src[k] = !S.game.src[k]; S.game.result = null; render(); },
-  'menu-set': () => { if (S.game.busy) return; MENU_SET.forEach(m => { if (!S.game.custom.includes(m)) S.game.custom.push(m); S.game.off.delete('c:' + m); }); S.game.result = null; render(); },
+  'game-src': a => { if (S.game.busy) return; const k = a.dataset.v; S.game.src[k] = !S.game.src[k]; S.game.result = null; render(); refreshCandSheet(); },
+  'menu-set': () => { if (S.game.busy) return; MENU_SET.forEach(m => { if (!S.game.custom.includes(m)) S.game.custom.push(m); S.game.off.delete('c:' + m); }); S.game.result = null; render(); refreshCandSheet(); },
   'cand-toggle': a => {
     if (S.game.busy) return;
     const k = a.dataset.v; if (S.game.off.has(k)) S.game.off.delete(k); else S.game.off.add(k);
-    S.game.result = null; render();
+    S.game.result = null; render(); refreshCandSheet();
   },
   'cand-remove': a => {
     if (S.game.busy) return;
     const v = a.dataset.v; S.game.custom = S.game.custom.filter(x => x !== v); S.game.off.delete('c:' + v);
-    S.game.result = null; render();
+    S.game.result = null; render(); refreshCandSheet();
   },
   'spin': spin,
+  'sound': () => { Sound.toggle(); render(); if (Sound.on) Sound.tick(); },
+  'cand-edit': () => { openSheet('후보 고르기', '<div id="candBox">' + candSheetBody(cur()) + '</div>'); wireCandForm(); },
   'lad-go': a => ladGo(+a.dataset.i),
   'lad-new': () => { if (S.game.busy) return; S.game.ladder = null; S.game.ladSet = null; S.game.result = null; render(); },
   'lad-all': () => { const L = S.game.ladder; if (!L || S.game.busy) return; L.all = true; $$('.lad-res').forEach((el, j) => { el.classList.remove('hide'); el.textContent = L.bottom[j].label; }); },
