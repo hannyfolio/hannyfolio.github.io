@@ -15,7 +15,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Jua&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
 <style>
 /* 레이아웃: 폰 폭 한 줄 컬럼(최대 560px) · 여행은 탑승권 카드 · 여행 안에서는 하단 탭 5개 */
 :root {
@@ -37,8 +37,8 @@
   --f-body: "IBM Plex Sans KR", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   --f-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   --f-code: "Bebas Neue", "Arial Narrow", Impact, sans-serif;
-  --f-cute: "Jua", "IBM Plex Sans KR", -apple-system, "Apple SD Gothic Neo", sans-serif;
   --r: 14px;
+  --pz1: #fdf0f5; --pz2: #f3eefc; --pz3: #ebf4fc; --pz-ink: #4a3f63; --pz-sub: #8a7fa3; --pz-pink: #ec8fb1; --pz-line: #ebe1f3;
   padding-top: env(safe-area-inset-top, 0px);
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
@@ -48,6 +48,7 @@
     --accent: #7f9bff; --accent-ink: #0b111d; --accent-soft: #1c2848; --stamp: #ff6d57;
     --star: #ffbe45; --ok: #41cf8f; --warn: #ffb13b; --danger: #ff6f6f; --shade: rgba(0, 0, 0, .6);
     --g1: #2a3a6e; --g2: #5a4720; --g3: #1f4a3a; --g4: #5a2c28; --g5: #3d3266; --g6: #1d4554;
+    --pz1: #2a2231; --pz2: #241f33; --pz3: #1d2532; --pz-ink: #efe7fb; --pz-sub: #b3a7c9; --pz-pink: #e48aac; --pz-line: #3a3150;
     color-scheme: dark;
   }
 }
@@ -56,6 +57,7 @@
   --accent: #7f9bff; --accent-ink: #0b111d; --accent-soft: #1c2848; --stamp: #ff6d57;
   --star: #ffbe45; --ok: #41cf8f; --warn: #ffb13b; --danger: #ff6f6f; --shade: rgba(0, 0, 0, .6);
   --g1: #2a3a6e; --g2: #5a4720; --g3: #1f4a3a; --g4: #5a2c28; --g5: #3d3266; --g6: #1d4554;
+  --pz1: #2a2231; --pz2: #241f33; --pz3: #1d2532; --pz-ink: #efe7fb; --pz-sub: #b3a7c9; --pz-pink: #e48aac; --pz-line: #3a3150;
   color-scheme: dark;
 }
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -417,92 +419,96 @@ a.chip { text-decoration: none; color: var(--ink); }
 .check-row { display: flex; align-items: center; gap: 8px; font-size: 14px; flex-wrap: wrap; }
 .check-row input { width: 20px; height: 20px; accent-color: var(--accent); }
 .chip.sm { padding: 4px 10px; font-size: 12px; }
-/* 게임: 파스텔 동화 느낌 (라이트·다크 모두 같은 화사한 화면) */
+/* 게임: 앱과 같은 글꼴·모양에 파스텔 색만 */
 .arcade {
-  border-radius: 28px; padding: 14px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; color: #5b4a7a; position: relative; overflow: hidden;
-  font-family: var(--f-cute);
-  background:
-    radial-gradient(circle at 12% 18%, rgba(255, 255, 255, .9) 0 3px, transparent 4px),
-    radial-gradient(circle at 82% 10%, rgba(255, 255, 255, .9) 0 2px, transparent 3px),
-    radial-gradient(circle at 90% 62%, rgba(255, 255, 255, .8) 0 3px, transparent 4px),
-    radial-gradient(circle, rgba(255, 255, 255, .45) 1.5px, transparent 2px) 0 0 / 22px 22px,
-    linear-gradient(160deg, #ffe3ef 0%, #f3e3ff 45%, #dff1ff 100%);
-  box-shadow: inset 0 0 0 4px #fff, 0 10px 26px rgba(205, 160, 220, .45);
+  border-radius: 18px; padding: 16px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; color: var(--pz-ink); position: relative; overflow: hidden;
+  background: linear-gradient(160deg, var(--pz1) 0%, var(--pz2) 55%, var(--pz3) 100%); border: 1px solid var(--pz-line);
 }
 .arcade > * { min-width: 0; }
 .pz-top { display: flex; align-items: center; gap: 10px; }
-.mascot { width: 54px; height: 54px; flex: none; animation: bob 2.4s ease-in-out infinite; }
-.pz-title { flex: 1; min-width: 0; font-size: 22px; line-height: 1.15; color: #7a4f9a; }
-.pz-title small { display: block; font-size: 13px; color: #b08cc8; }
-.pz-mode { display: flex; background: rgba(255, 255, 255, .7); border-radius: 999px; padding: 4px; gap: 4px; }
-.pz-mode button { flex: 1; border: 0; border-radius: 999px; background: transparent; font-family: var(--f-cute); font-size: 15px; color: #b08cc8; padding: 8px 6px; }
-.pz-mode button[aria-pressed="true"] { background: #fff; color: #ff6f9c; box-shadow: 0 2px 0 #f6c6d8; }
-.snd { border: 0; background: rgba(255, 255, 255, .8); border-radius: 50%; width: 40px; height: 40px; font-size: 18px; flex: none; }
+.pz-title { flex: 1; min-width: 0; font-size: 19px; font-weight: 700; line-height: 1.25; }
+.pz-title small { display: block; font-size: 12.5px; font-weight: 500; color: var(--pz-sub); }
+.pz-mode { display: flex; background: color-mix(in srgb, var(--card) 60%, transparent); border: 1px solid var(--pz-line); border-radius: 12px; padding: 3px; gap: 3px; }
+.pz-mode button { flex: 1; border: 0; border-radius: 9px; background: transparent; font-size: 14px; font-weight: 600; color: var(--pz-sub); padding: 8px 6px; }
+.pz-mode button[aria-pressed="true"] { background: var(--card); color: var(--pz-ink); box-shadow: 0 1px 2px rgba(0, 0, 0, .06); }
+.snd { border: 1px solid var(--pz-line); background: var(--card); color: var(--pz-sub); border-radius: 10px; width: 38px; height: 38px; display: grid; place-items: center; flex: none; }
 .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); position: relative; }
-.steps::before { content: ""; position: absolute; left: 16%; right: 16%; top: 24px; border-top: 3px dotted #e4c6f0; }
-.steps li { display: grid; justify-items: center; gap: 4px; position: relative; text-align: center; min-width: 0; }
-.steps .bub { width: 48px; height: 48px; border-radius: 50%; background: #fff; display: grid; place-items: center; font-size: 22px; box-shadow: 0 3px 0 #ecd5f5; border: 3px solid #fff; }
-.steps li.now .bub { border-color: #ff8fab; transform: scale(1.12); box-shadow: 0 4px 0 #f6b3c8; }
-.steps li.done .bub { background: #fff4b8; }
-.steps .lb { font-size: 13px; color: #b08cc8; }
-.steps .pk { font-size: 12px; color: #5b4a7a; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; background: rgba(255, 255, 255, .75); border-radius: 999px; padding: 1px 8px; }
+.steps::before { content: ""; position: absolute; left: 17%; right: 17%; top: 16px; border-top: 2px solid var(--pz-line); }
+.steps li { display: grid; justify-items: center; gap: 3px; position: relative; text-align: center; min-width: 0; }
+.steps .bub { width: 32px; height: 32px; border-radius: 50%; background: var(--card); border: 2px solid var(--pz-line); display: grid; place-items: center; font-size: 14px; font-weight: 700; color: var(--pz-sub); }
+.steps li.now .bub { border-color: var(--pz-pink); color: var(--pz-pink); }
+.steps li.done .bub { background: var(--pz-pink); border-color: var(--pz-pink); color: #fff; }
+.steps .lb { font-size: 12.5px; font-weight: 600; color: var(--pz-sub); }
+.steps li.now .lb { color: var(--pz-ink); }
+.steps .pk { font-size: 12px; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--pz-ink); }
 .g-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-.g-tab { border: 0; border-radius: 18px; background: rgba(255, 255, 255, .65); color: #b08cc8; padding: 8px 2px 6px; display: grid; justify-items: center; gap: 2px; font-family: var(--f-cute); font-size: 14px; }
-.g-tab svg { width: 28px; height: 28px; }
-.g-tab[aria-pressed="true"] { background: #fff; color: #ff6f9c; box-shadow: 0 3px 0 #f6c6d8; }
-.stage { min-height: 300px; display: grid; justify-items: center; align-content: center; gap: 14px; }
-.g-empty { display: grid; justify-items: center; gap: 10px; text-align: center; }
-.g-empty p { margin: 0; font-size: 16px; }
-.g-empty .q { font-size: 64px; line-height: 1; animation: bob 1.6s ease-in-out infinite; }
-@keyframes bob { 50% { transform: translateY(-6px) rotate(-3deg); } }
-.big-btn {
-  border: 0; border-radius: 999px; background: #ff8fab; color: #fff; font-family: var(--f-cute); font-size: 24px;
-  padding: 12px 34px 10px; box-shadow: 0 6px 0 #e56b8f, inset 0 -3px 0 rgba(0, 0, 0, .06); letter-spacing: .02em;
-}
-.big-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #e56b8f; }
-.big-btn.mint { background: #7fd8be; box-shadow: 0 6px 0 #4fb79a; }
-.soft-btn { border: 0; border-radius: 999px; background: #fff; color: #7a4f9a; font-family: var(--f-cute); font-size: 16px; padding: 10px 18px; box-shadow: 0 3px 0 #ecd5f5; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
-.cand-bar { display: flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, .7); border-radius: 999px; padding: 6px 6px 6px 14px; }
-.cand-bar .n { font-size: 22px; color: #ff6f9c; line-height: 1; }
-.cand-bar .mini { flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 14px; color: #9b7bb3; }
-.cand-bar button { border: 0; border-radius: 999px; background: #ff8fab; color: #fff; font-family: var(--f-cute); font-size: 15px; padding: 8px 16px; }
-.g-tools { display: flex; gap: 10px; }
-.g-tool { width: 46px; height: 46px; border-radius: 50%; border: 0; background: #fff; color: #7a4f9a; font-size: 20px; box-shadow: 0 3px 0 #ecd5f5; }
-.arcade .wheel-wrap { width: min(100%, 300px); }
-.bulbs { position: absolute; inset: -9px; border-radius: 50%; background: repeating-conic-gradient(#fff 0 7deg, transparent 7deg 30deg); -webkit-mask: radial-gradient(circle, transparent 66%, #000 67%, #000 70%, transparent 71%); mask: radial-gradient(circle, transparent 66%, #000 67%, #000 70%, transparent 71%); }
-.spinning .bulbs { animation: blink .3s steps(2) infinite; }
-@keyframes blink { 50% { transform: rotate(15deg); } }
-.arcade .hub { background: #fff; color: #ff6f9c; border-color: #ffd1e1; font-family: var(--f-cute); font-size: 26px; box-shadow: 0 3px 0 #f6c6d8; }
-.arcade .pointer { border-top-color: #ff6f9c; top: -12px; border-left-width: 15px; border-right-width: 15px; border-top-width: 26px; filter: drop-shadow(0 2px 0 #fff); }
-.arcade .lad-btn { border: 3px solid #fff; background: var(--c); color: #5b4a7a; font-family: var(--f-cute); box-shadow: 0 3px 0 rgba(0, 0, 0, .08); }
-.arcade .lad-btn[aria-pressed="true"] { transform: scale(1.15); border-color: #ff6f9c; }
-.arcade .lad-res { background: rgba(255, 255, 255, .7); color: #5b4a7a; font-family: var(--f-cute); font-weight: 400; font-size: 13px; }
-.arcade .lad-res.hide { color: #c9a7dc; font-size: 20px; }
-.arcade .lad-res.hit { background: #ff8fab; color: #fff; animation: pop .35s ease; }
-.arcade .pcard .back { background: var(--c); color: #ff6f9c; font-size: 30px; background-image: radial-gradient(rgba(255, 255, 255, .55) 2px, transparent 2.5px); background-size: 14px 14px; border: 3px solid #fff; }
-.arcade .pcard .back span { width: 52px; height: 52px; border-radius: 50%; background: #fff; display: grid; place-items: center; }
-.arcade .pcard .front { background: #fff; color: #5b4a7a; border: 3px solid #fff; font-family: var(--f-cute); font-weight: 400; font-size: 15px; }
-.arcade .pcard.chosen .front { box-shadow: 0 0 0 4px #ff8fab; color: #ff6f9c; }
-.arcade .cards:not(.shuffle) .pcard:not(.flip):hover { transform: translateY(-4px) rotate(-2deg); transition: transform .15s; }
-.pick-card { width: 100%; background: #fff; border-radius: 22px; padding: 16px; text-align: center; display: grid; gap: 10px; box-shadow: 0 4px 0 #ecd5f5; animation: pop .4s ease; }
-.pick-card .ribbon { font-size: 15px; color: #ff6f9c; }
-.pick-card h3 { font-family: var(--f-cute); font-weight: 400; font-size: 28px; color: #5b4a7a; overflow-wrap: anywhere; }
-.pick-card p { margin: 0; color: #9b7bb3; font-size: 14px; }
+.g-tab { border: 1px solid var(--pz-line); border-radius: 12px; background: color-mix(in srgb, var(--card) 55%, transparent); color: var(--pz-sub); padding: 8px 2px 6px; display: grid; justify-items: center; gap: 2px; font-size: 13px; font-weight: 600; }
+.g-tab svg { width: 24px; height: 24px; }
+.g-tab[aria-pressed="true"] { background: var(--card); color: var(--pz-pink); border-color: var(--pz-pink); }
+.stage { min-height: 280px; display: grid; justify-items: center; align-content: center; gap: 14px; }
+.g-empty { display: grid; justify-items: center; gap: 12px; text-align: center; }
+.g-empty p { margin: 0; color: var(--pz-sub); }
+.big-btn { border: 0; border-radius: 12px; background: var(--pz-pink); color: #fff; font-size: 16px; font-weight: 700; padding: 12px 26px; min-height: 46px; }
+.big-btn:active { transform: translateY(1px); }
+.soft-btn { border: 1px solid var(--pz-line); border-radius: 12px; background: var(--card); color: var(--pz-ink); font-size: 14px; font-weight: 600; padding: 9px 14px; min-height: 40px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
+.cand-bar { display: flex; align-items: center; gap: 8px; background: color-mix(in srgb, var(--card) 60%, transparent); border: 1px solid var(--pz-line); border-radius: 12px; padding: 6px 6px 6px 12px; }
+.cand-bar .n { font-size: 18px; font-weight: 700; color: var(--pz-pink); line-height: 1; font-variant-numeric: tabular-nums; }
+.cand-bar .mini { flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 13px; color: var(--pz-sub); }
+.cand-bar button { border: 0; border-radius: 9px; background: var(--card); color: var(--pz-ink); font-weight: 600; font-size: 13px; padding: 8px 14px; }
+.g-tools { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.arcade .wheel-wrap { width: min(100%, 290px); }
+.arcade .hub { background: var(--card); color: var(--pz-pink); border: 3px solid #fff; font-size: 16px; font-weight: 700; box-shadow: 0 1px 4px rgba(0, 0, 0, .1); }
+.arcade .pointer { border-top-color: var(--pz-pink); top: -9px; }
+.arcade .lad-btn { border: 2px solid #fff; background: var(--c); color: #4a3f63; font-weight: 700; font-family: var(--f-body); font-size: 15px; }
+.arcade .lad-btn[aria-pressed="true"] { border-color: var(--pz-pink); }
+.arcade .lad-res { background: color-mix(in srgb, var(--card) 70%, transparent); color: var(--pz-ink); }
+.arcade .lad-res.hide { color: var(--pz-sub); font-family: var(--f-body); font-size: 16px; }
+.arcade .lad-res.hit { background: var(--pz-pink); color: #fff; }
+.arcade .pcard .back { background: var(--c); color: #4a3f63; font-family: var(--f-body); font-size: 22px; font-weight: 700; border: 2px solid #fff; }
+.arcade .pcard .back span { width: 44px; height: 44px; border-radius: 50%; background: rgba(255, 255, 255, .8); display: grid; place-items: center; }
+.arcade .pcard .front { background: var(--card); color: var(--pz-ink); border: 2px solid var(--pz-line); }
+.arcade .pcard.chosen .front { border-color: var(--pz-pink); color: var(--pz-pink); }
+.pick-card { width: 100%; background: var(--card); border: 1px solid var(--pz-line); border-radius: 16px; padding: 16px; text-align: center; display: grid; gap: 10px; animation: pop .3s ease; }
+.pick-card .ribbon { font-size: 13px; font-weight: 600; color: var(--pz-pink); }
+.pick-card h3 { font-size: 22px; color: var(--pz-ink); overflow-wrap: anywhere; }
+.pick-card p { margin: 0; color: var(--pz-sub); font-size: 14px; }
 .pick-card .row { justify-content: center; }
-.final { width: 100%; display: grid; gap: 12px; }
+.final { width: 100%; display: grid; gap: 10px; }
 .final-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
-.final-list li { display: flex; align-items: center; gap: 10px; background: #fff; border-radius: 18px; padding: 10px 10px 10px 14px; box-shadow: 0 3px 0 #ecd5f5; }
-.final-list .ic { font-size: 22px; }
+.final-list li { display: flex; align-items: center; gap: 10px; background: var(--card); border: 1px solid var(--pz-line); border-radius: 12px; padding: 10px 10px 10px 12px; }
+.final-list .ic { width: 26px; height: 26px; border-radius: 50%; background: var(--pz-pink); color: #fff; display: grid; place-items: center; font-size: 13px; font-weight: 700; flex: none; }
 .final-list .tx { flex: 1; min-width: 0; display: grid; }
-.final-list .tx small { color: #b08cc8; font-size: 12px; }
-.final-list .tx b { font-weight: 400; font-size: 17px; color: #5b4a7a; overflow-wrap: anywhere; }
-.final-list .map-btn { width: 38px; height: 38px; }
+.final-list .tx small { color: var(--pz-sub); font-size: 12px; }
+.final-list .tx b { font-size: 16px; color: var(--pz-ink); overflow-wrap: anywhere; }
+.final-list .map-btn { width: 36px; height: 36px; }
 .final .row { justify-content: center; }
-.result { border: 0; background: #fff; color: #5b4a7a; border-radius: 22px; box-shadow: 0 4px 0 #ecd5f5; font-family: var(--f-cute); }
-.result .win { font-family: var(--f-cute); font-size: 30px; line-height: 1; color: #ff6f9c; animation: pop .5s ease; }
-.result h3 { font-family: var(--f-cute); font-weight: 400; font-size: 28px; }
-.result .btn { font-family: var(--f-cute); font-weight: 400; border-radius: 999px; }
-.result .btn.primary { background: #ff8fab; border-color: #ff8fab; color: #fff; }
+.result { border: 1px solid var(--pz-line); background: var(--card); color: var(--pz-ink); border-radius: 16px; }
+.result .win { font-size: 13px; font-weight: 600; color: var(--pz-pink); }
+.result h3 { font-size: 24px; }
+.result .btn.primary { background: var(--pz-pink); border-color: var(--pz-pink); color: #fff; }
+/* 지도·동선 */
+.rmap { height: 260px; border-radius: 14px; overflow: hidden; background: var(--bg); border: 1px solid var(--line); }
+.pin { width: 26px; height: 26px; border-radius: 50%; background: var(--c); color: #3b3150; font-weight: 700; font-size: 13px; display: grid; place-items: center; border: 2px solid #fff; box-shadow: 0 1px 4px rgba(0, 0, 0, .25); flex: none; }
+.route { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.rstop { display: flex; align-items: center; gap: 10px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 8px 8px 8px 10px; }
+.rstop .tx { flex: 1; min-width: 0; display: grid; }
+.rstop .tx small { font-size: 12px; color: var(--sub); font-variant-numeric: tabular-nums; }
+.rstop .tx b { overflow-wrap: anywhere; }
+.rstop .map-btn { width: 36px; height: 36px; }
+.leg { font-size: 12px; color: var(--sub); padding-left: 22px; border-left: 2px dashed var(--line); margin-left: 22px; padding-block: 2px; }
+/* 접는 카드·상세 */
+.fold summary { list-style: none; display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.fold summary::-webkit-details-marker { display: none; }
+.fold-sum { margin-left: auto; font-weight: 600; font-size: 14px; }
+.chev { color: var(--sub); transition: transform .2s; }
+.fold[open] .chev { transform: rotate(180deg); }
+.fold-body { padding-top: 12px; }
+.fold-cat summary { list-style: none; display: flex; align-items: center; gap: 8px; padding: 6px 2px; cursor: pointer; }
+.fold-cat summary::-webkit-details-marker { display: none; }
+.fold-cat summary b { flex: 1; }
+.fold-cat .list { margin: 4px 0 10px; }
+.link-num { border: 0; background: none; padding: 0; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.link-num:hover { color: var(--accent); }
 .confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 35; }
 .foot { margin-top: 24px; display: grid; gap: 8px; justify-items: center; text-align: center; }
 @media (prefers-reduced-motion: reduce) {
@@ -1097,7 +1103,7 @@ function homeHeader() {
 }
 function tripHeader(t) {
   return '<button class="icon-btn" data-act="home" aria-label="여행 목록">' + ICON.back + '</button>' +
-    '<div class="hdr-title"><b>' + esc((t.flag ? t.flag + ' ' : '') + t.city) + '</b><span>' + esc(t.country) + ' · ' + fmtMD(t.start) + ' – ' + fmtMD(t.end) + '</span></div>' +
+    '<div class="hdr-title"><b>' + esc((t.flag ? t.flag + ' ' : '') + t.city) + '</b><span>' + esc(t.country) + ' · ' + fmtMD(t.start) + ' – ' + fmtMD(t.end) + (t.style && t.style !== 'solo' ? ' · ' + esc(STYLE_N[t.style]) : '') + '</span></div>' +
     '<button class="icon-btn" data-act="edit-trip" aria-label="여행 정보 수정">' + ICON.edit + '</button>';
 }
 
@@ -1167,16 +1173,16 @@ function sumView(t) {
   const p = st.budget ? st.spent / st.budget : 0;
   let h = '<section class="card stack">';
   if (st.budget) {
-    h += '<p class="eyebrow">남은 여행비 · ' + (st.status === 'upcoming' ? '출발 D-' + diffDays(st.today, t.start) : st.status === 'ongoing' ? 'DAY ' + st.dayIdx + ' / ' + st.days : '여행 끝') + '</p>' +
+    h += '<div class="row" style="justify-content:space-between"><p class="eyebrow">남은 여행비 · ' + (st.status === 'upcoming' ? '출발 D-' + diffDays(st.today, t.start) : st.status === 'ongoing' ? 'DAY ' + st.dayIdx + ' / ' + st.days : '여행 끝') + '</p>' +
+      '<button class="chip sm" data-act="budget">예산</button></div>' +
       '<div class="hero-num' + (st.left < 0 ? ' neg' : '') + '">' + (st.left < 0 ? '-' : '') + won(Math.abs(st.left)) + '</div>' +
       '<div class="meter ' + meterCls(p) + '"><i style="width:' + Math.min(100, p * 100).toFixed(1) + '%"></i></div>' +
-      '<div class="pass-figs"><span>여행비 <b>' + won(st.budget) + '</b></span><span>사용 <b>' + won(st.spent) + '</b> (' + Math.round(p * 100) + '%)</span></div>' +
-      '<p class="hint">쇼핑은 따로 계산해요.</p>';
+      '<div class="pass-figs"><span>여행비 <b>' + won(st.budget) + '</b></span><button class="link-num" data-act="spent" data-v="travel">사용 <b>' + won(st.spent) + '</b> (' + Math.round(p * 100) + '%) ›</button></div>';
     if (st.left < 0) h += '<p class="hint" style="color:var(--danger)">여행비를 ' + won(-st.left) + ' 넘었어요.</p>';
   } else {
-    h += '<p class="eyebrow">여행비 지출 (쇼핑 제외)</p><div class="hero-num">' + won(st.spent) + '</div>' +
+    h += '<p class="eyebrow">여행비 지출 (쇼핑 제외)</p><button class="hero-num link-num" data-act="spent" data-v="travel">' + won(st.spent) + ' ›</button>' +
       '<p class="hint">여행비 예산을 정하면 남은 금액과 하루 사용 가능 금액을 보여 드려요.</p>' +
-      '<button class="btn small" data-act="edit-trip">예산 정하기</button>';
+      '<button class="btn small" data-act="budget">예산 정하기</button>';
   }
   h += '</section>';
 
@@ -1244,12 +1250,16 @@ function rateCard(t) {
 }
 
 function shopCard(t, st) {
+  return '<details class="card fold" data-fold="shop"' + (S.fold && S.fold.shop ? ' open' : '') + '><summary><span class="sec">쇼핑비</span><span class="num fold-sum">' +
+    (st.shopBudget ? won(st.shopSpent) + ' / ' + won(st.shopBudget) : won(st.shopSpent)) + '</span><span class="chev" aria-hidden="true">▾</span></summary><div class="fold-body">' + shopCardInner(t, st) + '</div></details>';
+}
+function shopCardInner(t, st) {
   const abroad = t.cur !== 'KRW' || (t.country && t.country !== '한국');
   if (!st.shopBudget && !st.shopSpent) {
-    return '<section class="card rate-card"><div class="rate-main"><span class="l">쇼핑비</span><b>' + won(0) + '</b><span class="hint">쇼핑비 예산을 따로 정할 수 있어요' + (abroad ? ' · 관세도 자동 계산' : '') + '</span></div><button class="btn small" data-act="edit-trip">정하기</button></section>';
+    return '<div class="stack"><p class="hint">쇼핑비 예산을 따로 정할 수 있어요' + (abroad ? '. 쇼핑 지출이 생기면 관세도 계산해 드려요.' : '') + '</p><button class="btn small" data-act="budget">예산 정하기</button></div>';
   }
   const p = st.shopBudget ? st.shopSpent / st.shopBudget : 0;
-  let h = '<section class="card stack"><div class="row" style="justify-content:space-between"><h3 class="sec">쇼핑비</h3>' +
+  let h = '<div class="stack"><div class="row" style="justify-content:space-between"><button class="text-btn" style="padding:0" data-act="spent" data-v="shop">상세 보기 ›</button>' +
     (st.shopBudget ? '<span class="num" style="font-weight:700' + (st.shopBudget - st.shopSpent < 0 ? ';color:var(--danger)' : '') + '">' + won(Math.abs(st.shopBudget - st.shopSpent)) + (st.shopBudget - st.shopSpent < 0 ? ' 초과' : ' 남음') + '</span>' : '') + '</div>' +
     (st.shopBudget ? '<div class="meter ' + meterCls(p) + '"><i style="width:' + Math.min(100, p * 100).toFixed(1) + '%"></i></div>' : '') +
     '<div class="pass-figs"><span>예산 <b>' + (st.shopBudget ? won(st.shopBudget) : '–') + '</b></span><span>사용 <b>' + won(st.shopSpent) + '</b></span></div>';
@@ -1263,7 +1273,7 @@ function shopCard(t, st) {
         : '<p class="duty-main">면세 한도까지 <b>$' + fmtN(c.leftUSD, 0) + '</b> 남았어요</p>') +
       '<p class="hint">1인 기준 추정 · 한도 $800 초과분에 간이세율 20% · 술·담배·향수는 별도</p></div>';
   }
-  return h + '</section>';
+  return h + '<button class="btn small" data-act="budget">예산 수정</button></div>';
 }
 
 /* 지출 */
@@ -1272,7 +1282,7 @@ function expView(t) {
   let list = t.expenses.slice();
   if (S.expFilter !== 'all') list = list.filter(e => e.cat === S.expFilter);
   const sum = list.reduce((s, e) => s + expKRW(t, e), 0);
-  let h = '<section class="card"><p class="eyebrow">' + (S.expFilter === 'all' ? '총 지출' : CAT[S.expFilter].n) + '</p><div class="hero-num" style="font-size:32px">' + won(sum) + '</div>' +
+  let h = '<section class="card"><p class="eyebrow">' + (S.expFilter === 'all' ? '총 지출' : CAT[S.expFilter].n) + '</p><button class="hero-num link-num" style="font-size:32px" data-act="spent" data-v="' + (S.expFilter === 'all' ? 'all' : 'cat:' + S.expFilter) + '">' + won(sum) + ' ›</button>' +
     (S.expFilter === 'all' ? '<p class="hint">여행비 ' + won(st.spent) + ' · 쇼핑 ' + won(st.shopSpent) + '</p>' : '') + '</section>';
   h += '<div class="chips scroll">' + [['all', '전체']].concat(CATS.map(c => [c.k, c.n])).map(([k, n]) =>
     '<button class="chip" data-act="exp-filter" data-v="' + k + '" aria-pressed="' + (S.expFilter === k) + '">' + n + '</button>').join('') + '</div>';
@@ -1305,510 +1315,573 @@ const THEME = Object.fromEntries(THEMES.map(x => [x[0], { n: x[1], g: x[2] }]));
 const THEME_Q = { sight: '관광명소', shop: '쇼핑', food: '맛집', cafe: '카페', night: '야경' };
 const RECS = {
 '도쿄': `# 시부야·하라주쿠
-sight|시부야 스크램블 교차로|한 번에 수천 명이 건너는 횡단보도
-night|시부야 스카이|옥상 전망대 야경, 예약 추천
-sight|메이지 신궁|도심 속 숲길 신사
-shop|미야시타 파크|옥상 공원이 있는 쇼핑몰
-shop|다케시타 거리|크레이프·10대 패션 골목
-shop|오모테산도|건축이 멋진 명품 매장 거리
-food|우오베이 시부야|주문하면 레일로 오는 가성비 초밥
+sight|시부야 스크램블 교차로|한 번에 수천 명이 건너는 횡단보도|35.6595,139.7005|f
+night|시부야 스카이|옥상 전망대 야경, 예약 추천|35.6584,139.7022|cf
+sight|메이지 신궁|도심 속 숲길 신사|35.6764,139.6993|p
+shop|미야시타 파크|옥상 공원이 있는 쇼핑몰|35.6620,139.7020|f
+shop|다케시타 거리|크레이프·10대 패션 골목|35.6717,139.7030|fk
+shop|오모테산도|건축이 멋진 명품 매장 거리|35.6670,139.7090|c
+food|우오베이 시부야|주문하면 레일로 오는 가성비 초밥|35.6590,139.6985|kf
+shop|디즈니 스토어 시부야|디즈니 캐릭터 굿즈 매장|35.6614,139.6996|k
+shop|포켓몬 센터 시부야|파르코 6층 포켓몬 굿즈|35.6622,139.6987|k
+shop|닌텐도 도쿄|파르코 6층 닌텐도 매장|35.6622,139.6988|kf
+shop|키디랜드 하라주쿠|캐릭터 장난감 백화점|35.6688,139.7066|k
 # 신주쿠
-sight|신주쿠 교엔|넓은 정원, 벚꽃·단풍 명소
-night|도쿄도청 전망대|무료로 보는 도쿄 야경
-food|오모이데 요코초|꼬치구이 가게 골목
-food|후운지|진한 국물 츠케멘 맛집
-night|골든가이|작은 바 200여 곳이 모인 골목
-shop|이세탄 신주쿠|도쿄 대표 백화점
+sight|신주쿠 교엔|넓은 정원, 벚꽃·단풍 명소|35.6852,139.7101|pck
+night|도쿄도청 전망대|무료로 보는 도쿄 야경|35.6896,139.6917|pkc
+food|오모이데 요코초|꼬치구이 가게 골목|35.6933,139.6995|fa
+food|후운지|진한 국물 츠케멘 맛집|35.6862,139.6970|f
+night|골든가이|작은 바 200여 곳이 모인 골목|35.6939,139.7046|fa
+shop|이세탄 신주쿠|도쿄 대표 백화점|35.6918,139.7046|p
+sight|도쿄 장난감 미술관|나무 장난감 놀이터 (요츠야)|35.6893,139.7187|k
 # 아사쿠사·우에노
-sight|센소지|도쿄에서 가장 오래된 절과 나카미세 거리
-night|도쿄 스카이트리|634m 전망대와 소라마치 쇼핑몰
-sight|우에노 공원|박물관·동물원이 모인 공원
-food|아메요코 시장|간식·해산물 노점 시장
-cafe|카게츠도|아사쿠사 명물 점보 메론빵
+sight|센소지|도쿄에서 가장 오래된 절과 나카미세 거리|35.7148,139.7967|pkc
+night|도쿄 스카이트리|634m 전망대와 소라마치 쇼핑몰|35.7101,139.8107|kcp
+sight|우에노 공원|박물관·동물원이 모인 공원|35.7156,139.7745|kp
+food|아메요코 시장|간식·해산물 노점 시장|35.7105,139.7745|f
+cafe|카게츠도|아사쿠사 명물 점보 메론빵|35.7138,139.7955|k
+sight|우에노 동물원|판다가 있는 동물원|35.7166,139.7713|k
+sight|국립과학박물관|공룡 화석·체험 전시|35.7163,139.7765|k
+sight|스미다 수족관|스카이트리 안 펭귄 수족관|35.7099,139.8097|kc
 # 긴자·츠키지
-shop|긴자 거리|백화점과 명품 매장
-shop|긴자 식스|대형 쇼핑몰과 옥상 정원
-food|츠키지 장외시장|초밥·해산물 덮밥·계란말이
-food|츠키시마 몬자 스트리트|도쿄식 철판요리 몬자야키 골목
-sight|팀랩 플래닛|물 위를 걷는 디지털 아트 (도요스)
+shop|긴자 거리|백화점과 명품 매장|35.6717,139.7650|pc
+shop|긴자 식스|대형 쇼핑몰과 옥상 정원|35.6696,139.7640|p
+food|츠키지 장외시장|초밥·해산물 덮밥·계란말이|35.6654,139.7707|pk
+food|츠키시마 몬자 스트리트|도쿄식 철판요리 몬자야키 골목|35.6627,139.7820|fk
+sight|팀랩 플래닛|물 위를 걷는 디지털 아트 (도요스)|35.6493,139.7898|ck
+sight|키자니아 도쿄|아이들 직업 체험 테마파크 (도요스)|35.6544,139.7924|k
 # 롯폰기·도쿄타워
-night|롯폰기 힐즈 전망대|도쿄 타워가 정면으로 보이는 야경
-sight|모리 미술관|전망대와 함께 보는 현대미술
-night|도쿄 타워|불 켜진 빨간 탑과 전망대
-shop|도쿄 미드타운|쇼핑몰과 디자인 전시
-food|곤파치 니시아자부|영화 킬빌 배경으로 유명한 이자카야
+night|롯폰기 힐즈 전망대|도쿄 타워가 정면으로 보이는 야경|35.6605,139.7292|c
+sight|모리 미술관|전망대와 함께 보는 현대미술|35.6604,139.7290|cp
+night|도쿄 타워|불 켜진 빨간 탑과 전망대|35.6586,139.7454|kcp
+shop|도쿄 미드타운|쇼핑몰과 디자인 전시|35.6654,139.7310|pc
+food|곤파치 니시아자부|영화 킬빌 배경으로 유명한 이자카야|35.6577,139.7234|fc
+# 오다이바
+sight|레고랜드 디스커버리 센터 도쿄|실내 레고 놀이 시설|35.6276,139.7752|k
+night|오다이바 해변공원|레인보우브릿지 야경 해변|35.6298,139.7744|ck
+shop|다이버시티 도쿄 플라자|실물 크기 건담과 쇼핑몰|35.6252,139.7756|kf
 # 아키하바라
-shop|아키하바라 전자상가|전자제품·피규어·애니 굿즈
-shop|요도바시 아키바|층층이 전자제품 대형 매장
+shop|아키하바라 전자상가|전자제품·피규어·애니 굿즈|35.6984,139.7731|fk
+shop|요도바시 아키바|층층이 전자제품 대형 매장|35.6991,139.7746|k
 # 나카메구로·시모키타자와
-cafe|메구로강 산책로|강변 카페와 편집숍, 봄엔 벚꽃
-shop|시모키타자와|빈티지 옷가게와 작은 카페 동네
-cafe|블루보틀 기요스미시라카와|블루보틀 일본 1호점`,
+cafe|메구로강 산책로|강변 카페와 편집숍, 봄엔 벚꽃|35.6440,139.6990|c
+shop|시모키타자와|빈티지 옷가게와 작은 카페 동네|35.6615,139.6680|fc
+# 근교 당일치기
+sight|도쿄 디즈니랜드|마이하마 디즈니 테마파크|35.6329,139.8804|kc
+sight|도쿄 디즈니씨|바다 테마 디즈니 파크|35.6267,139.8851|ck
+sight|지브리 미술관|미타카, 예약 필수|35.6962,139.5704|kc`,
 '오사카': `# 난바·도톤보리
-sight|도톤보리|글리코 간판과 운하가 있는 번화가
-night|도톤보리 리버크루즈|네온사인 사이를 지나는 운하 유람선
-food|앗치치 혼포|겉바속촉 타코야키
-food|킨류 라멘|용 간판의 24시간 라멘집
-food|구로몬 시장|해산물·과일 시장 (닛폰바시)
-food|우라난바|작은 이자카야가 모인 뒷골목
-cafe|리쿠로 오지상 치즈케이크|갓 구운 흔들흔들 치즈케이크
-shop|신사이바시스지 상점가|지붕 덮인 긴 쇼핑 거리
-shop|아메리카무라|빈티지·스트리트 패션 거리
-shop|덴덴타운|전자제품·피규어 상점가
+sight|도톤보리|글리코 간판과 운하가 있는 번화가|34.6687,135.5013|fk
+night|도톤보리 리버크루즈|네온사인 사이를 지나는 운하 유람선|34.6686,135.5020|ck
+food|앗치치 혼포|겉바속촉 타코야키|34.6683,135.5005|kf
+food|킨류 라멘|용 간판의 24시간 라멘집|34.6687,135.5029|f
+food|구로몬 시장|해산물·과일 시장 (닛폰바시)|34.6654,135.5069|pk
+food|우라난바|작은 이자카야가 모인 뒷골목|34.6644,135.5035|fa
+cafe|리쿠로 오지상 치즈케이크|갓 구운 흔들흔들 치즈케이크|34.6658,135.5013|kp
+shop|신사이바시스지 상점가|지붕 덮인 긴 쇼핑 거리|34.6733,135.5013|f
+shop|아메리카무라|빈티지·스트리트 패션 거리|34.6720,135.4983|f
+shop|덴덴타운|전자제품·피규어 상점가|34.6600,135.5060|kf
+shop|포켓몬 센터 오사카 DX|신사이바시 다이마루 포켓몬 매장|34.6735,135.5010|k
 # 우메다
-night|우메다 스카이빌딩 공중정원|원형 옥상 전망대 야경
-shop|그랜드 프런트 오사카|역과 이어진 대형 쇼핑몰
-shop|한큐 백화점 우메다|지하 식품관이 유명한 백화점
-food|카메스시 총본점|현지인 단골이 많은 초밥집
+night|우메다 스카이빌딩 공중정원|원형 옥상 전망대 야경|34.7053,135.4906|cp
+shop|그랜드 프런트 오사카|역과 이어진 대형 쇼핑몰|34.7042,135.4950|p
+shop|한큐 백화점 우메다|지하 식품관이 유명한 백화점|34.7038,135.4995|p
+food|카메스시 총본점|현지인 단골이 많은 초밥집|34.7037,135.4990|p
+night|헵파이브 관람차|빌딩 위 빨간 관람차|34.7039,135.5003|ck
+shop|키디랜드 우메다|캐릭터 장난감 매장|34.7066,135.4985|k
 # 오사카성·덴마
-sight|오사카성|천수각과 넓은 성 공원
-food|덴진바시스지 상점가|일본에서 가장 긴 상점가 먹거리
-food|하루코마 스시|줄 서는 가성비 초밥
+sight|오사카성|천수각과 넓은 성 공원|34.6873,135.5262|pk
+food|덴진바시스지 상점가|일본에서 가장 긴 상점가 먹거리|34.7000,135.5115|fp
+food|하루코마 스시|줄 서는 가성비 초밥|34.7047,135.5118|p
 # 신세카이·덴노지
-sight|츠텐카쿠|옛 오사카 분위기의 전망탑
-food|쿠시카츠 다루마 신세카이 본점|오사카식 꼬치튀김 원조
-night|아베노 하루카스 300|오사카에서 가장 높은 전망대
+sight|츠텐카쿠|옛 오사카 분위기의 전망탑|34.6525,135.5063|kf
+food|쿠시카츠 다루마 신세카이 본점|오사카식 꼬치튀김 원조|34.6519,135.5065|fk
+night|아베노 하루카스 300|오사카에서 가장 높은 전망대|34.6458,135.5139|cpk
+sight|덴노지 동물원|도심 속 동물원|34.6516,135.5096|k
+# 베이 에어리어
+sight|가이유칸 수족관|고래상어가 있는 대형 수족관|34.6545,135.4290|kcp
+night|덴포잔 대관람차|바다 야경 대관람차|34.6560,135.4322|ck
+sight|레고랜드 디스커버리 센터 오사카|실내 레고 놀이 시설|34.6556,135.4301|k
+sight|유니버설 스튜디오 재팬|닌텐도 월드·해리포터 테마파크|34.6654,135.4323|kcf
 # 근교 당일치기
-sight|유니버설 스튜디오 재팬|닌텐도 월드·해리포터 테마파크
-sight|나라 공원|사슴과 도다이지
-sight|후시미 이나리 신사|교토 붉은 도리이 터널
-sight|아라시야마 대나무숲|교토 대나무 숲길과 도게츠교`,
+sight|나라 공원|사슴과 도다이지|34.6851,135.8430|kp
+sight|후시미 이나리 신사|교토 붉은 도리이 터널|34.9671,135.7727|pc
+sight|아라시야마 대나무숲|교토 대나무 숲길과 도게츠교|35.0170,135.6713|cp`,
 '후쿠오카': `# 하카타
-shop|캐널시티 하카타|운하가 흐르는 대형 쇼핑몰
-shop|JR 하카타 시티|역과 붙은 백화점·식당가
-sight|구시다 신사|하카타 마쓰리의 중심 신사
-food|모츠나베 오오야마|진한 곱창전골 모츠나베
+shop|캐널시티 하카타|운하가 흐르는 대형 쇼핑몰|33.5898,130.4111|kf
+shop|JR 하카타 시티|역과 붙은 백화점·식당가|33.5897,130.4207|p
+sight|구시다 신사|하카타 마쓰리의 중심 신사|33.5929,130.4105|p
+food|모츠나베 오오야마|진한 곱창전골 모츠나베|33.5895,130.4180|f
+shop|포켓몬 센터 후쿠오카|아뮤플라자 하카타 8층|33.5900,130.4207|k
 # 나카스
-food|나카스 야타이 거리|강변 포장마차 라멘·꼬치
-food|이치란 본사 총본점|1인 칸막이 돈코츠 라멘 본점
-night|나카스 강변|불빛 비친 강과 포장마차
+food|나카스 야타이 거리|강변 포장마차 라멘·꼬치|33.5925,130.4057|f
+food|이치란 본사 총본점|1인 칸막이 돈코츠 라멘 본점|33.5926,130.4064|f
+night|나카스 강변|불빛 비친 강과 포장마차|33.5930,130.4060|c
 # 텐진·다이묘
-shop|텐진 지하상가|유럽풍 지하 쇼핑 거리
-shop|다이묘 거리|편집숍·빈티지 골목
-food|잇푸도 다이묘 본점|돈코츠 라멘 본점
-food|신신 라멘 텐진 본점|얇은 면 하카타 라멘
-food|야나기바시 연합시장|해산물·어묵 골목 시장
+shop|텐진 지하상가|유럽풍 지하 쇼핑 거리|33.5903,130.4002|p
+shop|다이묘 거리|편집숍·빈티지 골목|33.5878,130.3945|fc
+food|잇푸도 다이묘 본점|돈코츠 라멘 본점|33.5888,130.3933|f
+food|신신 라멘 텐진 본점|얇은 면 하카타 라멘|33.5883,130.3984|f
+food|야나기바시 연합시장|해산물·어묵 골목 시장|33.5847,130.4060|p
 # 오호리·모모치
-sight|오호리 공원|호수를 한 바퀴 도는 산책 공원
-cafe|스타벅스 오호리 공원점|호수 바로 앞 통유리 카페
-night|후쿠오카 타워|바다와 도시가 보이는 전망대
-sight|모모치 해변|타워 앞 인공 해변
+sight|오호리 공원|호수를 한 바퀴 도는 산책 공원|33.5862,130.3770|kpc
+cafe|스타벅스 오호리 공원점|호수 바로 앞 통유리 카페|33.5839,130.3787|c
+night|후쿠오카 타워|바다와 도시가 보이는 전망대|33.5933,130.3515|ck
+sight|모모치 해변|타워 앞 인공 해변|33.5951,130.3532|ck
 # 근교 당일치기
-sight|다자이후 텐만구|학문의 신 신사와 우메가에모치
-sight|유후인|긴린코 호수와 온천 마을`,
+sight|다자이후 텐만구|학문의 신 신사와 우메가에모치|33.5215,130.5349|pk
+sight|유후인|긴린코 호수와 온천 마을|33.2659,131.3550|cp
+sight|마린월드 우미노나카미치|돌고래 쇼 수족관|33.6612,130.3624|k`,
 '삿포로': `# 오도리·스스키노
-sight|오도리 공원|도심 공원, 겨울엔 눈축제
-sight|삿포로 시계탑|삿포로의 상징 같은 옛 건물
-night|삿포로 TV 타워|오도리 공원이 내려다보이는 전망대
-shop|다누키코지 상점가|지붕 덮인 상점가와 드럭스토어
-food|니조 시장|게·성게 덮밥 해산물 시장
-food|라멘 요코초|미소 라멘 가게 골목
-food|징기스칸 다루마|양고기 철판구이 노포
-food|스아게 플러스|바삭한 닭다리 수프카레
-night|스스키노|네온사인 번화가
+sight|오도리 공원|도심 공원, 겨울엔 눈축제|43.0598,141.3483|kp
+sight|삿포로 시계탑|삿포로의 상징 같은 옛 건물|43.0625,141.3536|p
+night|삿포로 TV 타워|오도리 공원이 내려다보이는 전망대|43.0610,141.3563|ck
+shop|다누키코지 상점가|지붕 덮인 상점가와 드럭스토어|43.0575,141.3530|fp
+food|니조 시장|게·성게 덮밥 해산물 시장|43.0568,141.3567|p
+food|라멘 요코초|미소 라멘 가게 골목|43.0547,141.3530|f
+food|징기스칸 다루마|양고기 철판구이 노포|43.0546,141.3533|f
+food|스아게 플러스|바삭한 닭다리 수프카레|43.0540,141.3545|f
+night|스스키노|네온사인 번화가|43.0550,141.3533|fa
 # 삿포로역 주변
-shop|스텔라 플레이스|역과 이어진 쇼핑몰
-food|삿포로 라멘 공화국|홋카이도 라멘 가게 모음 (에스타 10층)
-cafe|롯카테이 삿포로 본점|버터샌드 디저트 가게
-sight|삿포로 맥주 박물관|맥주 역사와 시음
+shop|스텔라 플레이스|역과 이어진 쇼핑몰|43.0679,141.3510|pk
+food|삿포로 라멘 공화국|홋카이도 라멘 가게 모음 (에스타 10층)|43.0678,141.3530|f
+cafe|롯카테이 삿포로 본점|버터샌드 디저트 가게|43.0660,141.3534|pc
+sight|삿포로 맥주 박물관|맥주 역사와 시음|43.0716,141.3690|fc
+shop|포켓몬 센터 삿포로|다이마루 삿포로 8층|43.0681,141.3496|k
 # 마루야마·모이와산
-sight|홋카이도 신궁|숲길을 걷는 신사
-night|모이와산 로프웨이|일본 신 3대 야경 전망대
+sight|홋카이도 신궁|숲길을 걷는 신사|43.0543,141.3083|p
+night|모이와산 로프웨이|일본 신 3대 야경 전망대|43.0420,141.3190|cp
+sight|마루야마 동물원|북극곰이 있는 동물원|43.0523,141.3049|k
 # 오타루 당일치기
-sight|오타루 운하|옛 창고와 가스등 운하
-shop|사카이마치 거리|유리공예·오르골 거리
-cafe|르타오 본점|더블 치즈케이크 본점
-food|오타루 삼각시장|해산물 덮밥 시장`,
+sight|오타루 운하|옛 창고와 가스등 운하|43.1997,141.0003|cp
+shop|사카이마치 거리|유리공예·오르골 거리|43.1925,141.0040|ck
+cafe|르타오 본점|더블 치즈케이크 본점|43.1911,141.0048|ck
+food|오타루 삼각시장|해산물 덮밥 시장|43.1975,140.9939|p`,
 '타이베이': `# 신이 (101)
-night|타이베이 101 전망대|도시 한가운데 고층 전망대
-night|샹산(코끼리산)|101이 정면으로 보이는 야경 등산로
-shop|신광미츠코시 신이|101 근처 백화점 거리
+night|타이베이 101 전망대|도시 한가운데 고층 전망대|25.0340,121.5645|ckp
+night|샹산(코끼리산)|101이 정면으로 보이는 야경 등산로|25.0270,121.5770|cf
+shop|신광미츠코시 신이|101 근처 백화점 거리|25.0365,121.5668|p
 # 다안·융캉제
-food|딘타이펑 본점|샤오롱바오 본점 (신이로)
-food|융캉 우육면|진한 국물 소고기면
-cafe|스무시 하우스|망고 빙수 맛집
-shop|융캉제|맛집·소품 가게 골목
+food|딘타이펑 본점|샤오롱바오 본점 (신이로)|25.0330,121.5300|kp
+food|융캉 우육면|진한 국물 소고기면|25.0320,121.5295|p
+cafe|스무시 하우스|망고 빙수 맛집|25.0328,121.5294|kc
+shop|융캉제|맛집·소품 가게 골목|25.0322,121.5297|c
 # 중정·시먼딩
-sight|중정기념당|넓은 광장과 근위병 교대식
-sight|용산사|타이베이에서 가장 오래된 절
-shop|시먼딩|타이베이의 명동 같은 번화가
-food|아종면선|곱창 국수 노포
+sight|중정기념당|넓은 광장과 근위병 교대식|25.0347,121.5218|pk
+sight|용산사|타이베이에서 가장 오래된 절|25.0372,121.4999|p
+shop|시먼딩|타이베이의 명동 같은 번화가|25.0422,121.5081|f
+food|아종면선|곱창 국수 노포|25.0434,121.5074|f
 # 다퉁·닝샤
-shop|디화제|옛 건물의 건어물·차·소품 거리
-food|닝샤 야시장|현지인이 많이 가는 야시장
+shop|디화제|옛 건물의 건어물·차·소품 거리|25.0560,121.5100|pc
+food|닝샤 야시장|현지인이 많이 가는 야시장|25.0563,121.5155|f
 # 스린·쑹산·베이터우
-sight|국립고궁박물원|중국 황실 보물 박물관
-food|스린 야시장|가장 큰 야시장, 지파이·굴전
-food|라오허제 야시장|후추빵이 유명한 야시장
-sight|베이터우 온천|지열곡과 온천 박물관
+sight|국립고궁박물원|중국 황실 보물 박물관|25.1024,121.5485|pk
+food|스린 야시장|가장 큰 야시장, 지파이·굴전|25.0880,121.5241|fk
+food|라오허제 야시장|후추빵이 유명한 야시장|25.0509,121.5776|f
+sight|베이터우 온천|지열곡과 온천 박물관|25.1365,121.5066|p
+sight|국립 대만 과학교육관|체험형 과학관|25.0960,121.5160|k
 # 근교 당일치기
-sight|지우펀 옛거리|홍등 걸린 산동네 찻집 거리
-sight|스펀 천등|기찻길에서 소원 천등 날리기
-sight|예류 지질공원|여왕머리 바위 해안`,
+sight|지우펀 옛거리|홍등 걸린 산동네 찻집 거리|25.1095,121.8448|cp
+sight|스펀 천등|기찻길에서 소원 천등 날리기|25.0430,121.7790|ck
+sight|예류 지질공원|여왕머리 바위 해안|25.2068,121.6900|pk
+sight|타이베이 시립 동물원|판다가 있는 큰 동물원|24.9985,121.5810|k`,
 '방콕': `# 왕궁·라따나꼬신
-sight|왕궁·왓 프라깨우|에메랄드 불상이 있는 왕실 사원
-sight|왓 포|거대한 와불과 타이 마사지
-sight|왓 아룬|강변의 새벽 사원
-food|팁싸마이|팟타이로 유명한 집
-night|카오산 로드|여행자 거리 밤 분위기
+sight|왕궁·왓 프라깨우|에메랄드 불상이 있는 왕실 사원|13.7500,100.4913|p
+sight|왓 포|거대한 와불과 타이 마사지|13.7465,100.4927|p
+sight|왓 아룬|강변의 새벽 사원|13.7437,100.4888|cp
+food|팁싸마이|팟타이로 유명한 집|13.7527,100.5047|f
+night|카오산 로드|여행자 거리 밤 분위기|13.7590,100.4974|fa
 # 시암·칫롬
-shop|시암 파라곤|시암 대표 쇼핑몰
-shop|센트럴월드|초대형 쇼핑몰
-cafe|애프터 유|망고 빙수·토스트 디저트
+shop|시암 파라곤|시암 대표 쇼핑몰|13.7462,100.5347|pk
+shop|센트럴월드|초대형 쇼핑몰|13.7466,100.5393|p
+cafe|애프터 유|망고 빙수·토스트 디저트|13.7454,100.5340|kc
+sight|씨라이프 방콕 오션월드|시암 파라곤 지하 수족관|13.7458,100.5350|k
+sight|키자니아 방콕|아이들 직업 체험 테마파크|13.7462,100.5348|k
 # 수쿰빗·아속
-shop|터미널21|층마다 도시 테마인 쇼핑몰
-shop|엠쿼티어|고급 쇼핑몰과 식당가
-food|쿠아 끌링 팍 쏫|맵고 진한 남부 태국 요리
-night|옥타브 루프탑 바|360도 도시 야경 루프탑
+shop|터미널21|층마다 도시 테마인 쇼핑몰|13.7377,100.5604|f
+shop|엠쿼티어|고급 쇼핑몰과 식당가|13.7310,100.5697|p
+food|쿠아 끌링 팍 쏫|맵고 진한 남부 태국 요리|13.7275,100.5774|f
+night|옥타브 루프탑 바|360도 도시 야경 루프탑|13.7240,100.5784|cfa
 # 실롬·사톤
-night|마하나콘 스카이워크|유리 바닥 전망대
-night|르부아 스카이바|영화 행오버 촬영지 루프탑 바
+night|마하나콘 스카이워크|유리 바닥 전망대|13.7232,100.5281|ck
+night|르부아 스카이바|영화 행오버 촬영지 루프탑 바|13.7215,100.5168|ca
 # 차이나타운·강변
-food|야오와랏|밤에 열리는 길거리 음식 거리
-shop|아이콘시암|강변 쇼핑몰과 실내 수상시장
-night|아시아티크|대관람차가 있는 강변 야시장
+food|야오와랏|밤에 열리는 길거리 음식 거리|13.7398,100.5097|f
+shop|아이콘시암|강변 쇼핑몰과 실내 수상시장|13.7265,100.5101|pk
+night|아시아티크|대관람차가 있는 강변 야시장|13.7044,100.5032|ck
 # 짜뚜짝·근교
-shop|짜뚜짝 주말시장|1만 개가 넘는 가게, 주말만
-food|쩟페어 야시장|랭쌥(돼지등뼈탕)으로 유명
-sight|담넌사두악 수상시장|배 위에서 사고파는 시장
-sight|아유타야 유적|옛 왕국 사원 유적`,
+shop|짜뚜짝 주말시장|1만 개가 넘는 가게, 주말만|13.7999,100.5500|f
+food|쩟페어 야시장|랭쌥(돼지등뼈탕)으로 유명|13.7574,100.5664|f
+sight|사파리 월드|동물원과 마린 파크|13.8608,100.7046|k
+sight|담넌사두악 수상시장|배 위에서 사고파는 시장|13.5194,99.9590|p
+sight|아유타야 유적|옛 왕국 사원 유적|14.3554,100.5652|p`,
 '다낭': `# 하이쩌우 (시내)
-sight|다낭 대성당|분홍색 성당
-shop|한 시장|기념품·건과일·옷 맞춤
-food|미꽝 1A|다낭식 비빔국수 미꽝
-food|반쎄오 바즈엉|골목 안 반쎄오 맛집
-cafe|콩 카페|코코넛 스무디 커피
-night|용다리 불쇼|주말 밤 용 머리에서 불·물 뿜는 쇼
+sight|다낭 대성당|분홍색 성당|16.0668,108.2232|c
+shop|한 시장|기념품·건과일·옷 맞춤|16.0682,108.2244|p
+food|미꽝 1A|다낭식 비빔국수 미꽝|16.0627,108.2203|p
+food|반쎄오 바즈엉|골목 안 반쎄오 맛집|16.0625,108.2170|f
+cafe|콩 카페|코코넛 스무디 커피|16.0680,108.2240|c
+night|용다리 불쇼|주말 밤 용 머리에서 불·물 뿜는 쇼|16.0613,108.2275|kc
+night|아시아 파크|대관람차가 있는 놀이공원|16.0393,108.2262|kc
 # 미케 해변·손짜
-sight|미케 비치|길고 넓은 도심 해변
-sight|린응사|해수관음상과 바다 전망
-food|베만 해산물|현지인도 많은 해산물 식당
-night|선짜 야시장|강변 야시장 먹거리
+sight|미케 비치|길고 넓은 도심 해변|16.0544,108.2475|kc
+sight|린응사|해수관음상과 바다 전망|16.1000,108.2775|p
+food|베만 해산물|현지인도 많은 해산물 식당|16.0590,108.2460|fp
+night|선짜 야시장|강변 야시장 먹거리|16.0600,108.2300|fk
 # 오행산·바나힐
-sight|오행산(마블 마운틴)|동굴 사원과 전망
-sight|바나힐 골든브릿지|거대한 손 다리와 테마파크
+sight|오행산(마블 마운틴)|동굴 사원과 전망|16.0035,108.2635|p
+sight|바나힐 골든브릿지|거대한 손 다리와 테마파크|15.9952,107.9960|kc
 # 호이안
-sight|호이안 구시가지|등불 거리 옛 마을
-food|반미 프엉|유명한 바게트 샌드위치
-night|호이안 등불 야경|소원 등 띄우는 투본강`,
+sight|호이안 구시가지|등불 거리 옛 마을|15.8770,108.3290|cp
+food|반미 프엉|유명한 바게트 샌드위치|15.8778,108.3317|f
+night|호이안 등불 야경|소원 등 띄우는 투본강|15.8763,108.3275|ck
+sight|빈원더스 남호이안|워터파크·사파리 테마파크|15.7860,108.4150|k`,
 '나트랑': `# 해변 시내
-sight|나트랑 해변|도심을 따라 이어진 해변
-shop|나트랑 야시장|기념품·먹거리 야시장
-shop|롯데마트 골드코스트|기념품·간식 쇼핑
-cafe|레인포레스트 카페|정글처럼 꾸민 나무 카페
-night|스카이라이트 루프탑|해변 앞 루프탑 바
+sight|나트랑 해변|도심을 따라 이어진 해변|12.2390,109.1970|kc
+shop|나트랑 야시장|기념품·먹거리 야시장|12.2427,109.1965|f
+shop|롯데마트 골드코스트|기념품·간식 쇼핑|12.2510,109.1955|pk
+cafe|레인포레스트 카페|정글처럼 꾸민 나무 카페|12.2360,109.1960|ck
+night|스카이라이트 루프탑|해변 앞 루프탑 바|12.2440,109.1960|fca
 # 구시가 (담 시장)
-shop|담 시장|현지 재래시장, 건어물
-food|락깐|숯불 고기구이 노포
-food|넴느엉 당반꾸옌|구운 돼지고기 쌈 넴느엉
-sight|롱선사|큰 백색 불상이 있는 절
+shop|담 시장|현지 재래시장, 건어물|12.2520,109.1925|p
+food|락깐|숯불 고기구이 노포|12.2500,109.1915|f
+food|넴느엉 당반꾸옌|구운 돼지고기 쌈 넴느엉|12.2510,109.1900|kp
+sight|롱선사|큰 백색 불상이 있는 절|12.2510,109.1810|p
 # 북부
-sight|뽀나가르 참탑|참파 왕국 붉은 벽돌 사원
-sight|머드 온천|진흙 온천 체험
+sight|뽀나가르 참탑|참파 왕국 붉은 벽돌 사원|12.2655,109.1950|p
+sight|머드 온천|진흙 온천 체험|12.2950,109.1700|kpc
 # 혼째섬
-sight|빈원더스|케이블카로 가는 섬 테마파크`,
+sight|빈원더스|케이블카로 가는 섬 테마파크|12.2140,109.2430|k`,
 '세부': `# 세부시티 구시가
-sight|산토 니뇨 성당|필리핀에서 가장 오래된 성당
-sight|마젤란 십자가|1521년 마젤란이 세운 십자가
-sight|산페드로 요새|스페인 시대 요새
-food|주부촌|바삭한 껍질의 통돼지 레촌
+sight|산토 니뇨 성당|필리핀에서 가장 오래된 성당|10.2943,123.9020|p
+sight|마젤란 십자가|1521년 마젤란이 세운 십자가|10.2934,123.9018|p
+sight|산페드로 요새|스페인 시대 요새|10.2925,123.9055|pk
+food|주부촌|바삭한 껍질의 통돼지 레촌|10.3170,123.8975|fp
 # IT파크·아얄라
-shop|아얄라 센터 세부|쇼핑몰과 식당가
-shop|SM 시티 세부|대형 쇼핑몰
-night|아얄라 테라스|야외 레스토랑·바 거리
-cafe|아바카 베이킹 컴퍼니|브런치·빵 카페
+shop|아얄라 센터 세부|쇼핑몰과 식당가|10.3180,123.9050|pk
+shop|SM 시티 세부|대형 쇼핑몰|10.3115,123.9180|k
+night|아얄라 테라스|야외 레스토랑·바 거리|10.3180,123.9055|cf
+cafe|아바카 베이킹 컴퍼니|브런치·빵 카페|10.3260,123.9050|c
 # 부사이 언덕
-sight|템플 오브 레아|언덕 위 그리스풍 신전
-night|탑스 전망대|세부 시내 야경
+sight|템플 오브 레아|언덕 위 그리스풍 신전|10.3700,123.8820|c
+night|탑스 전망대|세부 시내 야경|10.3690,123.8700|c
 # 막탄
-food|수투킬|해산물을 골라 굽고 끓이는 식당가
-sight|아일랜드 호핑|날루수안·힐루뚱안 섬 스노클링
+food|수투킬|해산물을 골라 굽고 끓이는 식당가|10.2885,123.9825|fp
+sight|아일랜드 호핑|날루수안·힐루뚱안 섬 스노클링|10.2800,124.0000|kcf
 # 남부 당일치기
-sight|오슬롭 고래상어|고래상어와 수영
-sight|가와산 폭포|에메랄드빛 폭포 캐녀닝
-sight|모알보알 정어리떼|바다 거북과 정어리떼 스노클링`,
+sight|오슬롭 고래상어|고래상어와 수영|9.4600,123.3800|kc
+sight|가와산 폭포|에메랄드빛 폭포 캐녀닝|9.8035,123.3755|fc
+sight|모알보알 정어리떼|바다 거북과 정어리떼 스노클링|9.9500,123.3700|f`,
 '싱가포르': `# 마리나 베이
-sight|가든스 바이 더 베이|슈퍼트리와 플라워돔
-sight|마리나 베이 샌즈 스카이파크|도시 전망대
-sight|머라이언 공원|싱가포르의 상징 동상
-night|가든 랩소디|슈퍼트리 빛과 음악 쇼, 무료
-night|스펙트라 쇼|물과 레이저 쇼, 무료
-cafe|바샤 커피|화려한 매장의 커피 하우스
-food|라우파삿|밤엔 사테 거리가 되는 호커센터
+sight|가든스 바이 더 베이|슈퍼트리와 플라워돔|1.2816,103.8636|kcp
+sight|마리나 베이 샌즈 스카이파크|도시 전망대|1.2834,103.8607|c
+sight|머라이언 공원|싱가포르의 상징 동상|1.2868,103.8545|kp
+night|가든 랩소디|슈퍼트리 빛과 음악 쇼, 무료|1.2815,103.8640|kc
+night|스펙트라 쇼|물과 레이저 쇼, 무료|1.2830,103.8590|kc
+cafe|바샤 커피|화려한 매장의 커피 하우스|1.2840,103.8590|c
+food|라우파삿|밤엔 사테 거리가 되는 호커센터|1.2806,103.8504|fp
 # 차이나타운
-sight|불아사|부처 치아 사리 사원
-food|맥스웰 푸드센터|티엔티엔 치킨라이스 호커센터
-food|랴오판 홍콩 소야소스 치킨|간장 치킨라이스
+sight|불아사|부처 치아 사리 사원|1.2815,103.8443|p
+food|맥스웰 푸드센터|티엔티엔 치킨라이스 호커센터|1.2803,103.8448|pk
+food|랴오판 홍콩 소야소스 치킨|간장 치킨라이스|1.2817,103.8445|f
 # 오차드
-shop|오차드 로드|쇼핑몰이 줄지은 메인 거리
-shop|아이온 오차드|대표 쇼핑몰과 전망대
+shop|오차드 로드|쇼핑몰이 줄지은 메인 거리|1.3048,103.8318|p
+shop|아이온 오차드|대표 쇼핑몰과 전망대|1.3040,103.8318|p
 # 클락키
-night|클락키|강변 식당·바 거리
-food|점보 시푸드 리버사이드|칠리크랩 대표 맛집
+night|클락키|강변 식당·바 거리|1.2906,103.8465|fc
+food|점보 시푸드 리버사이드|칠리크랩 대표 맛집|1.2890,103.8480|pk
 # 캄퐁 글람·리틀 인디아
-shop|하지 레인|벽화와 편집숍 골목
-sight|술탄 모스크|황금 돔 모스크
-sight|리틀 인디아|알록달록한 인도 거리
-# 센토사·창이
-sight|유니버설 스튜디오 싱가포르|센토사섬 테마파크
-shop|쥬얼 창이|실내 폭포가 있는 공항 쇼핑몰`,
+shop|하지 레인|벽화와 편집숍 골목|1.3008,103.8590|fc
+sight|술탄 모스크|황금 돔 모스크|1.3022,103.8590|p
+sight|리틀 인디아|알록달록한 인도 거리|1.3066,103.8518|p
+# 센토사
+sight|유니버설 스튜디오 싱가포르|센토사섬 테마파크|1.2540,103.8238|kf
+sight|S.E.A. 아쿠아리움|센토사 대형 수족관|1.2585,103.8204|kc
+# 북부·창이
+sight|싱가포르 동물원|오픈형 동물원|1.4043,103.7930|k
+night|나이트 사파리|밤에 보는 사파리|1.4022,103.7880|kc
+shop|쥬얼 창이|실내 폭포가 있는 공항 쇼핑몰|1.3602,103.9898|kp`,
 '홍콩': `# 센트럴·소호
-sight|빅토리아 피크|피크트램 타고 오르는 전망대
-sight|미드레벨 에스컬레이터|세계에서 가장 긴 야외 에스컬레이터
-food|막스 누들|새우 완탕면 노포
-food|란퐁유엔|홍콩식 밀크티와 토스트
-cafe|타이청 베이커리|에그타르트 명소
-night|란콰이퐁|바·클럽 거리
+sight|빅토리아 피크|피크트램 타고 오르는 전망대|22.2712,114.1500|ckp
+sight|미드레벨 에스컬레이터|세계에서 가장 긴 야외 에스컬레이터|22.2830,114.1545|f
+food|막스 누들|새우 완탕면 노포|22.2830,114.1550|p
+food|란퐁유엔|홍콩식 밀크티와 토스트|22.2840,114.1530|f
+cafe|타이청 베이커리|에그타르트 명소|22.2830,114.1540|k
+night|란콰이퐁|바·클럽 거리|22.2808,114.1556|fa
 # 침사추이
-sight|스타의 거리|빅토리아 항구 산책로
-night|심포니 오브 라이트|매일 밤 8시 빌딩 조명 쇼
-shop|하버시티|항구 앞 초대형 쇼핑몰
-shop|K11 뮤제아|예술 쇼핑몰
-food|딤딤섬|가성비 딤섬
+sight|스타의 거리|빅토리아 항구 산책로|22.2930,114.1740|ck
+night|심포니 오브 라이트|매일 밤 8시 빌딩 조명 쇼|22.2935,114.1720|ckp
+shop|하버시티|항구 앞 초대형 쇼핑몰|22.2970,114.1680|pk
+shop|K11 뮤제아|예술 쇼핑몰|22.2945,114.1745|c
+food|딤딤섬|가성비 딤섬|22.3010,114.1720|p
 # 몽콕·야우마테이
-shop|몽콕 레이디스 마켓|노점 쇼핑 거리
-night|템플 스트리트 야시장|밤 노점과 해산물 식당
-food|오스트레일리아 데어리 컴퍼니|스크램블 에그 토스트 차찬텡
+shop|몽콕 레이디스 마켓|노점 쇼핑 거리|22.3188,114.1709|f
+night|템플 스트리트 야시장|밤 노점과 해산물 식당|22.3060,114.1700|f
+food|오스트레일리아 데어리 컴퍼니|스크램블 에그 토스트 차찬텡|22.3048,114.1712|f
 # 코즈웨이베이
-shop|타임스스퀘어|코즈웨이베이 대표 쇼핑몰
-food|호흥키|미쉐린 완탕면
+shop|타임스스퀘어|코즈웨이베이 대표 쇼핑몰|22.2783,114.1822|p
+food|호흥키|미쉐린 완탕면|22.2800,114.1830|p
 # 삼수이포
-food|팀호완 삼수이포|미쉐린 딤섬 원조
-# 란타우
-sight|옹핑 빅부다|케이블카와 큰 불상
-sight|홍콩 디즈니랜드|디즈니 테마파크`,
+food|팀호완 삼수이포|미쉐린 딤섬 원조|22.3305,114.1625|p
+# 테마파크·란타우
+sight|오션파크|놀이기구·판다·수족관 테마파크|22.2467,114.1757|k
+sight|홍콩 디즈니랜드|디즈니 테마파크|22.3130,114.0413|kc
+sight|옹핑 빅부다|케이블카와 큰 불상|22.2540,113.9050|pk`,
 '상하이': `# 와이탄·난징동루
-sight|와이탄|강변 근대 건축물 거리
-night|와이탄 야경|강 건너 루자쭈이 스카이라인
-shop|난징동루 보행가|네온 가득한 쇼핑 거리
-food|양스 생지엔|바닥을 바삭하게 구운 군만두
+sight|와이탄|강변 근대 건축물 거리|31.2400,121.4900|cp
+night|와이탄 야경|강 건너 루자쭈이 스카이라인|31.2390,121.4905|ck
+shop|난징동루 보행가|네온 가득한 쇼핑 거리|31.2370,121.4800|f
+food|양스 생지엔|바닥을 바삭하게 구운 군만두|31.2360,121.4740|f
 # 예원
-sight|예원|명나라 정원과 상점가
-food|난샹 만두점|샤오롱바오 노포
+sight|예원|명나라 정원과 상점가|31.2272,121.4921|pk
+food|난샹 만두점|샤오롱바오 노포|31.2275,121.4920|p
 # 신톈디·톈쯔팡
-shop|신톈디|석고문 건물의 쇼핑·식당가
-sight|톈쯔팡|골목 공방과 카페 거리
+shop|신톈디|석고문 건물의 쇼핑·식당가|31.2195,121.4750|c
+sight|톈쯔팡|골목 공방과 카페 거리|31.2085,121.4690|cf
 # 루자쭈이
-night|상하이 타워 전망대|중국에서 가장 높은 전망대
-night|동방명주|상하이 상징 방송탑
-shop|IFC몰|고층 쇼핑몰
+night|상하이 타워 전망대|중국에서 가장 높은 전망대|31.2335,121.5055|ck
+night|동방명주|상하이 상징 방송탑|31.2397,121.4998|k
+shop|IFC몰|고층 쇼핑몰|31.2365,121.5025|p
+sight|상하이 해양수족관|수중 터널 수족관|31.2405,121.5020|k
 # 징안·옛 프랑스 조계지
-cafe|스타벅스 리저브 로스터리|대형 로스터리 카페
-sight|우캉루|플라타너스 길의 옛 조계지
-sight|징안사|빌딩 숲 속 황금 사원
+cafe|스타벅스 리저브 로스터리|대형 로스터리 카페|31.2290,121.4580|c
+sight|우캉루|플라타너스 길의 옛 조계지|31.2070,121.4380|c
+sight|징안사|빌딩 숲 속 황금 사원|31.2235,121.4460|p
 # 근교 당일치기
-sight|주자자오 수향 마을|운하 물의 마을`,
+sight|주자자오 수향 마을|운하 물의 마을|31.1110,121.0560|pc
+sight|상하이 디즈니랜드|디즈니 테마파크|31.1440,121.6570|kc`,
 '뉴욕': `# 미드타운
-night|탑 오브 더 락|엠파이어가 보이는 전망대
-night|엠파이어 스테이트 빌딩|클래식 야경 전망대
-night|타임스스퀘어|전광판 가득한 밤거리
-sight|뉴욕 현대미술관 MoMA|현대미술 대표 미술관
-shop|5번가|플래그십 매장 거리
-food|할랄 가이즈|53번가 줄 서는 치킨 오버 라이스
+night|탑 오브 더 락|엠파이어가 보이는 전망대|40.7593,-73.9794|ck
+night|엠파이어 스테이트 빌딩|클래식 야경 전망대|40.7484,-73.9857|cp
+night|타임스스퀘어|전광판 가득한 밤거리|40.7580,-73.9855|kf
+sight|뉴욕 현대미술관 MoMA|현대미술 대표 미술관|40.7614,-73.9776|cp
+shop|5번가|플래그십 매장 거리|40.7590,-73.9760|p
+food|할랄 가이즈|53번가 줄 서는 치킨 오버 라이스|40.7618,-73.9790|f
+shop|레고 스토어 록펠러 센터|레고 플래그십 매장|40.7590,-73.9786|k
+shop|닌텐도 뉴욕|닌텐도 플래그십 매장|40.7585,-73.9789|kf
+shop|디즈니 스토어 타임스스퀘어|디즈니 캐릭터 굿즈|40.7570,-73.9860|k
 # 센트럴파크·어퍼
-sight|센트럴파크|도심 한가운데 거대한 공원
-sight|메트로폴리탄 미술관|세계적인 미술관
-sight|자연사 박물관|공룡 화석 박물관
-cafe|르뱅 베이커리|두툼한 쿠키
+sight|센트럴파크|도심 한가운데 거대한 공원|40.7812,-73.9665|kcp
+sight|메트로폴리탄 미술관|세계적인 미술관|40.7794,-73.9632|pc
+sight|자연사 박물관|공룡 화석 박물관|40.7813,-73.9740|k
+cafe|르뱅 베이커리|두툼한 쿠키|40.7798,-73.9800|k
+sight|센트럴파크 동물원|공원 안 작은 동물원|40.7678,-73.9718|k
 # 다운타운·소호
-shop|소호|편집숍·브랜드 매장 동네
-food|카츠 델리카트슨|파스트라미 샌드위치
-food|조스 피자|뉴욕 조각 피자
-sight|9/11 메모리얼|추모 공원과 박물관
-sight|자유의 여신상|배터리 파크에서 페리
+shop|소호|편집숍·브랜드 매장 동네|40.7233,-74.0030|cf
+food|카츠 델리카트슨|파스트라미 샌드위치|40.7223,-73.9874|f
+food|조스 피자|뉴욕 조각 피자|40.7306,-74.0021|fk
+sight|9/11 메모리얼|추모 공원과 박물관|40.7115,-74.0134|p
+sight|자유의 여신상|배터리 파크에서 페리|40.6892,-74.0445|kp
 # 첼시·허드슨야드
-sight|하이라인|옛 철길 위 공중 공원
-shop|첼시 마켓|실내 푸드홀과 상점
-night|엣지 전망대|하늘로 튀어나온 야외 전망대
+sight|하이라인|옛 철길 위 공중 공원|40.7480,-74.0048|c
+shop|첼시 마켓|실내 푸드홀과 상점|40.7424,-74.0060|pf
+night|엣지 전망대|하늘로 튀어나온 야외 전망대|40.7538,-74.0011|c
 # 브루클린
-sight|브루클린 브리지·덤보|걸어서 건너는 다리와 포토존
-food|피터 루거 스테이크하우스|드라이에이징 스테이크
+sight|브루클린 브리지·덤보|걸어서 건너는 다리와 포토존|40.7033,-73.9881|c
+food|피터 루거 스테이크하우스|드라이에이징 스테이크|40.7099,-73.9625|p
 # 근교
-shop|우드버리 커먼 아울렛|대형 아울렛`,
+shop|우드버리 커먼 아울렛|대형 아울렛|41.3150,-74.1300|p`,
 '하와이': `# 와이키키
-sight|와이키키 해변|호놀룰루 대표 해변
-sight|다이아몬드 헤드|분화구 정상 트레킹
-shop|인터내셔널 마켓플레이스|와이키키 중심 쇼핑몰
-food|마루가메 우동 와이키키|줄 서는 우동집
-food|듀크스 와이키키|해변 앞 레스토랑과 훌라파이
-night|와이키키 선셋|해변에서 보는 노을
-night|힐튼 하와이안 빌리지 불꽃놀이|금요일 밤 불꽃놀이
+sight|와이키키 해변|호놀룰루 대표 해변|21.2766,-157.8270|kc
+sight|다이아몬드 헤드|분화구 정상 트레킹|21.2620,-157.8060|fp
+shop|인터내셔널 마켓플레이스|와이키키 중심 쇼핑몰|21.2785,-157.8268|p
+food|마루가메 우동 와이키키|줄 서는 우동집|21.2802,-157.8248|k
+food|듀크스 와이키키|해변 앞 레스토랑과 훌라파이|21.2770,-157.8290|c
+night|와이키키 선셋|해변에서 보는 노을|21.2760,-157.8280|c
+night|힐튼 하와이안 빌리지 불꽃놀이|금요일 밤 불꽃놀이|21.2830,-157.8370|kc
+sight|와이키키 수족관|해변 옆 작은 수족관|21.2660,-157.8220|k
+sight|호놀룰루 동물원|카피올라니 공원 동물원|21.2710,-157.8210|k
 # 알라모아나·카카아코
-shop|알라모아나 센터|하와이 최대 쇼핑몰
-sight|카카아코 벽화 거리|컬러풀한 벽화 포토존
+shop|알라모아나 센터|하와이 최대 쇼핑몰|21.2910,-157.8430|pk
+sight|카카아코 벽화 거리|컬러풀한 벽화 포토존|21.2970,-157.8600|cf
 # 카파훌루
-cafe|레오나즈 베이커리|말라사다 도넛
-food|오노 시푸드|포케 맛집
-food|레인보우 드라이브인|하와이식 플레이트 런치
+cafe|레오나즈 베이커리|말라사다 도넛|21.2850,-157.8130|k
+food|오노 시푸드|포케 맛집|21.2830,-157.8140|f
+food|레인보우 드라이브인|하와이식 플레이트 런치|21.2780,-157.8150|kp
 # 동부 해안
-sight|하나우마 베이|스노클링 명소, 예약 필요
-sight|마카푸우 전망대|해안 절벽 트레일
+sight|하나우마 베이|스노클링 명소, 예약 필요|21.2690,-157.6940|kf
+sight|마카푸우 전망대|해안 절벽 트레일|21.3090,-157.6500|p
 # 노스쇼어·북동부
-sight|할레이바|서핑 마을과 거북이 해변
-food|지오반니 새우 트럭|갈릭 새우 플레이트
-cafe|마츠모토 셰이브 아이스|무지개 빙수
-sight|쿠알로아 랜치|쥬라기공원 촬영지 투어
+sight|할레이바|서핑 마을과 거북이 해변|21.5930,-158.1030|c
+food|지오반니 새우 트럭|갈릭 새우 플레이트|21.6800,-157.9790|f
+cafe|마츠모토 셰이브 아이스|무지개 빙수|21.5920,-158.1030|k
+sight|쿠알로아 랜치|쥬라기공원 촬영지 투어|21.5210,-157.8370|k
 # 진주만·서부
-sight|진주만 국립기념관|애리조나 기념관
-shop|와이켈레 프리미엄 아울렛|아울렛 쇼핑`,
+sight|진주만 국립기념관|애리조나 기념관|21.3670,-157.9390|p
+shop|와이켈레 프리미엄 아울렛|아울렛 쇼핑|21.4080,-158.0120|p`,
 '파리': `# 에펠탑·트로카데로
-sight|에펠탑|파리의 상징, 전망대
-night|트로카데로 광장|에펠탑 반짝임 보는 명당
-night|센강 유람선|밤에 타는 바토 무슈
+sight|에펠탑|파리의 상징, 전망대|48.8584,2.2945|kcp
+night|트로카데로 광장|에펠탑 반짝임 보는 명당|48.8620,2.2875|c
+night|센강 유람선|밤에 타는 바토 무슈|48.8600,2.2920|cpk
 # 루브르·튈르리
-sight|루브르 박물관|모나리자가 있는 박물관
-sight|오랑주리 미술관|모네 수련 연작
-cafe|앙젤리나|몽블랑과 진한 핫초코
+sight|루브르 박물관|모나리자가 있는 박물관|48.8606,2.3376|pc
+sight|오랑주리 미술관|모네 수련 연작|48.8638,2.3227|p
+cafe|앙젤리나|몽블랑과 진한 핫초코|48.8650,2.3285|ck
 # 생제르맹·오르세
-sight|오르세 미술관|인상파 그림 미술관
-cafe|카페 드 플로르|문인들이 사랑한 카페
-cafe|피에르 에르메|마카롱 명소
-food|르 를레 드 랑트르코트|감자튀김 스테이크 한 메뉴
+sight|오르세 미술관|인상파 그림 미술관|48.8600,2.3266|p
+cafe|카페 드 플로르|문인들이 사랑한 카페|48.8541,2.3326|c
+cafe|피에르 에르메|마카롱 명소|48.8510,2.3330|c
+food|르 를레 드 랑트르코트|감자튀김 스테이크 한 메뉴|48.8540,2.3340|p
+sight|뤽상부르 공원|회전목마·인형극이 있는 공원|48.8462,2.3372|kc
 # 마레·시테섬
-sight|노트르담 대성당|복원된 고딕 성당
-shop|마레 지구|편집숍과 빈티지 골목
-food|마르셰 데 앙팡 루주|파리에서 가장 오래된 실내 시장
-food|라스 뒤 팔라펠|줄 서는 팔라펠 샌드위치
+sight|노트르담 대성당|복원된 고딕 성당|48.8530,2.3499|p
+shop|마레 지구|편집숍과 빈티지 골목|48.8590,2.3620|cf
+food|마르셰 데 앙팡 루주|파리에서 가장 오래된 실내 시장|48.8627,2.3619|f
+food|라스 뒤 팔라펠|줄 서는 팔라펠 샌드위치|48.8574,2.3590|f
 # 오페라·샹젤리제
-shop|갤러리 라파예트|돔 천장 백화점, 옥상 전망
-shop|샹젤리제 거리|개선문까지 이어진 쇼핑 거리
-sight|개선문|옥상에서 보는 방사형 거리
-food|부이용 샤르티에|합리적인 가격의 옛 프랑스 식당
+shop|갤러리 라파예트|돔 천장 백화점, 옥상 전망|48.8738,2.3320|p
+shop|샹젤리제 거리|개선문까지 이어진 쇼핑 거리|48.8698,2.3076|c
+sight|개선문|옥상에서 보는 방사형 거리|48.8738,2.2950|p
+food|부이용 샤르티에|합리적인 가격의 옛 프랑스 식당|48.8720,2.3430|p
+shop|디즈니 스토어 샹젤리제|디즈니 캐릭터 굿즈|48.8710,2.3040|k
 # 몽마르트르
-sight|사크레쾨르 대성당|언덕 위 하얀 성당과 전망
-sight|테르트르 광장|화가들이 그림 그리는 광장
+sight|사크레쾨르 대성당|언덕 위 하얀 성당과 전망|48.8867,2.3431|cp
+sight|테르트르 광장|화가들이 그림 그리는 광장|48.8865,2.3408|c
 # 근교 당일치기
-sight|베르사유 궁전|거울의 방과 정원
-shop|라 발레 빌리지|명품 아울렛`,
+sight|베르사유 궁전|거울의 방과 정원|48.8049,2.1204|p
+shop|라 발레 빌리지|명품 아울렛|48.8550,2.7820|p
+sight|디즈니랜드 파리|디즈니 테마파크|48.8722,2.7758|kc`,
 '로마': `# 콜로세움·포로
-sight|콜로세움|고대 원형경기장
-sight|포로 로마노|고대 로마 광장 유적
-sight|팔라티노 언덕|황제 궁전 터와 전망
+sight|콜로세움|고대 원형경기장|41.8902,12.4922|kp
+sight|포로 로마노|고대 로마 광장 유적|41.8925,12.4853|p
+sight|팔라티노 언덕|황제 궁전 터와 전망|41.8894,12.4875|p
 # 바티칸
-sight|바티칸 박물관·시스티나 성당|미켈란젤로 천장화
-sight|성 베드로 대성당|세계 최대 성당과 돔 전망
-night|산탄젤로 성|다리와 성이 비치는 강변 야경
-food|본치 피자리움|조각 피자 맛집
+sight|바티칸 박물관·시스티나 성당|미켈란젤로 천장화|41.9065,12.4536|p
+sight|성 베드로 대성당|세계 최대 성당과 돔 전망|41.9022,12.4539|p
+night|산탄젤로 성|다리와 성이 비치는 강변 야경|41.9031,12.4663|c
+food|본치 피자리움|조각 피자 맛집|41.9070,12.4470|kf
 # 판테온·나보나
-sight|판테온|2천 년 된 돔 신전
-sight|나보나 광장|분수와 거리 예술가 광장
-cafe|젤라테리아 지올리티|오래된 젤라토 가게
-cafe|타짜 도로|그라니타 디 카페
-cafe|산 테우스타키오 일 카페|로마 대표 에스프레소
-food|로쇼리|와인바 겸 식당
+sight|판테온|2천 년 된 돔 신전|41.8986,12.4769|pc
+sight|나보나 광장|분수와 거리 예술가 광장|41.8992,12.4731|kc
+cafe|젤라테리아 지올리티|오래된 젤라토 가게|41.9009,12.4767|k
+cafe|타짜 도로|그라니타 디 카페|41.8993,12.4772|c
+cafe|산 테우스타키오 일 카페|로마 대표 에스프레소|41.8981,12.4753|c
+food|로쇼리|와인바 겸 식당|41.8940,12.4730|c
 # 트레비·스페인 광장
-sight|트레비 분수|동전 던지는 분수
-night|스페인 계단|밤 산책 명소
-shop|콘도티 거리|명품 매장 거리
-shop|코르소 거리|브랜드 매장 쇼핑 거리
+sight|트레비 분수|동전 던지는 분수|41.9009,12.4833|kc
+night|스페인 계단|밤 산책 명소|41.9058,12.4823|c
+shop|콘도티 거리|명품 매장 거리|41.9050,12.4800|p
+shop|코르소 거리|브랜드 매장 쇼핑 거리|41.9030,12.4810|f
+sight|보르게세 공원|자전거·보트 타는 큰 공원|41.9129,12.4853|kp
 # 트라스테베레
-food|다 엔초 알 29|카르보나라·로마 가정식
-food|수플리 로마|로마식 주먹밥 튀김
-night|트라스테베레 골목|밤이 예쁜 식당 골목`,
+food|다 엔초 알 29|카르보나라·로마 가정식|41.8880,12.4770|c
+food|수플리 로마|로마식 주먹밥 튀김|41.8890,12.4700|kf
+night|트라스테베레 골목|밤이 예쁜 식당 골목|41.8890,12.4690|cf`,
 '바르셀로나': `# 에샴플레
-sight|사그라다 파밀리아|가우디의 미완성 성당, 예약 필수
-sight|카사 바트요|뼈를 닮은 가우디 건물
-sight|카사 밀라|물결 모양 건물과 옥상
-shop|그라시아 거리|가우디 건물 사이 명품 거리
-food|시우다드 콘달|현지인도 줄 서는 타파스 집
+sight|사그라다 파밀리아|가우디의 미완성 성당, 예약 필수|41.4036,2.1744|pkc
+sight|카사 바트요|뼈를 닮은 가우디 건물|41.3917,2.1649|c
+sight|카사 밀라|물결 모양 건물과 옥상|41.3954,2.1619|p
+shop|그라시아 거리|가우디 건물 사이 명품 거리|41.3925,2.1650|c
+food|시우다드 콘달|현지인도 줄 서는 타파스 집|41.3880,2.1670|f
 # 고딕·보른
-sight|고딕 지구 대성당|중세 골목과 대성당
-sight|피카소 미술관|피카소 초기작 미술관
-food|엘 샴파네트|카바와 타파스 바
-food|라 보케리아 시장|과일 주스·하몽·타파스 시장
-cafe|그란하 라 파야레사|추로스와 진한 초콜릿
-shop|라 람블라 거리|산책·노점 거리
+sight|고딕 지구 대성당|중세 골목과 대성당|41.3839,2.1762|p
+sight|피카소 미술관|피카소 초기작 미술관|41.3852,2.1809|p
+food|엘 샴파네트|카바와 타파스 바|41.3840,2.1830|f
+food|라 보케리아 시장|과일 주스·하몽·타파스 시장|41.3817,2.1716|kf
+cafe|그란하 라 파야레사|추로스와 진한 초콜릿|41.3829,2.1740|kc
+shop|라 람블라 거리|산책·노점 거리|41.3809,2.1734|f
 # 그라시아·구엘공원
-sight|구엘 공원|모자이크 벤치와 도시 전망
-night|벙커 델 카르멜|도시 전체가 보이는 야경
+sight|구엘 공원|모자이크 벤치와 도시 전망|41.4145,2.1527|kc
+night|벙커 델 카르멜|도시 전체가 보이는 야경|41.4190,2.1620|cf
 # 몬주익
-sight|몬주익 성|케이블카와 항구 전망
-night|몬주익 마법의 분수|음악 분수 쇼 (운영일 확인)
+sight|몬주익 성|케이블카와 항구 전망|41.3634,2.1660|k
+night|몬주익 마법의 분수|음악 분수 쇼 (운영일 확인)|41.3713,2.1517|kc
 # 바르셀로네타
-night|바르셀로네타 해변|해변 산책과 바
-food|라 코바 푸말레타|원조 봄바(감자 크로켓)
+night|바르셀로네타 해변|해변 산책과 바|41.3784,2.1925|cf
+food|라 코바 푸말레타|원조 봄바(감자 크로켓)|41.3795,2.1890|f
+sight|바르셀로나 수족관|항구 앞 수족관|41.3767,2.1837|k
 # 근교 당일치기
-sight|몬세라트|톱니 바위산 수도원
-shop|라 로카 빌리지|명품 아울렛`,
+sight|몬세라트|톱니 바위산 수도원|41.5932,1.8374|p
+shop|라 로카 빌리지|명품 아울렛|41.6118,2.3436|p
+sight|포트아벤투라|테마파크, 당일치기|41.0870,1.1570|k`,
 '런던': `# 웨스트민스터
-sight|빅벤·웨스트민스터 사원|국회의사당 시계탑
-sight|버킹엄 궁전|근위병 교대식
-sight|내셔널 갤러리|무료 명화 미술관
-night|런던 아이|템스강 대관람차
+sight|빅벤·웨스트민스터 사원|국회의사당 시계탑|51.5007,-0.1246|pk
+sight|버킹엄 궁전|근위병 교대식|51.5014,-0.1419|kp
+sight|내셔널 갤러리|무료 명화 미술관|51.5089,-0.1283|p
+night|런던 아이|템스강 대관람차|51.5033,-0.1196|kc
+sight|씨라이프 런던 아쿠아리움|런던 아이 옆 수족관|51.5020,-0.1190|k
 # 소호·코벤트가든·피카딜리
-shop|코벤트 가든|마켓·공연·쇼핑
-shop|리버티 백화점|튜더 양식 백화점
-shop|옥스퍼드 스트리트|대형 매장 쇼핑 거리
-food|디슘|봄베이식 인도 카페
-food|더 울슬리|클래식 아침·브런치
-cafe|포트넘 앤 메이슨|애프터눈티와 홍차
-cafe|몬머스 커피|런던 대표 스페셜티 커피
-night|웨스트엔드 뮤지컬|뮤지컬 극장가
+shop|코벤트 가든|마켓·공연·쇼핑|51.5117,-0.1240|c
+shop|리버티 백화점|튜더 양식 백화점|51.5140,-0.1400|cp
+shop|옥스퍼드 스트리트|대형 매장 쇼핑 거리|51.5150,-0.1420|f
+food|디슘|봄베이식 인도 카페|51.5121,-0.1270|f
+food|더 울슬리|클래식 아침·브런치|51.5073,-0.1410|p
+cafe|포트넘 앤 메이슨|애프터눈티와 홍차|51.5087,-0.1381|pc
+cafe|몬머스 커피|런던 대표 스페셜티 커피|51.5141,-0.1265|c
+night|웨스트엔드 뮤지컬|뮤지컬 극장가|51.5110,-0.1310|cpk
+shop|햄리스|7층짜리 장난감 가게|51.5128,-0.1402|k
+shop|M&M's 월드 런던|초콜릿 캐릭터 매장|51.5101,-0.1307|k
 # 사우스뱅크·런던 브리지
-food|버로우 마켓|런던 대표 먹거리 시장
-sight|테이트 모던|무료 현대미술관
-night|더 샤드 전망대|런던 최고층 전망대
+food|버로우 마켓|런던 대표 먹거리 시장|51.5055,-0.0910|f
+sight|테이트 모던|무료 현대미술관|51.5076,-0.0994|c
+night|더 샤드 전망대|런던 최고층 전망대|51.5045,-0.0865|c
 # 시티·타워
-sight|타워 브리지|도개교와 전시
-sight|런던탑|왕관 보석이 있는 성
-sight|세인트폴 대성당|돔 위 전망
-night|스카이 가든|무료 실내 정원 전망대 (예약)
+sight|타워 브리지|도개교와 전시|51.5055,-0.0754|kc
+sight|런던탑|왕관 보석이 있는 성|51.5081,-0.0759|kp
+sight|세인트폴 대성당|돔 위 전망|51.5138,-0.0984|p
+night|스카이 가든|무료 실내 정원 전망대 (예약)|51.5113,-0.0836|c
 # 켄싱턴·블룸즈버리
-sight|대영박물관|무료 세계 문명 박물관
-sight|자연사 박물관|공룡 홀이 있는 무료 박물관
-shop|해롯|고급 백화점과 푸드홀
-sight|노팅힐·포토벨로 마켓|알록달록 집과 앤티크 시장
+sight|대영박물관|무료 세계 문명 박물관|51.5194,-0.1270|pk
+sight|자연사 박물관|공룡 홀이 있는 무료 박물관|51.4967,-0.1764|k
+sight|과학 박물관|체험 전시가 많은 무료 박물관|51.4978,-0.1745|k
+shop|해롯|고급 백화점과 푸드홀|51.4994,-0.1633|p
+sight|노팅힐·포토벨로 마켓|알록달록 집과 앤티크 시장|51.5160,-0.2050|c
 # 근교
-shop|비스터 빌리지|명품 아울렛`,
+shop|비스터 빌리지|명품 아울렛|51.8920,-1.1560|p
+sight|워너 브라더스 해리포터 스튜디오|해리포터 촬영 세트 투어|51.6904,-0.4180|kf`,
 '시드니': `# 서큘러 키·더 록스
-sight|시드니 오페라하우스|조개 모양 공연장
-sight|하버 브리지|다리 걷기·브리지 클라임
-night|오페라 바|오페라하우스 옆 야외 바
-shop|더 록스 마켓|주말 수공예 마켓
+sight|시드니 오페라하우스|조개 모양 공연장|-33.8568,151.2153|pc
+sight|하버 브리지|다리 걷기·브리지 클라임|-33.8523,151.2108|fc
+night|오페라 바|오페라하우스 옆 야외 바|-33.8580,151.2140|cf
+shop|더 록스 마켓|주말 수공예 마켓|-33.8590,151.2085|p
 # 시티
-shop|퀸 빅토리아 빌딩|아름다운 옛 쇼핑 아케이드
-shop|피트 스트리트 몰|도심 쇼핑 거리
-food|해리스 카페 드 휠스|명물 미트파이 트럭 (울루물루)
+shop|퀸 빅토리아 빌딩|아름다운 옛 쇼핑 아케이드|-33.8718,151.2067|p
+shop|피트 스트리트 몰|도심 쇼핑 거리|-33.8698,151.2085|f
+food|해리스 카페 드 휠스|명물 미트파이 트럭|-33.8690,151.2210|f
 # 달링하버·피어몬트
-night|달링하버|항구 식당가와 야경
-food|시드니 피시마켓|굴·해산물 플래터
+night|달링하버|항구 식당가와 야경|-33.8748,151.2007|kc
+food|시드니 피시마켓|굴·해산물 플래터|-33.8730,151.1920|pk
+sight|씨라이프 시드니 아쿠아리움|대형 수족관|-33.8696,151.2021|k
+sight|와일드라이프 시드니 동물원|코알라·캥거루 실내 동물원|-33.8697,151.2025|k
 # 본다이
-sight|본다이 비치|서핑과 해변
-sight|본다이-쿠지 해안 산책로|절벽 따라 걷는 해안길
-food|본다이 아이스버그스|바다 수영장 앞 레스토랑
+sight|본다이 비치|서핑과 해변|-33.8915,151.2767|kc
+sight|본다이-쿠지 해안 산책로|절벽 따라 걷는 해안길|-33.8950,151.2740|pc
+food|본다이 아이스버그스|바다 수영장 앞 레스토랑|-33.8950,151.2745|c
 # 북쪽 해안
-night|밀슨스 포인트|하버브리지·오페라하우스 야경 명당
-sight|타롱가 동물원|페리 타고 가는 항구 전망 동물원
+night|밀슨스 포인트|하버브리지·오페라하우스 야경 명당|-33.8470,151.2110|c
+sight|타롱가 동물원|페리 타고 가는 항구 전망 동물원|-33.8436,151.2411|k
 # 뉴타운·근교
-cafe|블랙스타 페이스트리|수박 케이크 디저트
-sight|블루마운틴|세자매봉 국립공원, 당일치기`,
+cafe|블랙스타 페이스트리|수박 케이크 디저트|-33.8960,151.1800|c
+sight|블루마운틴|세자매봉 국립공원, 당일치기|-33.7320,150.3120|pk`,
 '제주': `# 제주시
-shop|동문재래시장|기념품·귤·해산물 시장
-food|동문시장 야시장|저녁 먹거리 노점
-food|흑돼지 거리|제주 흑돼지 구이 골목
-food|고기국수 거리|돼지고기 국수 맛집 거리
-night|용두암·용연|바닷가 밤 산책
-night|이호테우 해변 말 등대|빨간·하얀 말 모양 등대 노을
+shop|동문재래시장|기념품·귤·해산물 시장|33.5120,126.5280|pk
+food|동문시장 야시장|저녁 먹거리 노점|33.5115,126.5275|fk
+food|흑돼지 거리|제주 흑돼지 구이 골목|33.5140,126.5240|fp
+food|고기국수 거리|돼지고기 국수 맛집 거리|33.5050,126.5300|p
+night|용두암·용연|바닷가 밤 산책|33.5160,126.5120|cp
+night|이호테우 해변 말 등대|빨간·하얀 말 모양 등대 노을|33.4980,126.4530|c
 # 애월·한림 (서쪽)
-sight|협재해수욕장|에메랄드 바다와 비양도
-cafe|애월 해안 카페 거리|바다 보이는 카페들
-sight|한림공원|야자수·동굴 정원
+sight|협재해수욕장|에메랄드 바다와 비양도|33.3940,126.2390|kc
+cafe|애월 해안 카페 거리|바다 보이는 카페들|33.4630,126.3100|cf
+sight|한림공원|야자수·동굴 정원|33.3895,126.2395|kp
 # 안덕 (남서쪽)
-cafe|오설록 티 뮤지엄|녹차밭과 녹차 디저트
-sight|산방산|바다 앞 종 모양 산
-sight|카멜리아힐|동백 정원
+cafe|오설록 티 뮤지엄|녹차밭과 녹차 디저트|33.3060,126.2895|pck
+sight|산방산|바다 앞 종 모양 산|33.2370,126.3130|p
+sight|카멜리아힐|동백 정원|33.2900,126.3700|cp
+sight|제주신화월드 테마파크|아이들 놀이 테마파크|33.3060,126.3170|k
 # 서귀포
-shop|매일올레시장|먹거리 많은 재래시장
-sight|천지연 폭포|밤에도 걷는 폭포 산책로
-sight|정방 폭포|바다로 떨어지는 폭포
-sight|쇠소깍|투명 카약 타는 계곡
+shop|매일올레시장|먹거리 많은 재래시장|33.2500,126.5640|pk
+sight|천지연 폭포|밤에도 걷는 폭포 산책로|33.2445,126.5590|pc
+sight|정방 폭포|바다로 떨어지는 폭포|33.2445,126.5720|p
+sight|쇠소깍|투명 카약 타는 계곡|33.2525,126.6240|cf
 # 성산·구좌 (동쪽)
-sight|성산일출봉|해돋이 오름, 유네스코 자연유산
-sight|섭지코지|해안 산책로
-sight|우도|배 타고 가는 섬, 땅콩 아이스크림
-sight|만장굴|용암 동굴
+sight|성산일출봉|해돋이 오름, 유네스코 자연유산|33.4580,126.9420|pk
+sight|섭지코지|해안 산책로|33.4240,126.9300|c
+sight|우도|배 타고 가는 섬, 땅콩 아이스크림|33.5050,126.9550|ck
+sight|만장굴|용암 동굴|33.5280,126.7710|kp
+sight|아쿠아플라넷 제주|대형 수족관|33.4330,126.9280|k
 # 한라산
-sight|한라산|성판악·관음사 정상 코스, 예약 필요`
+sight|한라산|성판악·관음사 정상 코스, 예약 필요|33.3617,126.5292|fp`
 };
 const CITY_ALIAS = {
   '동경': '도쿄', 'tokyo': '도쿄', 'osaka': '오사카', '하카타': '후쿠오카', 'fukuoka': '후쿠오카', '홋카이도': '삿포로', 'sapporo': '삿포로',
@@ -1831,8 +1904,8 @@ function recsFor(t) {
     recCache[c] = [];
     RECS[c].trim().split('\n').forEach((l, i) => {
       if (l.startsWith('# ')) { area = l.slice(2).trim(); return; }
-      const [theme, name, desc] = l.split('|');
-      recCache[c].push({ id: c + '-' + i, theme, name, area, desc });
+      const [theme, name, desc, ll, tags] = l.split('|');
+      recCache[c].push({ id: c + '-' + i, theme, name, area, desc, ll: ll ? ll.split(',').map(Number) : null, tags: tags || '' });
     });
   }
   return recCache[c];
@@ -1844,11 +1917,17 @@ function recSaved(t, r) {
 }
 function addRec(t, r) {
   if (recSaved(t, r)) return false;
-  if (r.theme === 'food' || r.theme === 'cafe') t.foods.push({ id: uid(), name: r.name, area: r.area, menu: '', memo: r.desc, visited: false, rating: 0, theme: r.theme });
-  else t.places.push({ id: uid(), name: r.name, area: r.area, memo: r.desc, done: false, theme: r.theme });
+  if (r.theme === 'food' || r.theme === 'cafe') t.foods.push({ id: uid(), name: r.name, area: r.area, menu: '', memo: r.desc, visited: false, rating: 0, theme: r.theme, ll: r.ll });
+  else t.places.push({ id: uid(), name: r.name, area: r.area, memo: r.desc, done: false, theme: r.theme, ll: r.ll });
   return true;
 }
 const themeSearch = (t, k) => 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent((S.recArea && S.recArea !== 'all' ? S.recArea.split('·')[0].replace(/ ?\(.*\)$/, '') + ' ' : '') + t.city + ' ' + THEME_Q[k]);
+/* 여행 타입별 추천 */
+const STYLES = [['solo', '혼자'], ['couple', '커플'], ['friends', '친구'], ['family', '가족'], ['kids', '아이 동반'], ['parents', '부모님과']];
+const STYLE_N = Object.fromEntries(STYLES);
+const STYLE_PREF = { couple: 'c', friends: 'f', family: 'kp', kids: 'k', parents: 'p' };
+const styleFit = (t, r) => { const pf = STYLE_PREF[t.style]; return !!pf && [...pf].some(ch => (r.tags || '').includes(ch)); };
+const styleOK = (t, r) => !(['family', 'kids', 'parents'].includes(t.style) && (r.tags || '').includes('a'));
 function recView(t) {
   const recs = recsFor(t);
   const more = '<div class="chips">' + THEMES.map(([k, n]) =>
@@ -1856,8 +1935,14 @@ function recView(t) {
   if (!recs) return '<section class="card stack"><p class="eyebrow">' + esc(t.city) + ' 추천</p><p style="margin:0">' + esc(t.city) + ' 추천 목록은 아직 없어요. 구글맵에서 테마별로 찾아보세요.</p>' + more + '</section>';
   const areas = [...new Set(recs.map(r => r.area))];
   const th = S.recTheme || 'all', ar = S.recArea && areas.includes(S.recArea) ? S.recArea : 'all';
-  const list = recs.filter(r => (th === 'all' || r.theme === th) && (ar === 'all' || r.area === ar));
-  let h = '<section class="card stack"><p class="eyebrow">' + esc(t.city) + ' · 평점·후기 좋은 곳 ' + recs.length + '</p>' +
+  const list = recs.filter(r => styleOK(t, r) && (th === 'all' || r.theme === th) && (ar === 'all' || r.area === ar));
+  // 여행 타입에 맞는 곳을 동네 안에서 먼저
+  if (STYLE_PREF[t.style]) {
+    const order = [...new Set(list.map(r => r.area))];
+    list.sort((a, b) => order.indexOf(a.area) - order.indexOf(b.area) || styleFit(t, b) - styleFit(t, a));
+  }
+  let h = '<section class="card stack"><div class="row" style="justify-content:space-between"><p class="eyebrow">' + esc(t.city) + ' · 평점·후기 좋은 곳</p>' +
+    '<button class="chip sm" data-act="edit-style">' + (t.style && t.style !== 'solo' ? esc(STYLE_N[t.style]) + ' 맞춤' : '여행 타입') + ' ▾</button></div>' +
     '<div class="chips scroll">' + [['all', '전체 지역']].concat(areas.map(a => [a, a])).map(([k, n]) =>
       '<button class="chip" data-act="rec-area" data-v="' + esc(k) + '" aria-pressed="' + (ar === k) + '">' + esc(n) + '</button>').join('') + '</div>' +
     '<div class="chips scroll">' + [['all', '전체']].concat(THEMES.map(([k, n]) => [k, n])).map(([k, n]) =>
@@ -1867,12 +1952,13 @@ function recView(t) {
   list.forEach(r => { const g = groups[groups.length - 1]; if (g && g.area === r.area) g.items.push(r); else groups.push({ area: r.area, items: [r] }); });
   groups.forEach(g => {
     const unsaved = g.items.filter(r => !recSaved(t, r)).length;
-    h += '<div class="day-h"><span><b>' + esc(g.area) + '</b> · ' + g.items.length + '곳</span>' +
-      (unsaved > 1 ? '<button class="text-btn" data-act="rec-add-all" data-v="' + esc(g.area) + '">모두 담기</button>' : '') + '</div>';
+    h += '<div class="day-h"><span><b>' + esc(g.area) + '</b> · ' + g.items.length + '곳</span><span class="row" style="gap:2px">' +
+      '<button class="text-btn" data-act="route-open" data-v="' + esc(g.area) + '">지도·동선</button>' +
+      (unsaved > 1 ? '<button class="text-btn" data-act="rec-add-all" data-v="' + esc(g.area) + '">모두 담기</button>' : '') + '</span></div>';
     h += '<div class="list">' + g.items.map(r => {
       const saved = recSaved(t, r);
       return '<div class="item"><span class="cat-dot" style="background:' + THEME[r.theme].g + '" title="' + THEME[r.theme].n + '">' + THEME[r.theme].n[0] + '</span>' +
-        '<span class="item-main"><span class="item-title" style="display:block">' + esc(r.name) + '</span><span class="item-sub" style="display:block">' + esc(r.desc) + '</span></span>' +
+        '<span class="item-main"><span class="item-title" style="display:block">' + esc(r.name) + (styleFit(t, r) ? ' <span class="tag">' + esc(STYLE_N[t.style]) + ' 추천</span>' : '') + '</span><span class="item-sub" style="display:block">' + esc(r.desc) + '</span></span>' +
         mapBtn({ name: r.name, area: r.area.replace(/ ?\(.*\)$/, '').split('·')[0] }, t) +
         (saved ? '<span class="add-btn on" aria-label="담음">' + ICON.check + '</span>'
                : '<button class="add-btn" data-act="rec-add" data-id="' + r.id + '" aria-label="' + esc(r.name) + ' 담기">+</button>') + '</div>';
@@ -1977,8 +2063,8 @@ function confetti() {
   const dpr = window.devicePixelRatio || 1, W = innerWidth, H = innerHeight;
   cv.width = W * dpr; cv.height = H * dpr;
   const ctx = cv.getContext('2d'); ctx.scale(dpr, dpr);
-  const cols = ['#ff8fab', '#ffc8dd', '#bde0fe', '#cdb4db', '#fff1a8', '#b9fbc0', '#ffd6a5'];
-  const parts = Array.from({ length: 110 }, () => ({ x: W / 2, y: H * .45, vx: (Math.random() - .5) * 14, vy: -Math.random() * 15 - 4, r: Math.random() * 6 + 4, c: cols[Math.floor(Math.random() * cols.length)], a: Math.random() * 6, va: (Math.random() - .5) * .4 }));
+  const cols = ['#f2a7c3', '#a9cdee', '#c9b5ea', '#f3d98b', '#a8dcc5'];
+  const parts = Array.from({ length: 45 }, () => ({ x: W / 2, y: H * .45, vx: (Math.random() - .5) * 14, vy: -Math.random() * 15 - 4, r: Math.random() * 6 + 4, c: cols[Math.floor(Math.random() * cols.length)], a: Math.random() * 6, va: (Math.random() - .5) * .4 }));
   const t0 = performance.now();
   const step = now => {
     const k = (now - t0) / 1600;
@@ -1986,8 +2072,7 @@ function confetti() {
     parts.forEach((q, i) => {
       q.vy += .45; q.vx *= .99; q.x += q.vx; q.y += q.vy; q.a += q.va;
       ctx.save(); ctx.globalAlpha = Math.max(0, 1 - k); ctx.translate(q.x, q.y); ctx.rotate(q.a); ctx.fillStyle = q.c;
-      if (i % 3 === 0) { const r = q.r * .6; ctx.beginPath(); ctx.moveTo(0, r * .9); ctx.bezierCurveTo(-r * 1.6, -r * .4, -r * .5, -r * 1.5, 0, -r * .5); ctx.bezierCurveTo(r * .5, -r * 1.5, r * 1.6, -r * .4, 0, r * .9); ctx.fill(); }
-      else if (i % 3 === 1) { ctx.beginPath(); ctx.arc(0, 0, q.r / 2.4, 0, Math.PI * 2); ctx.fill(); }
+      if (i % 2 === 1) { ctx.beginPath(); ctx.arc(0, 0, q.r / 2.4, 0, Math.PI * 2); ctx.fill(); }
       else ctx.fillRect(-q.r / 2, -q.r / 4, q.r, q.r / 2);
       ctx.restore();
     });
@@ -1995,23 +2080,196 @@ function confetti() {
   };
   requestAnimationFrame(step);
 }
-const MASCOT = '<svg class="mascot" viewBox="0 0 64 64" aria-hidden="true">' +
-  '<ellipse cx="22" cy="16" rx="7" ry="15" fill="#fff" stroke="#f3cfe0" stroke-width="2" transform="rotate(-12 22 16)"/><ellipse cx="22" cy="17" rx="3.2" ry="10" fill="#ffc8dd" transform="rotate(-12 22 17)"/>' +
-  '<ellipse cx="42" cy="16" rx="7" ry="15" fill="#fff" stroke="#f3cfe0" stroke-width="2" transform="rotate(12 42 16)"/><ellipse cx="42" cy="17" rx="3.2" ry="10" fill="#ffc8dd" transform="rotate(12 42 17)"/>' +
-  '<ellipse cx="32" cy="40" rx="22" ry="19" fill="#fff" stroke="#f3cfe0" stroke-width="2"/>' +
-  '<circle cx="24" cy="39" r="2.6" fill="#5b4a7a"/><circle cx="40" cy="39" r="2.6" fill="#5b4a7a"/>' +
-  '<circle cx="18.5" cy="46" r="4" fill="#ffc8dd"/><circle cx="45.5" cy="46" r="4" fill="#ffc8dd"/>' +
-  '<path d="M29 45q3 3 6 0" stroke="#5b4a7a" stroke-width="2" fill="none" stroke-linecap="round"/>' +
-  '<path d="M44 24l6-4 1 7zM44 24l-1 7 7-2z" fill="#a0d8ff"/><circle cx="45" cy="25" r="2" fill="#7fc4f5"/></svg>';
+/* ---------- 지도·동선 ---------- */
+const toRad = d => d * Math.PI / 180;
+function distKm(a, b) {
+  const dLat = toRad(b[0] - a[0]), dLng = toRad(b[1] - a[1]);
+  const h = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(a[0])) * Math.cos(toRad(b[0])) * Math.sin(dLng / 2) ** 2;
+  return 12742 * Math.asin(Math.sqrt(h));
+}
+// 직선거리 × 1.3 으로 걷는 거리를 어림하고, 멀면 대중교통 시간으로
+function legMin(km) { const d = km * 1.3; return d < 1.6 ? Math.max(1, Math.round(d / 4.5 * 60)) : Math.round(d / 18 * 60 + 10); }
+function legText(km) { const d = km * 1.3; return (d < 1.6 ? '도보 ' : '이동 약 ') + legMin(km) + '분'; }
+const hhmm = m => pad2(Math.floor(m / 60) % 24) + ':' + pad2(Math.round(m % 60));
+function llOf(t, it) {
+  if (it.ll) return it.ll;
+  const r = (recsFor(t) || []).find(x => normName(x.name) === normName(it.name));
+  return r ? r.ll : null;
+}
+async function geocodeMissing(t, items) {
+  let n = 0;
+  for (const it of items) {
+    if (it.ll || it.geoTried || n >= 5) continue;
+    it.geoTried = true; n++;
+    try {
+      const j = await fetchJSON('https://nominatim.openstreetmap.org/search?format=json&limit=1&accept-language=ko&q=' + encodeURIComponent(it.name + ' ' + t.city), 6000);
+      if (j && j[0]) it.ll = [+j[0].lat, +j[0].lon];
+    } catch (e) {}
+    await new Promise(z => setTimeout(z, 1100));
+  }
+  if (n) Store.save(t.id);
+}
+function routePool(t, area) {
+  const out = [], seen = new Set();
+  const add = x => { const k = normName(x.name); if (seen.has(k)) return; seen.add(k); out.push(x); };
+  t.places.filter(p => !p.done && areaOf(t, p.area) === area).forEach(p => add({ name: p.name, theme: p.theme || 'sight', ll: llOf(t, p), kind: 'place', id: p.id, saved: true }));
+  t.foods.filter(f => !f.visited && areaOf(t, f.area) === area).forEach(f => add({ name: f.name, theme: f.theme === 'cafe' || SNACK_RE.test(f.name + ' ' + (f.menu || '')) ? 'cafe' : 'food', ll: llOf(t, f), kind: 'food', id: f.id, saved: true }));
+  (recsFor(t) || []).filter(r => r.area === area && styleOK(t, r)).forEach(r => add({ name: r.name, theme: r.theme, ll: r.ll, kind: 'rec', rec: r, fit: styleFit(t, r) }));
+  return out;
+}
+function pathLen(pts) { let s = 0; for (let i = 1; i < pts.length; i++) s += distKm(pts[i - 1].ll, pts[i].ll); return s; }
+function bestOrder(list, from) {
+  // 4곳 이하라 모든 순서를 비교해 가장 짧은 길을 골라요
+  if (list.length < 2) return list.slice();
+  let best = null, bestLen = Infinity;
+  const perm = (arr, l) => {
+    if (l === arr.length) { const len = pathLen(from ? [{ ll: from }].concat(arr) : arr); if (len < bestLen) { bestLen = len; best = arr.slice(); } return; }
+    for (let i = l; i < arr.length; i++) { [arr[l], arr[i]] = [arr[i], arr[l]]; perm(arr, l + 1); [arr[l], arr[i]] = [arr[i], arr[l]]; }
+  };
+  perm(list.slice(), 0);
+  return best;
+}
+const STAY = { sight: 90, shop: 60, food: 60, cafe: 40, night: 60 };
+function planDay(t, area, must) {
+  const pool = routePool(t, area).filter(x => x.ll);
+  const mk = new Set((must || []).filter(Boolean).map(m => normName(m.label || m.name)));
+  const isMust = x => mk.has(normName(x.name));
+  const score = x => (isMust(x) ? 100 : 0) + (x.saved ? 10 : 0) + (x.fit ? 5 : 0) + Math.random() * 4;
+  const top = (list, n) => list.slice().sort((a, b) => score(b) - score(a)).slice(0, n);
+  const sights = top(pool.filter(x => x.theme === 'sight' || x.theme === 'shop'), 3);
+  const foods = pool.filter(x => x.theme === 'food'), cafes = pool.filter(x => x.theme === 'cafe'), nights = pool.filter(x => x.theme === 'night');
+  const mustFood = foods.filter(isMust), mustNight = nights.filter(isMust);
+  // 관광지 순서·점심 위치·점심 가게를 모두 따져 보고, 하루 이동 거리가 가장 짧은 조합을 골라요
+  const perms = a => a.length < 2 ? [a.slice()] : a.flatMap((x, i) => perms(a.slice(0, i).concat(a.slice(i + 1))).map(r => [x].concat(r)));
+  const near = (list, pos, used) => list.filter(x => !used.has(x)).sort((a, b) => (isMust(b) - isMust(a)) || (pos ? distKm(pos, a.ll) - distKm(pos, b.ll) : 0))[0];
+  const lunchOpts = mustFood.length ? mustFood : (foods.length ? foods : [null]);
+  let best = null, bestLen = Infinity;
+  perms(sights).forEach(order => {
+    for (let split = Math.min(1, order.length); split <= order.length; split++) {
+      lunchOpts.forEach(lunch => {
+        const seq = [], used = new Set();
+        const add = (x, slot) => { if (x) { seq.push([x, slot]); used.add(x); } };
+        order.slice(0, split).forEach(x => add(x, '오전'));
+        add(lunch, '점심');
+        order.slice(split).forEach(x => add(x, '오후'));
+        const last = () => seq.length ? seq[seq.length - 1][0].ll : null;
+        add(near(cafes, last(), used), '카페');
+        add(near(foods, last(), used), '저녁');
+        add(mustNight[0] || near(nights, last(), used), '밤');
+        // 점심이 13시 30분을 넘기면 감점
+        let clock = 600, late = 0;
+        seq.forEach(([x, slot], i) => { if (i) clock += legMin(distKm(seq[i - 1][0].ll, x.ll)); if (slot === '점심') late = Math.max(0, clock - 810) / 30; clock = Math.max(clock, slot === '점심' ? 720 : 0) + (STAY[x.theme] || 60); });
+        const len = pathLen(seq.map(x => x[0])) + late * 2;
+        if (len < bestLen) { bestLen = len; best = seq; }
+      });
+    }
+  });
+  const route = (best || []).map(([x, slot]) => Object.assign({}, x, { slot }));
+  // 시간 계산: 10시 출발, 점심 12시·저녁 18시·밤 19시 30분 이후
+  const MIN = { 점심: 720, 저녁: 1080, 밤: 1170 };
+  let clock = 600;
+  route.forEach((x, i) => {
+    if (i) { x.leg = distKm(route[i - 1].ll, x.ll); clock += legMin(x.leg); }
+    clock = Math.max(clock, MIN[x.slot] || 0);
+    x.at = clock; clock += STAY[x.theme] || 60;
+  });
+  return route;
+}
+let leafletP = null;
+function loadLeaflet() {
+  if (window.L) return Promise.resolve(window.L);
+  if (!leafletP) leafletP = new Promise((res, rej) => {
+    const css = document.createElement('link'); css.rel = 'stylesheet'; css.href = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css'; document.head.appendChild(css);
+    const sc = document.createElement('script'); sc.src = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js';
+    sc.onload = () => res(window.L); sc.onerror = () => { leafletP = null; rej(new Error('leaflet')); };
+    document.head.appendChild(sc);
+  });
+  return leafletP;
+}
+const THEME_PIN = { sight: '#7cc4a8', shop: '#7fb2e5', food: '#f28fad', cafe: '#e8b86a', night: '#a48ad6' };
+function drawMap(el, route) {
+  if (window.claude) { el.innerHTML = '<p class="hint" style="padding:16px">지도는 사이트 버전에서 볼 수 있어요.</p>'; return; }
+  const pts = route.filter(x => x.ll);
+  if (!pts.length) { el.innerHTML = '<p class="hint" style="padding:16px">위치를 찾지 못했어요.</p>'; return; }
+  loadLeaflet().then(L => {
+    if (!document.contains(el)) return;
+    const map = L.map(el, { zoomControl: false, attributionControl: true });
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', { subdomains: 'abcd', maxZoom: 19, attribution: '&copy; OpenStreetMap &copy; CARTO' }).addTo(map);
+    L.polyline(pts.map(x => x.ll), { color: '#d98bb0', weight: 4, opacity: .85, dashArray: '2 8', lineCap: 'round' }).addTo(map);
+    pts.forEach((x, i) => {
+      const icon = L.divIcon({ className: '', html: '<span class="pin" style="--c:' + (THEME_PIN[x.theme] || '#f28fad') + '">' + (i + 1) + '</span>', iconSize: [30, 30], iconAnchor: [15, 15] });
+      L.marker(x.ll, { icon }).addTo(map).bindPopup(esc(x.name));
+    });
+    map.fitBounds(L.latLngBounds(pts.map(x => x.ll)).pad(.25), { maxZoom: 16 });
+  }, () => { el.innerHTML = '<p class="hint" style="padding:16px">지도를 불러오지 못했어요. 인터넷 연결을 확인해 주세요.</p>'; });
+}
+function routeDirURL(t, route) {
+  const q = route.map(x => x.ll ? x.ll.join(',') : x.name + ' ' + t.city);
+  if (q.length < 2) return mapURL({ name: route[0] ? route[0].name : t.city }, t);
+  return 'https://www.google.com/maps/dir/?api=1&travelmode=walking&origin=' + encodeURIComponent(q[0]) + '&destination=' + encodeURIComponent(q[q.length - 1]) +
+    (q.length > 2 ? '&waypoints=' + encodeURIComponent(q.slice(1, -1).slice(0, 8).join('|')) : '');
+}
+function routeListHTML(t, route) {
+  return '<ol class="route">' + route.map((x, i) =>
+    (x.leg != null ? '<li class="leg">' + legText(x.leg) + '</li>' : '') +
+    '<li class="rstop"><span class="pin" style="--c:' + (THEME_PIN[x.theme] || '#f28fad') + '">' + (i + 1) + '</span>' +
+    '<span class="tx"><small>' + (x.at != null ? hhmm(x.at) + ' · ' : '') + esc(x.slot || '') + '</small><b>' + esc(x.name) + '</b></span>' +
+    mapBtn({ name: x.name, area: (x.rec ? x.rec.area : '').split('·')[0].replace(/ ?\(.*\)$/, ''), map: x.kind !== 'rec' && itemOf(t, x.kind, x.id) ? itemOf(t, x.kind, x.id).map : '' }, t) + '</li>').join('') + '</ol>';
+}
+function openRoute(t, area, must) {
+  const pool = routePool(t, area);
+  const missing = pool.filter(x => !x.ll && x.kind !== 'rec').map(x => itemOf(t, x.kind, x.id)).filter(Boolean);
+  openSheet(area + ' 동선', '<div class="stack"><div id="rmap" class="rmap"></div><div id="rbody"><p class="hint">동선을 짜는 중…</p></div></div>', () => {
+    const go = () => {
+      const route = planDay(t, area, must);
+      S.route = { area, route, must };
+      if (!$('#rbody')) return;
+      if (!route.length) { $('#rbody').innerHTML = '<p class="hint">이 지역에서 동선을 짤 장소가 없어요.</p>'; $('#rmap').hidden = true; return; }
+      const total = route.reduce((a, x) => a + (x.leg || 0), 0) * 1.3;
+      $('#rbody').innerHTML = '<p class="hint">' + route.length + '곳 · 이동 거리 약 ' + fmtN(total, 1) + 'km · 지도의 위치는 대략이에요</p>' + routeListHTML(t, route) +
+        '<div class="row"><a class="btn" href="' + esc(routeDirURL(t, route)) + '" target="_blank" rel="noopener">구글맵 길찾기</a>' +
+        '<button class="btn" type="button" data-act="route-again">다시 짜기</button><button class="btn primary" type="button" data-act="route-save" style="flex:1">코스 저장</button></div>';
+      $('#rmap').innerHTML = ''; drawMap($('#rmap'), route);
+    };
+    if (missing.some(x => !x.geoTried) && !window.claude) geocodeMissing(t, missing).then(go); else go();
+  });
+}
+function openSavedRoute(t, c) {
+  const route = c.stops.map(x => {
+    const it = x.kind === 'place' || x.kind === 'food' ? itemOf(t, x.kind, x.id) : null;
+    return Object.assign({}, x, { name: x.label, slot: x.n, ll: x.ll || (it ? llOf(t, it) : llOf(t, { name: x.label })), theme: x.theme || (x.kind === 'food' ? 'food' : 'sight') });
+  });
+  route.forEach((x, i) => { if (i && x.ll && route[i - 1].ll) x.leg = distKm(route[i - 1].ll, x.ll); });
+  openSheet((c.anchor || '저장한') + ' 코스', '<div class="stack"><div id="rmap" class="rmap"></div>' + routeListHTML(t, route) +
+    '<a class="btn" href="' + esc(routeDirURL(t, route)) + '" target="_blank" rel="noopener">구글맵 길찾기</a></div>', () => drawMap($('#rmap'), route));
+}
+function saveRoute() {
+  const t = cur(), R = S.route; if (!t || !R) return;
+  const stops = R.route.map(x => {
+    let ref = { kind: x.kind, id: x.id };
+    if (x.kind === 'rec') {
+      addRec(t, x.rec);
+      const isFood = x.rec.theme === 'food' || x.rec.theme === 'cafe';
+      const it = (isFood ? t.foods : t.places).find(y => normName(y.name) === normName(x.rec.name));
+      ref = it ? { kind: isFood ? 'food' : 'place', id: it.id } : { kind: 'free', id: '' };
+    }
+    return Object.assign(ref, { n: x.slot, time: x.at != null ? hhmm(x.at) : '', label: x.name, area: R.area, ll: x.ll, theme: x.theme });
+  });
+  t.courses.push({ id: uid(), ts: Date.now(), date: todayISO(), anchor: R.area, stops });
+  closeSheet(); commit(t); toast('코스를 저장하고 가볼 곳·맛집에 담았어요');
+}
 /* ---------- 여행 뽑기: 지역 → 관광 → 맛집 ---------- */
 const JSTEPS = [
-  { k: 'area', n: '지역', icon: '🗺️', game: 'roulette' },
-  { k: 'sight', n: '관광', icon: '🎡', game: 'roulette' },
-  { k: 'food', n: '맛집', icon: '🍰', game: 'cards' }
+  { k: 'area', n: '지역', game: 'roulette' },
+  { k: 'sight', n: '관광', game: 'roulette' },
+  { k: 'food', n: '맛집', game: 'cards' }
 ];
 function jrDistricts(t) {
-  const out = [];
-  (recsFor(t) || []).forEach(r => { if (!out.includes(r.area)) out.push(r.area); });
+  let out = [];
+  const recs = (recsFor(t) || []).filter(r => styleOK(t, r));
+  recs.forEach(r => { if (!out.includes(r.area)) out.push(r.area); });
+  // 여행 타입에 맞는 곳이 있는 지역 위주로
+  if (STYLE_PREF[t.style]) { const fit = out.filter(d => recs.some(r => r.area === d && styleFit(t, r))); if (fit.length >= 3) out = fit; }
   // 내가 담은 곳의 동네도 지역 후보로 (추천 지역 이름에 포함되면 같은 지역으로)
   t.places.concat(t.foods).forEach(x => { const d = areaOf(t, x.area); if (d && !out.includes(d)) out.push(d); });
   return out;
@@ -2029,10 +2287,11 @@ function jrCands(t, k, area) {
   const own = k === 'sight' ? t.places.filter(p => !p.done) : t.foods.filter(f => !f.visited);
   own.forEach(x => { if (areaOf(t, x.area) === area && !seen.has(normName(x.name))) { seen.add(normName(x.name)); out.push({ key: (k === 'sight' ? 'p:' : 'f:') + x.id, label: x.name, kind: k === 'sight' ? 'place' : 'food', id: x.id }); } });
   (recsFor(t) || []).forEach(r => {
-    if (r.area !== area || !themes.includes(r.theme) || seen.has(normName(r.name))) return;
+    if (r.area !== area || !themes.includes(r.theme) || !styleOK(t, r) || seen.has(normName(r.name))) return;
     if (t.places.some(p => p.done && normName(p.name) === normName(r.name)) || t.foods.some(f => f.visited && normName(f.name) === normName(r.name))) return;
     seen.add(normName(r.name)); out.push({ key: 'r:' + r.id, label: r.name, kind: 'rec', rec: r });
   });
+  if (STYLE_PREF[t.style]) { const fit = out.filter(x => x.kind !== 'rec' || styleFit(t, x.rec)); if (fit.length >= 2) out.splice(0, out.length, ...fit); }
   // 후보가 적으면 '지도에서 찾기' 와일드카드를 넣어 게임이 되게
   if (out.length && out.length < 3) {
     const what = k === 'food' ? '맛집' : '관광지';
@@ -2046,7 +2305,7 @@ function stepsHTML() {
   const J = jrState();
   return '<ol class="steps">' + JSTEPS.map((st, i) => {
     const pk = J.picks[st.k];
-    return '<li class="' + (i === J.step ? 'now' : i < J.step ? 'done' : '') + '"><span class="bub">' + st.icon + '</span><span class="lb">' + st.n + '</span>' +
+    return '<li class="' + (i === J.step ? 'now' : i < J.step ? 'done' : '') + '"><span class="bub">' + (i < J.step ? '✓' : i + 1) + '</span><span class="lb">' + st.n + '</span>' +
       (pk ? '<span class="pk">' + esc(pk.label) + '</span>' : pk === null ? '<span class="pk">건너뜀</span>' : '') + '</li>';
   }).join('') + '</ol>';
 }
@@ -2057,12 +2316,12 @@ function mountJourney(stage, t) {
   const c = jrCands(t, st.k, J.picks.area && J.picks.area.label);
   if (J.pending) { stage.innerHTML = pickCardHTML(st, J.pending); return; }
   if (st.k === 'area' && c.length < 2) {
-    stage.innerHTML = '<div class="g-empty"><div class="q">🐰</div><p>' + esc(t.city) + ' 지역 정보가 아직 없어요.<br>가볼 곳에 동네를 적어 두거나 자유 게임을 해 보세요.</p><button class="big-btn" data-act="game-mode" data-v="free">자유 게임</button></div>';
+    stage.innerHTML = '<div class="g-empty"><p>' + esc(t.city) + ' 지역 정보가 아직 없어요.<br>가볼 곳에 동네를 적어 두거나 자유 게임을 해 보세요.</p><button class="big-btn" data-act="game-mode" data-v="free">자유 게임</button></div>';
     return;
   }
   if (c.length === 0) {
     const q = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(J.picks.area.label.split('·')[0].replace(/ ?\(.*\)$/, '') + ' ' + t.city + ' ' + (st.k === 'food' ? '맛집' : '관광명소'));
-    stage.innerHTML = '<div class="g-empty"><div class="q">🙈</div><p>이 지역엔 ' + st.n + ' 추천이 없어요</p><div class="row" style="justify-content:center"><a class="soft-btn" href="' + esc(q) + '" target="_blank" rel="noopener">🗺 지도에서 찾기</a><button class="big-btn" data-act="jr-skip">다음</button></div></div>';
+    stage.innerHTML = '<div class="g-empty"><p>이 지역엔 ' + st.n + ' 추천이 없어요</p><div class="row" style="justify-content:center"><a class="soft-btn" href="' + esc(q) + '" target="_blank" rel="noopener">지도에서 찾기</a><button class="big-btn" data-act="jr-skip">다음</button></div></div>';
     return;
   }
   if (c.length === 1) { J.pending = c[0]; stage.innerHTML = pickCardHTML(st, c[0], true); return; }
@@ -2070,11 +2329,12 @@ function mountJourney(stage, t) {
 }
 function pickCardHTML(st, r, only) {
   const J = jrState(), last = J.step === JSTEPS.length - 1;
-  return '<div class="pick-card"><div class="ribbon">' + st.icon + ' ' + st.n + ' ' + (only ? '딱 한 곳!' : '당첨!') + '</div><h3>' + esc(r.label) + '</h3>' +
+  return '<div class="pick-card"><div class="ribbon">' + st.n + ' · ' + (only ? '이곳 하나예요' : '당첨') + '</div><h3>' + esc(r.label) + '</h3>' +
     (r.rec ? '<p>' + esc(r.rec.desc) + '</p>' : '') +
-    (r.kind === 'search' ? '<p>지도에서 평점 좋은 곳을 골라 보세요!</p><div class="row"><a class="soft-btn" href="' + esc(r.q) + '" target="_blank" rel="noopener">🗺 지도 열기</a></div>' : '') +
-    '<div class="row">' + (only ? '' : '<button class="soft-btn" data-act="jr-again">🔁 다시</button>') +
-    '<button class="big-btn mint" data-act="jr-next">' + (last ? '코스 보기 ✨' : '다음: ' + JSTEPS[J.step + 1].n + ' →') + '</button></div></div>';
+    (r.kind === 'search' ? '<p>지도에서 평점 좋은 곳을 골라 보세요</p><div class="row"><a class="soft-btn" href="' + esc(r.q) + '" target="_blank" rel="noopener">지도 열기</a></div>' : '') +
+    (st.k === 'area' ? '<div class="row"><button class="soft-btn" data-act="route-open" data-v="' + esc(r.label) + '">이 지역 하루 동선 보기</button></div>' : '') +
+    '<div class="row">' + (only ? '' : '<button class="soft-btn" data-act="jr-again">다시 뽑기</button>') +
+    '<button class="big-btn" data-act="jr-next">' + (last ? '코스 완성' : '다음: ' + JSTEPS[J.step + 1].n + ' 뽑기') + '</button></div></div>';
 }
 function jrItemMap(t, x) {
   if (!x) return '';
@@ -2087,11 +2347,12 @@ function mountFinal(stage, t) {
   const J = jrState();
   const stops = [J.picks.sight, J.picks.food].filter(Boolean);
   const dir = courseDirURL(t, stops.filter(x => x.kind !== 'search').map(x => ({ label: x.label, kind: 'x' })));
-  stage.innerHTML = '<div class="final"><div class="pick-card" style="gap:6px"><div class="ribbon">✨ 오늘의 코스 ✨</div><h3>' + esc(J.picks.area ? J.picks.area.label : t.city) + '</h3></div>' +
-    '<ul class="final-list">' + [['🎡', '관광', J.picks.sight], ['🍰', '맛집', J.picks.food]].map(([ic, n, x]) =>
+  stage.innerHTML = '<div class="final"><div class="pick-card" style="gap:4px"><div class="ribbon">오늘의 코스</div><h3>' + esc(J.picks.area ? J.picks.area.label : t.city) + '</h3></div>' +
+    '<ul class="final-list">' + [['1', '관광', J.picks.sight], ['2', '맛집', J.picks.food]].map(([ic, n, x]) =>
       '<li><span class="ic">' + ic + '</span><span class="tx"><small>' + n + '</small><b>' + (x ? esc(x.label) : '건너뜀') + '</b></span>' + jrItemMap(t, x) + '</li>').join('') + '</ul>' +
-    '<div class="row">' + (dir ? '<a class="soft-btn" href="' + esc(dir) + '" target="_blank" rel="noopener">🗺 경로</a>' : '') +
-    '<button class="soft-btn" data-act="jr-reset">🔁 처음부터</button><button class="big-btn" data-act="jr-save">💖 저장</button></div></div>';
+    (J.picks.area ? '<button class="big-btn" data-act="jr-route">지도로 보기 · 하루 동선 짜기</button>' : '') +
+    '<div class="row">' + (dir ? '<a class="soft-btn" href="' + esc(dir) + '" target="_blank" rel="noopener">길찾기</a>' : '') +
+    '<button class="soft-btn" data-act="jr-reset">처음부터</button><button class="soft-btn" data-act="jr-save">이대로 저장</button></div></div>';
 }
 function jrPicked(r) {
   const J = jrState();
@@ -2112,11 +2373,13 @@ function jrMaterialize(t, x, kind) {
   const it = (isFood ? t.foods : t.places).find(y => normName(y.name) === normName(x.rec.name));
   return it ? { label: it.name, kind: isFood ? 'food' : 'place', id: it.id, area: it.area } : { label: x.label, kind: 'free' };
 }
+const SND_ON = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/></svg>';
+const SND_OFF = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M17 9l4 6M21 9l-4 6"/></svg>';
 function gameView(t) {
   const g = S.game, mode = g.mode || 'trip';
-  let h = '<section class="arcade"><div class="pz-top">' + MASCOT + '<div class="pz-title">오늘 어디 갈까?<small>' + esc(t.city) + ' 랜덤 여행 뽑기</small></div>' +
-    '<button class="snd" data-act="sound" aria-label="효과음 ' + (Sound.on ? '끄기' : '켜기') + '">' + (Sound.on ? '🔔' : '🔕') + '</button></div>' +
-    '<div class="pz-mode" role="group" aria-label="게임 방식"><button data-act="game-mode" data-v="trip" aria-pressed="' + (mode === 'trip') + '">🎀 여행 뽑기</button><button data-act="game-mode" data-v="free" aria-pressed="' + (mode === 'free') + '">🎲 자유 게임</button></div>';
+  let h = '<section class="arcade"><div class="pz-top"><div class="pz-title">오늘 어디 갈까?<small>' + esc(t.city) + (t.style && t.style !== 'solo' ? ' · ' + esc(STYLE_N[t.style]) : '') + '</small></div>' +
+    '<button class="snd" data-act="sound" aria-label="효과음 ' + (Sound.on ? '끄기' : '켜기') + '">' + (Sound.on ? SND_ON : SND_OFF) + '</button></div>' +
+    '<div class="pz-mode" role="group" aria-label="게임 방식"><button data-act="game-mode" data-v="trip" aria-pressed="' + (mode === 'trip') + '">여행 뽑기</button><button data-act="game-mode" data-v="free" aria-pressed="' + (mode === 'free') + '">자유 게임</button></div>';
   if (mode === 'trip') {
     h += stepsHTML() + '<div class="stage" id="stage"></div>';
   } else {
@@ -2163,7 +2426,7 @@ function mountGame(t) {
   if (S.game.type === 'course') S.game.type = 'roulette';
   const c = activeCands(t);
   if (c.length < 2) {
-    stage.innerHTML = '<div class="g-empty"><div class="q">🐰</div><p>후보를 2개 이상 담아 주세요</p><button class="big-btn" data-act="cand-edit">후보 담기</button></div>';
+    stage.innerHTML = '<div class="g-empty"><p>후보를 2개 이상 담아 주세요</p><button class="big-btn" data-act="cand-edit">후보 담기</button></div>';
     $('#gameResult').innerHTML = '';
     return;
   }
@@ -2185,8 +2448,8 @@ function pickSubset(list, n, slot) {
 /* 룰렛 */
 function mountRoulette(stage, c) {
   const items = pickSubset(c, 12, 'wheelSet');
-  stage.innerHTML = '<div class="wheel-wrap"><div class="bulbs"></div><canvas id="wheel" aria-label="룰렛"></canvas><div class="pointer"></div><button class="hub" data-act="spin" aria-label="룰렛 돌리기">GO</button></div>' +
-    '<button class="big-btn" data-act="spin">SPIN!</button>';
+  stage.innerHTML = '<div class="wheel-wrap"><canvas id="wheel" aria-label="룰렛"></canvas><div class="pointer"></div><button class="hub" data-act="spin" aria-label="룰렛 돌리기">GO</button></div>' +
+    '<button class="big-btn" data-act="spin">돌리기</button>';
   S.game.wheelItems = items;
   drawWheel();
 }
@@ -2214,7 +2477,7 @@ function drawWheel() {
     ctx.save(); ctx.translate(R, R); ctx.rotate(s + a / 2 + (flip ? Math.PI : 0));
     ctx.fillStyle = ink; ctx.textAlign = flip ? 'left' : 'right'; ctx.textBaseline = 'middle';
     const fs = n > 8 ? 12 : 14;
-    ctx.font = (fs + 1) + 'px "Jua", "IBM Plex Sans KR", sans-serif';
+    ctx.font = '600 ' + fs + 'px "IBM Plex Sans KR", sans-serif';
     let label = items[i].label;
     const maxW = R - 50;
     while (label.length > 1 && ctx.measureText(label).width > maxW) label = label.slice(0, -1);
@@ -2222,7 +2485,7 @@ function drawWheel() {
     ctx.fillText(label, flip ? -(R - 14) : R - 14, 0);
     ctx.restore();
   }
-  ctx.beginPath(); ctx.arc(R, R, R - 3, 0, Math.PI * 2); ctx.lineWidth = 6; ctx.strokeStyle = '#ffffff'; ctx.stroke();
+  ctx.beginPath(); ctx.arc(R, R, R - 3, 0, Math.PI * 2); ctx.lineWidth = 5; ctx.strokeStyle = '#ffffff'; ctx.stroke();
 }
 function spin() {
   if (S.game.busy) return;
@@ -2266,7 +2529,7 @@ function genRungs(n) {
   } while (!Array.from({ length: n - 1 }, (_, c) => g.some(row => row[c])).every(Boolean));
   return g;
 }
-const PASTEL = ['#ffc8dd', '#bde0fe', '#cdb4db', '#fff1a8', '#b9fbc0', '#ffd6a5'];
+const PASTEL = ['#f9d5e3', '#cfe4f7', '#e0d4f2', '#fbeec1', '#cdeedd', '#fbdcc4'];
 const LAD_COLS = PASTEL;
 function mountLadder(stage, c) {
   const items = pickSubset(c, 6, 'ladSet');
@@ -2282,7 +2545,7 @@ function mountLadder(stage, c) {
       const show = L.all || L.end === j;
       return '<div class="lad-res' + (show ? '' : ' hide') + (L.end === j ? ' hit' : '') + '" id="lr' + j + '">' + (show ? esc(it.label) : '?') + '</div>';
     }).join('') + '</div></div>' +
-    '<div class="g-tools"><button class="g-tool" data-act="lad-new" aria-label="새 사다리">↻</button><button class="g-tool" data-act="lad-all" aria-label="결과 모두 보기">👀</button></div>';
+    '<div class="g-tools"><button class="soft-btn" data-act="lad-new">새 사다리</button><button class="soft-btn" data-act="lad-all">결과 모두 보기</button></div>';
   drawLadder(L.picked != null ? ladderPath(L.picked) : null, 1);
 }
 function ladGeom() {
@@ -2364,8 +2627,8 @@ function mountCards(stage, c, shuffling) {
   if (!C || C.src !== S.game.cardSet.src) C = S.game.cards = { src: S.game.cardSet.src, order: shuffle(items), picked: null };
   stage.innerHTML = '<div class="cards' + (shuffling ? ' shuffle' : '') + '">' + C.order.map((it, i) =>
     '<button class="pcard' + (C.picked != null ? ' flip' : '') + (C.picked === i ? ' chosen' : C.picked != null ? ' dim' : '') + '" data-act="card-pick" data-i="' + i + '" aria-label="' + (C.picked != null ? esc(it.label) : (i + 1) + '번 카드') + '">' +
-      '<span class="in"><span class="face back" style="--c:' + LAD_COLS[i % 6] + '"><span>♡</span></span><span class="face front">' + esc(it.label) + '</span></span></button>').join('') + '</div>' +
-    '<div class="g-tools"><button class="g-tool" data-act="card-shuffle" aria-label="다시 섞기">🔀</button></div>';
+      '<span class="in"><span class="face back" style="--c:' + LAD_COLS[i % 6] + '"><span>?</span></span><span class="face front">' + esc(it.label) + '</span></span></button>').join('') + '</div>' +
+    '<div class="g-tools"><button class="soft-btn" data-act="card-shuffle">다시 섞기</button></div>';
 }
 function cardPick(i) {
   const C = S.game.cards; if (!C || C.picked != null) return;
@@ -2476,18 +2739,18 @@ function savedCourseCard(t) {
   const c = list.find(x => x.date === today) || list[0];
   const dir = courseDirURL(t, c.stops);
   return '<section class="card stack"><div class="row" style="justify-content:space-between"><h3 class="sec">' + (c.date === today ? '오늘의 코스' : '저장한 코스 · ' + fmtMD(c.date)) + '</h3>' +
-    '<button class="text-btn" data-act="course-del" data-id="' + c.id + '">지우기</button></div>' + stopsHTML(t, c.stops, false) +
+    '<span class="row" style="gap:2px"><button class="text-btn" data-act="course-map" data-id="' + c.id + '">지도</button><button class="text-btn" data-act="course-del" data-id="' + c.id + '">지우기</button></span></div>' + stopsHTML(t, c.stops, false) +
     (dir ? '<a class="btn small" href="' + esc(dir) + '" target="_blank" rel="noopener">구글맵으로 경로 보기</a>' : '') +
     (list.length > 1 ? '<p class="hint">저장한 코스 ' + list.length + '개 중 ' + (c.date === today ? '오늘 코스' : '가장 최근 코스') + '를 보여 드려요.</p>' : '') + '</section>';
 }
 function resultHTML(r) {
   const t = cur();
   const it = r.kind === 'place' ? itemOf(t, 'place', r.id) : r.kind === 'food' ? itemOf(t, 'food', r.id) : null;
-  return '<section class="result" aria-live="polite"><div class="win">🎉 당첨!</div><h3>' + esc(r.label) + '</h3>' +
+  return '<section class="result" aria-live="polite"><div class="win">당첨</div><h3>' + esc(r.label) + '</h3>' +
     '<div class="row" style="justify-content:center">' +
-    (it ? '<a class="btn" href="' + esc(mapURL(it, t)) + '" target="_blank" rel="noopener">🗺 지도</a>' : '') +
-    (r.kind === 'place' ? '<button class="btn primary" data-act="res-place" data-id="' + r.id + '">✓ 다녀옴</button>' : '') +
-    (r.kind === 'food' ? '<button class="btn primary" data-act="res-food" data-id="' + r.id + '">★ 별점</button>' : '') +
+    (it ? '<a class="btn" href="' + esc(mapURL(it, t)) + '" target="_blank" rel="noopener">지도</a>' : '') +
+    (r.kind === 'place' ? '<button class="btn primary" data-act="res-place" data-id="' + r.id + '">다녀왔어요</button>' : '') +
+    (r.kind === 'food' ? '<button class="btn primary" data-act="res-food" data-id="' + r.id + '">별점 남기기</button>' : '') +
     '</div></section>';
 }
 function showResult(r) {
@@ -2543,6 +2806,7 @@ function tripSheet(t) {
     '<label class="field"><span class="lbl">도시</span><input id="t-city" value="' + esc(v.city) + '" placeholder="도쿄" required></label></div>' +
     '<div class="row2"><label class="field"><span class="lbl">출발일</span><input type="date" id="t-start" value="' + v.start + '" required></label>' +
     '<label class="field"><span class="lbl">귀국일</span><input type="date" id="t-end" value="' + v.end + '" required></label></div>' +
+    '<div class="field"><span class="lbl">여행 타입 (추천이 달라져요)</span>' + segHTML('t-style', STYLES, v.style || 'solo') + '</div>' +
     '<label class="field"><span class="lbl">현지 통화</span><select id="t-cur">' + curOptions(v.cur) + '</select></label>' +
     '<div class="field" id="rateField"><span class="lbl">환율</span>' + segHTML('t-rmode', [['live', '실시간 환율'], ['manual', '직접 입력']], v.rateMode === 'manual' ? 'manual' : 'live') +
       '<div class="rate-in"><span id="rateLbl">' + unitLabel(v.cur) + ' =</span><input id="t-rate" inputmode="decimal" value="' + rateNum((Number(v.rate) || 0) * unitOf(v.cur)) + '"><span>원</span></div>' +
@@ -2616,7 +2880,7 @@ function tripSheet(t) {
       if (c !== 'KRW' && !(rate > 0)) return fail('환율을 숫자로 적어 주세요. 예: ' + unitLabel(c) + ' = ' + fmtN((RATE[c] || 1) * unitOf(c)) + '원');
       const rm = c === 'KRW' ? 'manual' : mode();
       const bcur = segVal(sh, 't-bcur') === 'LOCAL' && c !== 'KRW' ? c : 'KRW';
-      const data = { country, city, start, end, cur: c, rate, rateMode: rm,
+      const data = { style: segVal(sh, 't-style') || 'solo', country, city, start, end, cur: c, rate, rateMode: rm,
         rateAt: rm === 'live' && liveHit ? liveHit.at : (t && t.cur === c && rm === 'live' ? t.rateAt || '' : ''), rateSrc: rm === 'live' && liveHit ? liveHit.src : (t && t.cur === c && rm === 'live' ? t.rateSrc || '' : ''),
         budget: num(f('t-budget').value), shopBudget: num(f('t-shop').value), budgetCur: bcur,
         code: f('t-code').value.trim().toUpperCase().slice(0, 4), flag: f('t-flag').value.trim() };
@@ -2631,6 +2895,44 @@ function tripSheet(t) {
       }
     };
   });
+}
+
+/* 예산 */
+function budgetSheet(t) {
+  const loc = t.cur !== 'KRW';
+  const v = t.budgetCur && t.budgetCur !== 'KRW' ? 'LOCAL' : 'KRW';
+  const body = '<form class="form" id="bf" novalidate>' +
+    (loc ? '<div class="field"><span class="lbl">통화</span>' + segHTML('b-cur', [['KRW', '원'], ['LOCAL', t.cur]], v) + '</div>' : '') +
+    '<label class="field"><span class="lbl">여행비 (숙소·식비·교통 등)</span><input id="b-travel" inputmode="decimal" placeholder="예: 1,200,000" value="' + (t.budget ? fmtN(t.budget, 2) : '') + '"></label>' +
+    '<label class="field"><span class="lbl">쇼핑비 (따로 계산)</span><input id="b-shop" inputmode="decimal" placeholder="예: 500,000" value="' + (t.shopBudget ? fmtN(t.shopBudget, 2) : '') + '"></label>' +
+    '<button class="btn primary" type="submit">저장</button></form>';
+  openSheet('예산', body, sh => {
+    $('#bf', sh).onsubmit = e => {
+      e.preventDefault();
+      t.budget = num($('#b-travel', sh).value); t.shopBudget = num($('#b-shop', sh).value);
+      t.budgetCur = loc && segVal(sh, 'b-cur') === 'LOCAL' ? t.cur : 'KRW';
+      closeSheet(); commit(t); toast('예산을 저장했어요');
+    };
+  });
+}
+/* 지출 상세 */
+function spentSheet(t, scope) {
+  let list = t.expenses.slice(), title = '전체 지출';
+  if (scope === 'travel') { list = list.filter(e => !isShopE(e)); title = '여행비 상세'; }
+  else if (scope === 'shop') { list = list.filter(isShopE); title = '쇼핑비 상세'; }
+  else if (scope && scope.startsWith('cat:')) { const k = scope.slice(4); list = list.filter(e => e.cat === k); title = (CAT[k] || CAT.etc).n + ' 상세'; }
+  const total = list.reduce((a, e) => a + expKRW(t, e), 0);
+  const groups = CATS.map(c => ({ c, items: list.filter(e => (CAT[e.cat] ? e.cat : 'etc') === c.k) })).filter(g => g.items.length)
+    .map(g => Object.assign(g, { sum: g.items.reduce((a, e) => a + expKRW(t, e), 0) })).sort((a, b) => b.sum - a.sum);
+  let body = '<div class="stack"><div class="row" style="justify-content:space-between"><span class="muted">' + list.length + '건</span><b class="num" style="font-size:20px">' + won(total) + '</b></div>';
+  if (!list.length) body += '<p class="hint">아직 지출이 없어요.</p>';
+  groups.forEach(g => {
+    body += '<details class="fold-cat" open><summary><span class="cat-dot" style="background:' + g.c.g + ';width:28px;height:28px">' + g.c.n[0] + '</span><b>' + g.c.n + '</b><span class="num">' + won(g.sum) + '</span><span class="muted" style="font-size:12px">' + (total ? Math.round(g.sum / total * 100) : 0) + '%</span></summary><div class="list">' +
+      g.items.slice().sort((a, b) => b.date.localeCompare(a.date) || (b.ts || 0) - (a.ts || 0)).map(e =>
+        '<button class="item" data-act="exp-edit" data-id="' + e.id + '"><span class="item-main"><span class="item-title" style="display:block">' + esc(e.memo || g.c.n) + '</span><span class="item-sub" style="display:block">' + fmtMDW(e.date) + ' · ' + (e.pay === 'cash' ? '현금' : '카드') + '</span></span>' +
+        '<span class="item-amt"><b>' + esc(money(e.amt, e.cur)) + '</b>' + (e.cur !== 'KRW' ? '<span>' + won(expKRW(t, e)) + '</span>' : '') + '</span></button>').join('') + '</div></details>';
+  });
+  openSheet(title, body + '</div>');
 }
 
 /* 지출 */
@@ -2959,6 +3261,19 @@ const ACT = {
     S.game.result = null; render(); refreshCandSheet();
   },
   'spin': spin,
+  'budget': () => budgetSheet(cur()),
+  'spent': a => spentSheet(cur(), a.dataset.v),
+  'edit-style': () => {
+    const t = cur();
+    openSheet('여행 타입', '<div class="stack"><p class="hint">고르면 추천 장소와 여행 뽑기 후보가 맞춰져요.</p><div class="chips">' + STYLES.map(([k, n]) =>
+      '<button class="chip" type="button" data-act="set-style" data-v="' + k + '" aria-pressed="' + ((t.style || 'solo') === k) + '">' + n + '</button>').join('') + '</div></div>');
+  },
+  'set-style': a => { const t = cur(); t.style = a.dataset.v; S.game.jr = null; jrResetGames(); closeSheet(); commit(t); toast(STYLE_N[t.style] + ' 맞춤으로 바꿨어요'); },
+  'route-open': a => openRoute(cur(), a.dataset.v),
+  'route-again': () => { const R = S.route; if (R) { closeSheet(); openRoute(cur(), R.area, R.must); } },
+  'route-save': saveRoute,
+  'jr-route': () => { const J = jrState(); if (J.picks.area) openRoute(cur(), J.picks.area.label, [J.picks.sight, J.picks.food]); },
+  'course-map': (a, id) => { const t = cur(), c = t.courses.find(x => x.id === id); if (c) openSavedRoute(t, c); },
   'game-mode': a => { if (S.game.busy) return; S.game.mode = a.dataset.v; S.game.result = null; jrResetGames(); render(); },
   'jr-next': () => {
     const J = jrState(); if (S.game.busy) return;
@@ -3003,6 +3318,9 @@ document.addEventListener('click', ev => {
   const fn = ACT[a.dataset.act];
   if (fn) fn(a, a.dataset.id, ev);
 });
+document.addEventListener('toggle', ev => {
+  const d = ev.target; if (d && d.matches && d.matches('details[data-fold]')) { S.fold = S.fold || {}; S.fold[d.dataset.fold] = d.open; }
+}, true);
 document.addEventListener('keydown', ev => {
   if (ev.key === 'Escape') { if (S.viewer) closeViewer(); else if ($('#sheetRoot').innerHTML) closeSheet(); }
   if (S.viewer && (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight')) { S.viewer.i += ev.key === 'ArrowRight' ? 1 : -1; S.viewer.confirm = false; renderViewer(); }
