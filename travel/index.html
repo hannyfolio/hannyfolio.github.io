@@ -15,7 +15,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Jua&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
 <style>
 /* 레이아웃: 폰 폭 한 줄 컬럼(최대 560px) · 여행은 탑승권 카드 · 여행 안에서는 하단 탭 5개 */
 :root {
@@ -37,6 +37,7 @@
   --f-body: "IBM Plex Sans KR", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   --f-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   --f-code: "Bebas Neue", "Arial Narrow", Impact, sans-serif;
+  --f-cute: "Jua", "IBM Plex Sans KR", -apple-system, "Apple SD Gothic Neo", sans-serif;
   --r: 14px;
   padding-top: env(safe-area-inset-top, 0px);
   padding-bottom: env(safe-area-inset-bottom, 0px);
@@ -416,57 +417,92 @@ a.chip { text-decoration: none; color: var(--ink); }
 .check-row { display: flex; align-items: center; gap: 8px; font-size: 14px; flex-wrap: wrap; }
 .check-row input { width: 20px; height: 20px; accent-color: var(--accent); }
 .chip.sm { padding: 4px 10px; font-size: 12px; }
+/* 게임: 파스텔 동화 느낌 (라이트·다크 모두 같은 화사한 화면) */
 .arcade {
-  border-radius: 22px; padding: 14px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; color: #fff; position: relative; overflow: hidden;
-  background: radial-gradient(120% 80% at 50% 0%, #3a4fd6 0%, #1a237e 55%, #0d1240 100%);
-  box-shadow: inset 0 0 0 3px rgba(255, 255, 255, .08), 0 10px 30px rgba(13, 18, 64, .35);
+  border-radius: 28px; padding: 14px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; color: #5b4a7a; position: relative; overflow: hidden;
+  font-family: var(--f-cute);
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255, 255, 255, .9) 0 3px, transparent 4px),
+    radial-gradient(circle at 82% 10%, rgba(255, 255, 255, .9) 0 2px, transparent 3px),
+    radial-gradient(circle at 90% 62%, rgba(255, 255, 255, .8) 0 3px, transparent 4px),
+    radial-gradient(circle, rgba(255, 255, 255, .45) 1.5px, transparent 2px) 0 0 / 22px 22px,
+    linear-gradient(160deg, #ffe3ef 0%, #f3e3ff 45%, #dff1ff 100%);
+  box-shadow: inset 0 0 0 4px #fff, 0 10px 26px rgba(205, 160, 220, .45);
 }
 .arcade > * { min-width: 0; }
-.g-tabs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
-.g-tab {
-  border: 0; border-radius: 14px; background: rgba(255, 255, 255, .1); color: rgba(255, 255, 255, .78);
-  padding: 10px 2px 8px; display: grid; justify-items: center; gap: 3px; font-size: 12px; font-weight: 700; transition: transform .12s;
-}
-.g-tab svg { width: 30px; height: 30px; }
-.g-tab[aria-pressed="true"] { background: #ffd23f; color: #1a237e; box-shadow: 0 4px 0 #c99a00; transform: translateY(-2px); }
-.stage { min-height: 320px; display: grid; justify-items: center; align-content: center; gap: 14px; }
-.g-empty { display: grid; justify-items: center; gap: 14px; }
-.g-empty .q { font-family: var(--f-code); font-size: 96px; line-height: 1; color: #ffd23f; text-shadow: 0 6px 0 rgba(0, 0, 0, .25); animation: bob 1.6s ease-in-out infinite; }
-@keyframes bob { 50% { transform: translateY(-8px) rotate(-4deg); } }
+.pz-top { display: flex; align-items: center; gap: 10px; }
+.mascot { width: 54px; height: 54px; flex: none; animation: bob 2.4s ease-in-out infinite; }
+.pz-title { flex: 1; min-width: 0; font-size: 22px; line-height: 1.15; color: #7a4f9a; }
+.pz-title small { display: block; font-size: 13px; color: #b08cc8; }
+.pz-mode { display: flex; background: rgba(255, 255, 255, .7); border-radius: 999px; padding: 4px; gap: 4px; }
+.pz-mode button { flex: 1; border: 0; border-radius: 999px; background: transparent; font-family: var(--f-cute); font-size: 15px; color: #b08cc8; padding: 8px 6px; }
+.pz-mode button[aria-pressed="true"] { background: #fff; color: #ff6f9c; box-shadow: 0 2px 0 #f6c6d8; }
+.snd { border: 0; background: rgba(255, 255, 255, .8); border-radius: 50%; width: 40px; height: 40px; font-size: 18px; flex: none; }
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); position: relative; }
+.steps::before { content: ""; position: absolute; left: 16%; right: 16%; top: 24px; border-top: 3px dotted #e4c6f0; }
+.steps li { display: grid; justify-items: center; gap: 4px; position: relative; text-align: center; min-width: 0; }
+.steps .bub { width: 48px; height: 48px; border-radius: 50%; background: #fff; display: grid; place-items: center; font-size: 22px; box-shadow: 0 3px 0 #ecd5f5; border: 3px solid #fff; }
+.steps li.now .bub { border-color: #ff8fab; transform: scale(1.12); box-shadow: 0 4px 0 #f6b3c8; }
+.steps li.done .bub { background: #fff4b8; }
+.steps .lb { font-size: 13px; color: #b08cc8; }
+.steps .pk { font-size: 12px; color: #5b4a7a; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; background: rgba(255, 255, 255, .75); border-radius: 999px; padding: 1px 8px; }
+.g-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.g-tab { border: 0; border-radius: 18px; background: rgba(255, 255, 255, .65); color: #b08cc8; padding: 8px 2px 6px; display: grid; justify-items: center; gap: 2px; font-family: var(--f-cute); font-size: 14px; }
+.g-tab svg { width: 28px; height: 28px; }
+.g-tab[aria-pressed="true"] { background: #fff; color: #ff6f9c; box-shadow: 0 3px 0 #f6c6d8; }
+.stage { min-height: 300px; display: grid; justify-items: center; align-content: center; gap: 14px; }
+.g-empty { display: grid; justify-items: center; gap: 10px; text-align: center; }
+.g-empty p { margin: 0; font-size: 16px; }
+.g-empty .q { font-size: 64px; line-height: 1; animation: bob 1.6s ease-in-out infinite; }
+@keyframes bob { 50% { transform: translateY(-6px) rotate(-3deg); } }
 .big-btn {
-  border: 0; border-radius: 16px; background: #ffd23f; color: #1a237e; font-family: var(--f-code), var(--f-body); font-size: 28px; letter-spacing: .06em;
-  padding: 10px 34px 8px; box-shadow: 0 6px 0 #c99a00; font-weight: 700;
+  border: 0; border-radius: 999px; background: #ff8fab; color: #fff; font-family: var(--f-cute); font-size: 24px;
+  padding: 12px 34px 10px; box-shadow: 0 6px 0 #e56b8f, inset 0 -3px 0 rgba(0, 0, 0, .06); letter-spacing: .02em;
 }
-.big-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #c99a00; }
-.cand-bar { display: flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, .1); border-radius: 14px; padding: 6px 6px 6px 12px; }
-.cand-bar .n { font-family: var(--f-code); font-size: 24px; color: #ffd23f; line-height: 1; }
-.cand-bar .mini { flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 13px; color: rgba(255, 255, 255, .78); }
-.cand-bar button { border: 0; border-radius: 10px; background: #fff; color: #1a237e; font-weight: 700; padding: 8px 14px; min-height: 38px; }
-.cand-bar .snd { background: rgba(255, 255, 255, .14); padding: 8px 10px; }
+.big-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #e56b8f; }
+.big-btn.mint { background: #7fd8be; box-shadow: 0 6px 0 #4fb79a; }
+.soft-btn { border: 0; border-radius: 999px; background: #fff; color: #7a4f9a; font-family: var(--f-cute); font-size: 16px; padding: 10px 18px; box-shadow: 0 3px 0 #ecd5f5; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
+.cand-bar { display: flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, .7); border-radius: 999px; padding: 6px 6px 6px 14px; }
+.cand-bar .n { font-size: 22px; color: #ff6f9c; line-height: 1; }
+.cand-bar .mini { flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 14px; color: #9b7bb3; }
+.cand-bar button { border: 0; border-radius: 999px; background: #ff8fab; color: #fff; font-family: var(--f-cute); font-size: 15px; padding: 8px 16px; }
 .g-tools { display: flex; gap: 10px; }
-.g-tool { width: 46px; height: 46px; border-radius: 14px; border: 0; background: rgba(255, 255, 255, .14); color: #fff; font-size: 20px; }
+.g-tool { width: 46px; height: 46px; border-radius: 50%; border: 0; background: #fff; color: #7a4f9a; font-size: 20px; box-shadow: 0 3px 0 #ecd5f5; }
 .arcade .wheel-wrap { width: min(100%, 300px); }
-.bulbs { position: absolute; inset: -8px; border-radius: 50%; background: repeating-conic-gradient(#ffd23f 0 6deg, transparent 6deg 30deg); -webkit-mask: radial-gradient(circle, transparent 66%, #000 67%, #000 70%, transparent 71%); mask: radial-gradient(circle, transparent 66%, #000 67%, #000 70%, transparent 71%); opacity: .9; }
-.spinning .bulbs { animation: blink .25s steps(2) infinite; }
+.bulbs { position: absolute; inset: -9px; border-radius: 50%; background: repeating-conic-gradient(#fff 0 7deg, transparent 7deg 30deg); -webkit-mask: radial-gradient(circle, transparent 66%, #000 67%, #000 70%, transparent 71%); mask: radial-gradient(circle, transparent 66%, #000 67%, #000 70%, transparent 71%); }
+.spinning .bulbs { animation: blink .3s steps(2) infinite; }
 @keyframes blink { 50% { transform: rotate(15deg); } }
-.arcade .hub { background: #ffd23f; color: #1a237e; border-color: #fff; font-size: 24px; }
-.arcade .pointer { border-top-color: #ff3d6e; top: -10px; }
-.arcade .lad-btn { border-color: var(--c); background: transparent; color: #fff; }
-.arcade .lad-btn[aria-pressed="true"] { background: var(--c); color: #1a237e; }
-.arcade .lad-res { background: rgba(255, 255, 255, .1); color: #fff; }
-.arcade .lad-res.hide { color: rgba(255, 255, 255, .55); }
-.arcade .lad-res.hit { background: #ffd23f; color: #1a237e; animation: pop .35s ease; }
-.arcade .pcard .back { background: var(--c); color: #1a237e; font-size: 40px; background-image: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, .35) 0 18%, transparent 19%), repeating-linear-gradient(45deg, transparent 0 8px, rgba(255, 255, 255, .15) 8px 16px); }
-.arcade .pcard .back span { width: 56px; height: 56px; border-radius: 50%; background: #fff; display: grid; place-items: center; }
-.arcade .pcard .front { background: #fff; color: #1a237e; border-color: #fff; }
-.arcade .pcard.chosen .front { border-color: #ffd23f; box-shadow: 0 0 0 4px #ffd23f; color: #1a237e; }
+.arcade .hub { background: #fff; color: #ff6f9c; border-color: #ffd1e1; font-family: var(--f-cute); font-size: 26px; box-shadow: 0 3px 0 #f6c6d8; }
+.arcade .pointer { border-top-color: #ff6f9c; top: -12px; border-left-width: 15px; border-right-width: 15px; border-top-width: 26px; filter: drop-shadow(0 2px 0 #fff); }
+.arcade .lad-btn { border: 3px solid #fff; background: var(--c); color: #5b4a7a; font-family: var(--f-cute); box-shadow: 0 3px 0 rgba(0, 0, 0, .08); }
+.arcade .lad-btn[aria-pressed="true"] { transform: scale(1.15); border-color: #ff6f9c; }
+.arcade .lad-res { background: rgba(255, 255, 255, .7); color: #5b4a7a; font-family: var(--f-cute); font-weight: 400; font-size: 13px; }
+.arcade .lad-res.hide { color: #c9a7dc; font-size: 20px; }
+.arcade .lad-res.hit { background: #ff8fab; color: #fff; animation: pop .35s ease; }
+.arcade .pcard .back { background: var(--c); color: #ff6f9c; font-size: 30px; background-image: radial-gradient(rgba(255, 255, 255, .55) 2px, transparent 2.5px); background-size: 14px 14px; border: 3px solid #fff; }
+.arcade .pcard .back span { width: 52px; height: 52px; border-radius: 50%; background: #fff; display: grid; place-items: center; }
+.arcade .pcard .front { background: #fff; color: #5b4a7a; border: 3px solid #fff; font-family: var(--f-cute); font-weight: 400; font-size: 15px; }
+.arcade .pcard.chosen .front { box-shadow: 0 0 0 4px #ff8fab; color: #ff6f9c; }
 .arcade .cards:not(.shuffle) .pcard:not(.flip):hover { transform: translateY(-4px) rotate(-2deg); transition: transform .15s; }
-.arcade .course-wrap { background: var(--card); color: var(--ink); border-radius: 16px; padding: 14px; }
-.result { border: 0; background: linear-gradient(135deg, #ffd23f, #ff9f43); color: #1a237e; }
-.result .win { font-family: var(--f-code); font-size: 40px; letter-spacing: .08em; line-height: 1; color: #fff; text-shadow: 0 3px 0 #c95f00; animation: pop .5s ease; }
-.result h3 { font-size: 26px; }
-.result .btn { background: #fff; border-color: #fff; color: #1a237e; }
-.result .btn.primary { background: #1a237e; border-color: #1a237e; color: #fff; }
+.pick-card { width: 100%; background: #fff; border-radius: 22px; padding: 16px; text-align: center; display: grid; gap: 10px; box-shadow: 0 4px 0 #ecd5f5; animation: pop .4s ease; }
+.pick-card .ribbon { font-size: 15px; color: #ff6f9c; }
+.pick-card h3 { font-family: var(--f-cute); font-weight: 400; font-size: 28px; color: #5b4a7a; overflow-wrap: anywhere; }
+.pick-card p { margin: 0; color: #9b7bb3; font-size: 14px; }
+.pick-card .row { justify-content: center; }
+.final { width: 100%; display: grid; gap: 12px; }
+.final-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.final-list li { display: flex; align-items: center; gap: 10px; background: #fff; border-radius: 18px; padding: 10px 10px 10px 14px; box-shadow: 0 3px 0 #ecd5f5; }
+.final-list .ic { font-size: 22px; }
+.final-list .tx { flex: 1; min-width: 0; display: grid; }
+.final-list .tx small { color: #b08cc8; font-size: 12px; }
+.final-list .tx b { font-weight: 400; font-size: 17px; color: #5b4a7a; overflow-wrap: anywhere; }
+.final-list .map-btn { width: 38px; height: 38px; }
+.final .row { justify-content: center; }
+.result { border: 0; background: #fff; color: #5b4a7a; border-radius: 22px; box-shadow: 0 4px 0 #ecd5f5; font-family: var(--f-cute); }
+.result .win { font-family: var(--f-cute); font-size: 30px; line-height: 1; color: #ff6f9c; animation: pop .5s ease; }
+.result h3 { font-family: var(--f-cute); font-weight: 400; font-size: 28px; }
+.result .btn { font-family: var(--f-cute); font-weight: 400; border-radius: 999px; }
+.result .btn.primary { background: #ff8fab; border-color: #ff8fab; color: #fff; }
 .confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 35; }
 .foot { margin-top: 24px; display: grid; gap: 8px; justify-items: center; text-align: center; }
 @media (prefers-reduced-motion: reduce) {
@@ -1931,8 +1967,8 @@ const Sound = {
       o.connect(g); g.connect(this.ctx.destination); o.start(t0); o.stop(t0 + (d || .04) + .02);
     } catch (e) {}
   },
-  tick() { this.beep(1400, .025, .03); },
-  win() { [523, 659, 784, 1047].forEach((f, i) => setTimeout(() => this.beep(f, .16, .05, 'triangle'), i * 110)); try { navigator.vibrate && navigator.vibrate([30, 40, 60]); } catch (e) {} },
+  tick() { this.beep(1800, .03, .025, 'sine'); },
+  win() { [784, 988, 1175, 1568].forEach((f, i) => setTimeout(() => this.beep(f, .22, .05, 'sine'), i * 120)); try { navigator.vibrate && navigator.vibrate([30, 40, 60]); } catch (e) {} },
   toggle() { this.on = !this.on; try { localStorage.setItem('travel-sound', this.on ? 'on' : 'off'); } catch (e) {} }
 };
 function confetti() {
@@ -1941,28 +1977,156 @@ function confetti() {
   const dpr = window.devicePixelRatio || 1, W = innerWidth, H = innerHeight;
   cv.width = W * dpr; cv.height = H * dpr;
   const ctx = cv.getContext('2d'); ctx.scale(dpr, dpr);
-  const cols = ['#ffd23f', '#ff6b6b', '#4ecdc4', '#a78bfa', '#ff9f43', '#54a0ff'];
+  const cols = ['#ff8fab', '#ffc8dd', '#bde0fe', '#cdb4db', '#fff1a8', '#b9fbc0', '#ffd6a5'];
   const parts = Array.from({ length: 110 }, () => ({ x: W / 2, y: H * .45, vx: (Math.random() - .5) * 14, vy: -Math.random() * 15 - 4, r: Math.random() * 6 + 4, c: cols[Math.floor(Math.random() * cols.length)], a: Math.random() * 6, va: (Math.random() - .5) * .4 }));
   const t0 = performance.now();
   const step = now => {
     const k = (now - t0) / 1600;
     ctx.clearRect(0, 0, W, H);
-    parts.forEach(q => { q.vy += .45; q.vx *= .99; q.x += q.vx; q.y += q.vy; q.a += q.va; ctx.save(); ctx.globalAlpha = Math.max(0, 1 - k); ctx.translate(q.x, q.y); ctx.rotate(q.a); ctx.fillStyle = q.c; ctx.fillRect(-q.r / 2, -q.r / 4, q.r, q.r / 2); ctx.restore(); });
+    parts.forEach((q, i) => {
+      q.vy += .45; q.vx *= .99; q.x += q.vx; q.y += q.vy; q.a += q.va;
+      ctx.save(); ctx.globalAlpha = Math.max(0, 1 - k); ctx.translate(q.x, q.y); ctx.rotate(q.a); ctx.fillStyle = q.c;
+      if (i % 3 === 0) { const r = q.r * .6; ctx.beginPath(); ctx.moveTo(0, r * .9); ctx.bezierCurveTo(-r * 1.6, -r * .4, -r * .5, -r * 1.5, 0, -r * .5); ctx.bezierCurveTo(r * .5, -r * 1.5, r * 1.6, -r * .4, 0, r * .9); ctx.fill(); }
+      else if (i % 3 === 1) { ctx.beginPath(); ctx.arc(0, 0, q.r / 2.4, 0, Math.PI * 2); ctx.fill(); }
+      else ctx.fillRect(-q.r / 2, -q.r / 4, q.r, q.r / 2);
+      ctx.restore();
+    });
     if (k < 1) requestAnimationFrame(step); else cv.remove();
   };
   requestAnimationFrame(step);
 }
+const MASCOT = '<svg class="mascot" viewBox="0 0 64 64" aria-hidden="true">' +
+  '<ellipse cx="22" cy="16" rx="7" ry="15" fill="#fff" stroke="#f3cfe0" stroke-width="2" transform="rotate(-12 22 16)"/><ellipse cx="22" cy="17" rx="3.2" ry="10" fill="#ffc8dd" transform="rotate(-12 22 17)"/>' +
+  '<ellipse cx="42" cy="16" rx="7" ry="15" fill="#fff" stroke="#f3cfe0" stroke-width="2" transform="rotate(12 42 16)"/><ellipse cx="42" cy="17" rx="3.2" ry="10" fill="#ffc8dd" transform="rotate(12 42 17)"/>' +
+  '<ellipse cx="32" cy="40" rx="22" ry="19" fill="#fff" stroke="#f3cfe0" stroke-width="2"/>' +
+  '<circle cx="24" cy="39" r="2.6" fill="#5b4a7a"/><circle cx="40" cy="39" r="2.6" fill="#5b4a7a"/>' +
+  '<circle cx="18.5" cy="46" r="4" fill="#ffc8dd"/><circle cx="45.5" cy="46" r="4" fill="#ffc8dd"/>' +
+  '<path d="M29 45q3 3 6 0" stroke="#5b4a7a" stroke-width="2" fill="none" stroke-linecap="round"/>' +
+  '<path d="M44 24l6-4 1 7zM44 24l-1 7 7-2z" fill="#a0d8ff"/><circle cx="45" cy="25" r="2" fill="#7fc4f5"/></svg>';
+/* ---------- 여행 뽑기: 지역 → 관광 → 맛집 ---------- */
+const JSTEPS = [
+  { k: 'area', n: '지역', icon: '🗺️', game: 'roulette' },
+  { k: 'sight', n: '관광', icon: '🎡', game: 'roulette' },
+  { k: 'food', n: '맛집', icon: '🍰', game: 'cards' }
+];
+function jrDistricts(t) {
+  const out = [];
+  (recsFor(t) || []).forEach(r => { if (!out.includes(r.area)) out.push(r.area); });
+  // 내가 담은 곳의 동네도 지역 후보로 (추천 지역 이름에 포함되면 같은 지역으로)
+  t.places.concat(t.foods).forEach(x => { const d = areaOf(t, x.area); if (d && !out.includes(d)) out.push(d); });
+  return out;
+}
+function areaOf(t, a) {
+  if (!a) return '';
+  const ds = [...new Set((recsFor(t) || []).map(r => r.area))];
+  const hit = ds.find(d => d === a || d.split(/[·()\s]+/).filter(Boolean).some(part => part.length > 1 && (a.includes(part) || part.includes(a))));
+  return hit || a;
+}
+function jrCands(t, k, area) {
+  if (k === 'area') return jrDistricts(t).map(d => ({ key: 'a:' + d, label: d, kind: 'area' }));
+  const themes = k === 'sight' ? ['sight', 'shop', 'night'] : ['food', 'cafe'];
+  const out = [], seen = new Set();
+  const own = k === 'sight' ? t.places.filter(p => !p.done) : t.foods.filter(f => !f.visited);
+  own.forEach(x => { if (areaOf(t, x.area) === area && !seen.has(normName(x.name))) { seen.add(normName(x.name)); out.push({ key: (k === 'sight' ? 'p:' : 'f:') + x.id, label: x.name, kind: k === 'sight' ? 'place' : 'food', id: x.id }); } });
+  (recsFor(t) || []).forEach(r => {
+    if (r.area !== area || !themes.includes(r.theme) || seen.has(normName(r.name))) return;
+    if (t.places.some(p => p.done && normName(p.name) === normName(r.name)) || t.foods.some(f => f.visited && normName(f.name) === normName(r.name))) return;
+    seen.add(normName(r.name)); out.push({ key: 'r:' + r.id, label: r.name, kind: 'rec', rec: r });
+  });
+  // 후보가 적으면 '지도에서 찾기' 와일드카드를 넣어 게임이 되게
+  if (out.length && out.length < 3) {
+    const what = k === 'food' ? '맛집' : '관광지';
+    out.push({ key: 's:' + k, label: '🔎 지도에서 ' + what + ' 찾기', kind: 'search',
+      q: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(area.split('·')[0].replace(/ ?\(.*\)$/, '') + ' ' + t.city + ' ' + (k === 'food' ? '맛집' : '관광명소')) });
+  }
+  return out;
+}
+function jrState() { return S.game.jr || (S.game.jr = { step: 0, picks: {} }); }
+function stepsHTML() {
+  const J = jrState();
+  return '<ol class="steps">' + JSTEPS.map((st, i) => {
+    const pk = J.picks[st.k];
+    return '<li class="' + (i === J.step ? 'now' : i < J.step ? 'done' : '') + '"><span class="bub">' + st.icon + '</span><span class="lb">' + st.n + '</span>' +
+      (pk ? '<span class="pk">' + esc(pk.label) + '</span>' : pk === null ? '<span class="pk">건너뜀</span>' : '') + '</li>';
+  }).join('') + '</ol>';
+}
+function mountJourney(stage, t) {
+  const J = jrState();
+  if (J.step >= JSTEPS.length) return mountFinal(stage, t);
+  const st = JSTEPS[J.step];
+  const c = jrCands(t, st.k, J.picks.area && J.picks.area.label);
+  if (J.pending) { stage.innerHTML = pickCardHTML(st, J.pending); return; }
+  if (st.k === 'area' && c.length < 2) {
+    stage.innerHTML = '<div class="g-empty"><div class="q">🐰</div><p>' + esc(t.city) + ' 지역 정보가 아직 없어요.<br>가볼 곳에 동네를 적어 두거나 자유 게임을 해 보세요.</p><button class="big-btn" data-act="game-mode" data-v="free">자유 게임</button></div>';
+    return;
+  }
+  if (c.length === 0) {
+    const q = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(J.picks.area.label.split('·')[0].replace(/ ?\(.*\)$/, '') + ' ' + t.city + ' ' + (st.k === 'food' ? '맛집' : '관광명소'));
+    stage.innerHTML = '<div class="g-empty"><div class="q">🙈</div><p>이 지역엔 ' + st.n + ' 추천이 없어요</p><div class="row" style="justify-content:center"><a class="soft-btn" href="' + esc(q) + '" target="_blank" rel="noopener">🗺 지도에서 찾기</a><button class="big-btn" data-act="jr-skip">다음</button></div></div>';
+    return;
+  }
+  if (c.length === 1) { J.pending = c[0]; stage.innerHTML = pickCardHTML(st, c[0], true); return; }
+  if (st.game === 'roulette') mountRoulette(stage, c); else mountCards(stage, c);
+}
+function pickCardHTML(st, r, only) {
+  const J = jrState(), last = J.step === JSTEPS.length - 1;
+  return '<div class="pick-card"><div class="ribbon">' + st.icon + ' ' + st.n + ' ' + (only ? '딱 한 곳!' : '당첨!') + '</div><h3>' + esc(r.label) + '</h3>' +
+    (r.rec ? '<p>' + esc(r.rec.desc) + '</p>' : '') +
+    (r.kind === 'search' ? '<p>지도에서 평점 좋은 곳을 골라 보세요!</p><div class="row"><a class="soft-btn" href="' + esc(r.q) + '" target="_blank" rel="noopener">🗺 지도 열기</a></div>' : '') +
+    '<div class="row">' + (only ? '' : '<button class="soft-btn" data-act="jr-again">🔁 다시</button>') +
+    '<button class="big-btn mint" data-act="jr-next">' + (last ? '코스 보기 ✨' : '다음: ' + JSTEPS[J.step + 1].n + ' →') + '</button></div></div>';
+}
+function jrItemMap(t, x) {
+  if (!x) return '';
+  if (x.kind === 'search') return '<a class="map-btn" href="' + esc(x.q) + '" target="_blank" rel="noopener" aria-label="지도에서 찾기">' + ICON.place + '</a>';
+  if (x.kind === 'rec') return mapBtn({ name: x.rec.name, area: x.rec.area.split('·')[0].replace(/ ?\(.*\)$/, '') }, t);
+  const it = itemOf(t, x.kind, x.id);
+  return it ? mapBtn(it, t) : '';
+}
+function mountFinal(stage, t) {
+  const J = jrState();
+  const stops = [J.picks.sight, J.picks.food].filter(Boolean);
+  const dir = courseDirURL(t, stops.filter(x => x.kind !== 'search').map(x => ({ label: x.label, kind: 'x' })));
+  stage.innerHTML = '<div class="final"><div class="pick-card" style="gap:6px"><div class="ribbon">✨ 오늘의 코스 ✨</div><h3>' + esc(J.picks.area ? J.picks.area.label : t.city) + '</h3></div>' +
+    '<ul class="final-list">' + [['🎡', '관광', J.picks.sight], ['🍰', '맛집', J.picks.food]].map(([ic, n, x]) =>
+      '<li><span class="ic">' + ic + '</span><span class="tx"><small>' + n + '</small><b>' + (x ? esc(x.label) : '건너뜀') + '</b></span>' + jrItemMap(t, x) + '</li>').join('') + '</ul>' +
+    '<div class="row">' + (dir ? '<a class="soft-btn" href="' + esc(dir) + '" target="_blank" rel="noopener">🗺 경로</a>' : '') +
+    '<button class="soft-btn" data-act="jr-reset">🔁 처음부터</button><button class="big-btn" data-act="jr-save">💖 저장</button></div></div>';
+}
+function jrPicked(r) {
+  const J = jrState();
+  J.pending = r;
+  const st = JSTEPS[J.step];
+  // 멈춘 룰렛·뒤집힌 카드를 잠깐 보여 준 뒤 당첨 카드로
+  setTimeout(() => { const stage = $('#stage'); if (stage && J.pending === r && S.view === 'trip' && S.tab === 'game') stage.innerHTML = pickCardHTML(st, r); }, st.game === 'cards' ? 1100 : 700);
+}
+function jrResetGames() { S.game.wheelSet = null; S.game.cardSet = null; S.game.cards = null; S.game.rot = 0; }
+// 뽑은 곳을 가볼 곳·맛집 위시에 담고, 실제 항목을 가리키도록 바꿔요
+function jrMaterialize(t, x, kind) {
+  if (!x) return null;
+  if (x.kind === 'search') return { label: x.label.replace('🔎 ', ''), kind: 'free' };
+  if (x.kind !== 'rec') return { label: x.label, kind: x.kind, id: x.id };
+  addRec(t, x.rec);
+  const list = kind === 'place' ? t.places : t.foods;
+  const isFood = x.rec.theme === 'food' || x.rec.theme === 'cafe';
+  const it = (isFood ? t.foods : t.places).find(y => normName(y.name) === normName(x.rec.name));
+  return it ? { label: it.name, kind: isFood ? 'food' : 'place', id: it.id, area: it.area } : { label: x.label, kind: 'free' };
+}
 function gameView(t) {
-  const g = S.game, n = activeCands(t).length;
-  const names = activeCands(t).map(c => c.label);
-  return '<section class="arcade">' +
-    '<div class="g-tabs" role="group" aria-label="게임 고르기">' + [['roulette', '룰렛'], ['ladder', '사다리'], ['cards', '카드'], ['course', '코스']].map(([k, nm]) =>
-      '<button class="g-tab" data-act="game-type" data-v="' + k + '" aria-pressed="' + (g.type === k) + '">' + GICON[k] + '<span>' + nm + '</span></button>').join('') + '</div>' +
-    '<div class="stage" id="stage"></div>' +
-    '<div class="cand-bar"><span class="n">' + n + '</span><span class="mini">' + (names.length ? esc(names.join(' · ')) : '후보 없음') + '</span>' +
-      '<button class="snd" data-act="sound" aria-label="효과음 ' + (Sound.on ? '끄기' : '켜기') + '">' + (Sound.on ? '🔊' : '🔇') + '</button>' +
-      '<button data-act="cand-edit">후보</button></div>' +
-  '</section><div id="gameResult"></div>';
+  const g = S.game, mode = g.mode || 'trip';
+  let h = '<section class="arcade"><div class="pz-top">' + MASCOT + '<div class="pz-title">오늘 어디 갈까?<small>' + esc(t.city) + ' 랜덤 여행 뽑기</small></div>' +
+    '<button class="snd" data-act="sound" aria-label="효과음 ' + (Sound.on ? '끄기' : '켜기') + '">' + (Sound.on ? '🔔' : '🔕') + '</button></div>' +
+    '<div class="pz-mode" role="group" aria-label="게임 방식"><button data-act="game-mode" data-v="trip" aria-pressed="' + (mode === 'trip') + '">🎀 여행 뽑기</button><button data-act="game-mode" data-v="free" aria-pressed="' + (mode === 'free') + '">🎲 자유 게임</button></div>';
+  if (mode === 'trip') {
+    h += stepsHTML() + '<div class="stage" id="stage"></div>';
+  } else {
+    const n = activeCands(t).length, names = activeCands(t).map(c => c.label);
+    h += '<div class="g-tabs" role="group" aria-label="게임 고르기">' + [['roulette', '룰렛'], ['ladder', '사다리'], ['cards', '카드']].map(([k, nm]) =>
+        '<button class="g-tab" data-act="game-type" data-v="' + k + '" aria-pressed="' + (g.type === k) + '">' + GICON[k] + '<span>' + nm + '</span></button>').join('') + '</div>' +
+      '<div class="stage" id="stage"></div>' +
+      '<div class="cand-bar"><span class="n">' + n + '</span><span class="mini">' + (names.length ? esc(names.join(' · ')) : '후보 없음') + '</span><button data-act="cand-edit">후보</button></div>';
+  }
+  return h + '</section><div id="gameResult"></div>';
 }
 function candSheetBody(t) {
   const g = S.game, all = allCands(t);
@@ -1995,10 +2159,11 @@ function wireCandForm() {
 function mountGame(t) {
   const stage = $('#stage');
   if (!stage) return;
+  if ((S.game.mode || 'trip') === 'trip') { $('#gameResult').innerHTML = ''; mountJourney(stage, t); return; }
+  if (S.game.type === 'course') S.game.type = 'roulette';
   const c = activeCands(t);
-  if (S.game.type === 'course') { mountCourse(stage, c, t); $('#gameResult').innerHTML = ''; return; }
   if (c.length < 2) {
-    stage.innerHTML = '<div class="g-empty"><div class="q">?</div><button class="big-btn" data-act="cand-edit">후보 담기</button></div>';
+    stage.innerHTML = '<div class="g-empty"><div class="q">🐰</div><p>후보를 2개 이상 담아 주세요</p><button class="big-btn" data-act="cand-edit">후보 담기</button></div>';
     $('#gameResult').innerHTML = '';
     return;
   }
@@ -2034,8 +2199,8 @@ function drawWheel() {
   const ctx = cv.getContext('2d');
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   const R = css / 2, n = items.length, a = Math.PI * 2 / n;
-  const cols = ['#ff6b6b', '#ffd23f', '#4ecdc4', '#a78bfa', '#ff9f43', '#54a0ff'];
-  const ink = '#141c5c', card = '#ffffff';
+  const cols = PASTEL;
+  const ink = '#5b4a7a', card = '#ffffff';
   ctx.clearRect(0, 0, css, css);
   for (let i = 0; i < n; i++) {
     let ci = i % 6;
@@ -2049,7 +2214,7 @@ function drawWheel() {
     ctx.save(); ctx.translate(R, R); ctx.rotate(s + a / 2 + (flip ? Math.PI : 0));
     ctx.fillStyle = ink; ctx.textAlign = flip ? 'left' : 'right'; ctx.textBaseline = 'middle';
     const fs = n > 8 ? 12 : 14;
-    ctx.font = '700 ' + fs + 'px "IBM Plex Sans KR", sans-serif';
+    ctx.font = (fs + 1) + 'px "Jua", "IBM Plex Sans KR", sans-serif';
     let label = items[i].label;
     const maxW = R - 50;
     while (label.length > 1 && ctx.measureText(label).width > maxW) label = label.slice(0, -1);
@@ -2101,7 +2266,8 @@ function genRungs(n) {
   } while (!Array.from({ length: n - 1 }, (_, c) => g.some(row => row[c])).every(Boolean));
   return g;
 }
-const LAD_COLS = ['#ff6b6b', '#ffd23f', '#4ecdc4', '#a78bfa', '#ff9f43', '#54a0ff'];
+const PASTEL = ['#ffc8dd', '#bde0fe', '#cdb4db', '#fff1a8', '#b9fbc0', '#ffd6a5'];
+const LAD_COLS = PASTEL;
 function mountLadder(stage, c) {
   const items = pickSubset(c, 6, 'ladSet');
   const n = items.length;
@@ -2143,7 +2309,7 @@ function drawLadder(path, k) {
   const ctx = G.cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   ctx.clearRect(0, 0, G.W, G.H);
   ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-  ctx.strokeStyle = 'rgba(255,255,255,.28)'; ctx.lineWidth = 5;
+  ctx.strokeStyle = '#e4c6f0'; ctx.lineWidth = 5;
   for (let c = 0; c < G.n; c++) { ctx.beginPath(); ctx.moveTo(G.x(c), 0); ctx.lineTo(G.x(c), G.H); ctx.stroke(); }
   for (let r = 0; r < G.R; r++) for (let c = 0; c < G.n - 1; c++) if (L.rungs[r][c]) {
     ctx.beginPath(); ctx.moveTo(G.x(c), G.y(r)); ctx.lineTo(G.x(c + 1), G.y(r)); ctx.stroke();
@@ -2152,8 +2318,8 @@ function drawLadder(path, k) {
   const pts = path.pts;
   let total = 0; for (let i = 1; i < pts.length; i++) total += Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]);
   let left = total * k;
-  const pc = LAD_COLS[L.picked || 0];
-  ctx.strokeStyle = pc; ctx.lineWidth = 6; ctx.shadowColor = pc; ctx.shadowBlur = 10;
+  const pc = '#ff8fab';
+  ctx.strokeStyle = pc; ctx.lineWidth = 7; ctx.shadowColor = 'rgba(255,143,171,.5)'; ctx.shadowBlur = 8;
   ctx.beginPath(); ctx.moveTo(pts[0][0], pts[0][1]);
   let last = pts[0];
   for (let i = 1; i < pts.length && left > 0; i++) {
@@ -2198,7 +2364,7 @@ function mountCards(stage, c, shuffling) {
   if (!C || C.src !== S.game.cardSet.src) C = S.game.cards = { src: S.game.cardSet.src, order: shuffle(items), picked: null };
   stage.innerHTML = '<div class="cards' + (shuffling ? ' shuffle' : '') + '">' + C.order.map((it, i) =>
     '<button class="pcard' + (C.picked != null ? ' flip' : '') + (C.picked === i ? ' chosen' : C.picked != null ? ' dim' : '') + '" data-act="card-pick" data-i="' + i + '" aria-label="' + (C.picked != null ? esc(it.label) : (i + 1) + '번 카드') + '">' +
-      '<span class="in"><span class="face back" style="--c:' + LAD_COLS[i % 6] + '"><span>?</span></span><span class="face front">' + esc(it.label) + '</span></span></button>').join('') + '</div>' +
+      '<span class="in"><span class="face back" style="--c:' + LAD_COLS[i % 6] + '"><span>♡</span></span><span class="face front">' + esc(it.label) + '</span></span></button>').join('') + '</div>' +
     '<div class="g-tools"><button class="g-tool" data-act="card-shuffle" aria-label="다시 섞기">🔀</button></div>';
 }
 function cardPick(i) {
@@ -2289,8 +2455,9 @@ function stopsHTML(t, stops, editable) {
   return '<ol class="course">' + stops.map((x, i) => {
     const it = x.kind === 'place' ? itemOf(t, 'place', x.id) : x.kind === 'food' ? itemOf(t, 'food', x.id) : null;
     const done = it && (it.done || it.visited);
-    return '<li class="stop' + (x.kind === 'free' ? ' free' : '') + (done && !editable ? ' done' : '') + '"><span class="time num">' + SLOTS[i].time + '</span><span class="dot"></span>' +
-      '<div class="stop-main"><span class="slot">' + SLOTS[i].n + (x.area ? ' · ' + esc(x.area) : '') + (x.kind === 'free' ? ' · 자유 일정' : '') + (done && !editable ? ' · 다녀옴' : '') + '</span><b>' + esc(x.label) + '</b></div>' +
+    const sl = x.n ? { time: x.time || '', n: x.n } : SLOTS[i];
+    return '<li class="stop' + (x.kind === 'free' ? ' free' : '') + (done && !editable ? ' done' : '') + '"><span class="time num">' + sl.time + '</span><span class="dot"></span>' +
+      '<div class="stop-main"><span class="slot">' + sl.n + (x.area ? ' · ' + esc(x.area) : '') + (x.kind === 'free' ? ' · 자유 일정' : '') + (done && !editable ? ' · 다녀옴' : '') + '</span><b>' + esc(x.label) + '</b></div>' +
       stopMap(t, x) + (editable ? '<button class="icon-btn sm" data-act="course-swap" data-i="' + i + '" aria-label="' + SLOTS[i].n + ' 일정 바꾸기">↻</button>' : '<span></span>') + '</li>';
   }).join('') + '</ol>';
 }
@@ -2316,7 +2483,7 @@ function savedCourseCard(t) {
 function resultHTML(r) {
   const t = cur();
   const it = r.kind === 'place' ? itemOf(t, 'place', r.id) : r.kind === 'food' ? itemOf(t, 'food', r.id) : null;
-  return '<section class="result" aria-live="polite"><div class="win">WIN!</div><h3>' + esc(r.label) + '</h3>' +
+  return '<section class="result" aria-live="polite"><div class="win">🎉 당첨!</div><h3>' + esc(r.label) + '</h3>' +
     '<div class="row" style="justify-content:center">' +
     (it ? '<a class="btn" href="' + esc(mapURL(it, t)) + '" target="_blank" rel="noopener">🗺 지도</a>' : '') +
     (r.kind === 'place' ? '<button class="btn primary" data-act="res-place" data-id="' + r.id + '">✓ 다녀옴</button>' : '') +
@@ -2324,6 +2491,7 @@ function resultHTML(r) {
     '</div></section>';
 }
 function showResult(r) {
+  if ((S.game.mode || 'trip') === 'trip') { jrPicked(r); Sound.win(); confetti(); if (S.renderPending) setTimeout(render, 1200); return; }
   S.game.result = r;
   const el = $('#gameResult');
   if (el) { el.innerHTML = resultHTML(r); el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
@@ -2791,6 +2959,24 @@ const ACT = {
     S.game.result = null; render(); refreshCandSheet();
   },
   'spin': spin,
+  'game-mode': a => { if (S.game.busy) return; S.game.mode = a.dataset.v; S.game.result = null; jrResetGames(); render(); },
+  'jr-next': () => {
+    const J = jrState(); if (S.game.busy) return;
+    J.picks[JSTEPS[J.step].k] = J.pending || null; J.pending = null; J.step++; jrResetGames(); render(); window.scrollTo({ top: 0, behavior: 'smooth' });
+  },
+  'jr-again': () => { const J = jrState(); J.pending = null; jrResetGames(); render(); },
+  'jr-skip': () => { const J = jrState(); J.picks[JSTEPS[J.step].k] = null; J.pending = null; J.step++; jrResetGames(); render(); },
+  'jr-reset': () => { S.game.jr = null; jrResetGames(); render(); },
+  'jr-save': () => {
+    const t = cur(), J = jrState();
+    const sight = jrMaterialize(t, J.picks.sight, 'place'), food = jrMaterialize(t, J.picks.food, 'food');
+    const stops = [];
+    if (sight) stops.push(Object.assign({ n: '관광', time: '☀️' }, sight));
+    if (food) stops.push(Object.assign({ n: '맛집', time: '🍽️' }, food));
+    if (!stops.length) return toast('저장할 곳이 없어요');
+    t.courses.push({ id: uid(), ts: Date.now(), date: todayISO(), anchor: J.picks.area ? J.picks.area.label : '', stops });
+    commit(t); toast('💖 코스를 저장하고 가볼 곳·맛집에 담았어요');
+  },
   'sound': () => { Sound.toggle(); render(); if (Sound.on) Sound.tick(); },
   'cand-edit': () => { openSheet('후보 고르기', '<div id="candBox">' + candSheetBody(cur()) + '</div>'); wireCandForm(); },
   'lad-go': a => ladGo(+a.dataset.i),
