@@ -520,6 +520,13 @@ a.chip { text-decoration: none; color: var(--ink); }
 .area-h b { font-size: 16px; }
 .cat-h { margin: 8px 2px 0; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 6px; }
 .cat-dot.sm { width: 10px; height: 10px; border-radius: 50%; }
+.share-bar { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; border: 0; background: var(--card); box-shadow: var(--shadow); border-radius: var(--r); padding: 12px 14px; }
+.share-bar .ico { width: 38px; height: 38px; border-radius: 12px; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; flex: none; }
+.share-bar .ico svg { width: 20px; height: 20px; }
+.share-bar > span:nth-child(2) { flex: 1; min-width: 0; display: grid; }
+.share-bar b { font-size: 14.5px; }
+.share-bar span span { font-size: 12.5px; color: var(--sub); }
+.share-text { width: 100%; min-height: 220px; border: 0; background: var(--soft); border-radius: 14px; padding: 12px; font-size: 13.5px; line-height: 1.55; resize: vertical; color: var(--ink); }
 .foot { margin-top: 24px; display: grid; gap: 8px; justify-items: center; text-align: center; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -2126,7 +2133,8 @@ function mapBtn(f, t) {
 function foodView(t) {
   const done = t.foods.filter(f => f.visited);
   const wish = t.foods.filter(f => !f.visited);
-  let h = '<div class="seg" role="group">' + [['done', '다녀온 맛집 ' + done.length], ['wish', '가고 싶은 곳 ' + wish.length]].map(([k, n]) =>
+  let h = (t.foods.length ? '<button class="share-bar" data-act="food-share"><span class="ico">' + ICON.place + '</span><span><b>구글맵 맛집 리스트 공유</b><span>이름·별점·지도 링크를 복사해 카톡 등에 붙여 넣기</span></span><span class="chev">›</span></button>' : '') +
+    '<div class="seg" role="group">' + [['done', '다녀온 맛집 ' + done.length], ['wish', '가고 싶은 곳 ' + wish.length]].map(([k, n]) =>
     '<button data-act="food-tab" data-v="' + k + '" aria-pressed="' + (S.foodTab === k) + '">' + n + '</button>').join('') + '</div>';
   if (S.foodTab === 'done') {
     if (!done.length) return h + '<div class="card empty"><p>다녀온 맛집을 적고 별점을 매겨 보세요. 별점 순으로 순위가 매겨져요.</p></div>';
@@ -3128,6 +3136,46 @@ function exportSheet(t, focusSetup) {
       '<p class="hint">연결 주소는 이 휴대폰에만 저장돼요. 앱을 같이 쓰는 친구는 각자 연결해야 해요.</p></div></details></div>';
   openSheet('비용 내보내기', body);
 }
+/* 맛집 리스트 공유 (구글맵 링크 포함, 복사·붙여넣기용) */
+// 붙여 넣었을 때 읽기 쉬운 지도 링크 (한글은 그대로, 띄어쓰기는 +)
+function shareMapURL(f, t) {
+  if (f.map) return f.map;
+  const q = [f.name, f.area, t.city].filter(Boolean).join(' ').replace(/[&#?%+=]/g, c => encodeURIComponent(c)).trim().replace(/\s+/g, '+');
+  return 'https://www.google.com/maps/search/?api=1&query=' + q;
+}
+function foodShareText(t, scope, withNote) {
+  let list = t.foods.slice();
+  if (scope === 'done') list = list.filter(f => f.visited).sort((a, b) => (b.rating || 0) - (a.rating || 0));
+  else if (scope === 'wish') list = list.filter(f => !f.visited);
+  else list.sort((a, b) => (b.visited - a.visited) || (b.rating || 0) - (a.rating || 0));
+  const label = scope === 'done' ? '다녀온 맛집' : scope === 'wish' ? '가고 싶은 맛집' : '맛집';
+  const lines = [t.city + ' ' + label + ' 리스트 (' + list.length + '곳)', ''];
+  list.forEach((f, i) => {
+    const stars = f.visited && f.rating ? ' ' + '★'.repeat(f.rating) + '☆'.repeat(5 - f.rating) : '';
+    lines.push((i + 1) + '. ' + f.name + stars + (scope === 'all' && !f.visited ? ' (가고 싶은 곳)' : ''));
+    const sub = [f.area, f.menu].filter(Boolean).join(' · ');
+    if (withNote && sub) lines.push('   ' + sub);
+    if (withNote && f.visited && f.memo) lines.push('   “' + f.memo + '”');
+    lines.push('   ' + shareMapURL(f, t));
+    lines.push('');
+  });
+  return { text: lines.join('\n').trim() + '\n', n: list.length };
+}
+function foodShareSheet(t) {
+  const sc = S.shareScope || (t.foods.some(f => f.visited) ? 'done' : 'wish');
+  const note = S.shareNote !== false;
+  const r = foodShareText(t, sc, note);
+  const body = '<div class="stack">' +
+    '<div class="seg" role="group">' + [['done', '다녀온 곳'], ['wish', '가고 싶은 곳'], ['all', '전체']].map(([k, n]) =>
+      '<button type="button" data-act="share-scope" data-v="' + k + '" aria-pressed="' + (sc === k) + '">' + n + '</button>').join('') + '</div>' +
+    '<label class="check-row"><input type="checkbox" id="shareNote"' + (note ? ' checked' : '') + ' data-act="share-note"> 동네·메뉴·한 줄 평 함께 넣기</label>' +
+    '<textarea id="shareText" class="share-text" readonly>' + esc(r.text) + '</textarea>' +
+    (r.n ? '<div class="row"><button class="btn primary" type="button" data-act="share-copy" style="flex:1">복사하기</button>' +
+      (navigator.share ? '<button class="btn" type="button" data-act="share-send" style="flex:1">공유하기</button>' : '') + '</div>' : '<p class="hint">이 목록에 맛집이 없어요.</p>') +
+    '<p class="hint">각 링크를 누르면 구글맵에서 바로 열려요. 구글맵 공유 링크를 저장해 둔 곳은 그 링크가 들어가요.</p></div>';
+  openSheet('맛집 리스트 공유', body);
+}
+
 /* 예산 */
 function budgetSheet(t) {
   const loc = t.cur !== 'KRW';
@@ -3494,6 +3542,15 @@ const ACT = {
   },
   'spin': spin,
   'budget': () => budgetSheet(cur()),
+  'food-share': () => foodShareSheet(cur()),
+  'share-scope': a => { S.shareScope = a.dataset.v; foodShareSheet(cur()); },
+  'share-note': a => { S.shareNote = a.checked; foodShareSheet(cur()); },
+  'share-copy': () => {
+    const ta = $('#shareText'); if (!ta) return;
+    const fallback = () => { ta.removeAttribute('readonly'); ta.focus(); ta.select(); ta.setSelectionRange(0, ta.value.length); ta.setAttribute('readonly', ''); toast('선택된 글자를 길게 눌러 복사하세요'); };
+    try { navigator.clipboard.writeText(ta.value).then(() => toast('맛집 리스트를 복사했어요'), fallback); } catch (e) { fallback(); }
+  },
+  'share-send': () => { const ta = $('#shareText'); if (ta && navigator.share) navigator.share({ title: '맛집 리스트', text: ta.value }).catch(() => {}); },
   'export': () => exportSheet(cur()),
   'export-xlsx': () => { closeSheet(); exportXLSX(cur()); },
   'export-sheet': () => exportToSheet(cur()),
