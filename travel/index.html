@@ -510,6 +510,16 @@ a.chip { text-decoration: none; color: var(--ink); }
 .link-num { border: 0; background: none; padding: 0; color: inherit; font: inherit; text-align: left; cursor: pointer; }
 .link-num:hover { color: var(--accent); }
 .confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 35; }
+.search { display: flex; align-items: center; gap: 8px; border: 1px solid var(--line); background: var(--bg); border-radius: 12px; padding: 0 6px 0 12px; }
+.search svg { width: 18px; height: 18px; color: var(--sub); flex: none; }
+.search input { flex: 1; min-width: 0; border: 0; background: transparent; padding: 11px 0; font-size: 16px; outline: none; }
+.search input::-webkit-search-cancel-button { display: none; }
+.search .x { border: 0; background: var(--line); color: var(--sub); width: 26px; height: 26px; border-radius: 50%; font-size: 16px; line-height: 1; flex: none; }
+.search:focus-within { border-color: var(--accent); }
+.area-block { display: grid; gap: 6px; }
+.area-h b { font-size: 16px; }
+.cat-h { margin: 8px 2px 0; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+.cat-dot.sm { width: 10px; height: 10px; border-radius: 50%; }
 .foot { margin-top: 24px; display: grid; gap: 8px; justify-items: center; text-align: center; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -1928,43 +1938,77 @@ const STYLE_N = Object.fromEntries(STYLES);
 const STYLE_PREF = { couple: 'c', friends: 'f', family: 'kp', kids: 'k', parents: 'p' };
 const styleFit = (t, r) => { const pf = STYLE_PREF[t.style]; return !!pf && [...pf].some(ch => (r.tags || '').includes(ch)); };
 const styleOK = (t, r) => !(['family', 'kids', 'parents'].includes(t.style) && (r.tags || '').includes('a'));
+function recItemHTML(t, r) {
+  const saved = recSaved(t, r);
+  return '<div class="item"><span class="cat-dot" style="background:' + THEME[r.theme].g + '" title="' + THEME[r.theme].n + '">' + THEME[r.theme].n[0] + '</span>' +
+    '<span class="item-main"><span class="item-title" style="display:block">' + esc(r.name) + (styleFit(t, r) ? ' <span class="tag">' + esc(STYLE_N[t.style]) + ' 추천</span>' : '') + '</span><span class="item-sub" style="display:block">' + esc(r.desc) + '</span></span>' +
+    mapBtn({ name: r.name, area: r.area.replace(/ ?\(.*\)$/, '').split('·')[0] }, t) +
+    (saved ? '<span class="add-btn on" aria-label="담음">' + ICON.check + '</span>'
+           : '<button class="add-btn" data-act="rec-add" data-id="' + r.id + '" aria-label="' + esc(r.name) + ' 담기">+</button>') + '</div>';
+}
+const fitFirst = (t, list) => STYLE_PREF[t.style] ? list.slice().sort((a, b) => styleFit(t, b) - styleFit(t, a)) : list;
+function areaHead(t, area, items) {
+  const unsaved = items.filter(r => !recSaved(t, r)).length;
+  return '<div class="day-h area-h"><span><b>' + esc(area) + '</b> · ' + items.length + '곳</span><span class="row" style="gap:2px">' +
+    '<button class="text-btn" data-act="route-open" data-v="' + esc(area) + '">지도·동선</button>' +
+    (unsaved > 1 ? '<button class="text-btn" data-act="rec-add-all" data-v="' + esc(area) + '">모두 담기</button>' : '') + '</span></div>';
+}
+// 한 지역을 카테고리(관광·쇼핑·맛집·카페·야경)별로
+function areaByCategory(t, area, recs, th) {
+  const items = recs.filter(r => r.area === area && (th === 'all' || r.theme === th));
+  if (!items.length) return '';
+  let h = '<section class="area-block">' + areaHead(t, area, items);
+  THEMES.forEach(([k, n]) => {
+    const list = fitFirst(t, items.filter(r => r.theme === k));
+    if (!list.length) return;
+    h += '<p class="cat-h"><span class="cat-dot sm" style="background:' + THEME[k].g + '"></span>' + n + ' <span class="muted">' + list.length + '</span></p>' +
+      '<div class="list">' + list.map(r => recItemHTML(t, r)).join('') + '</div>';
+  });
+  return h + '</section>';
+}
+function recResultsHTML(t) {
+  const recs = (recsFor(t) || []).filter(r => styleOK(t, r));
+  const areas = [...new Set(recs.map(r => r.area))];
+  const th = S.recTheme || 'all';
+  const q = normName(S.recQ || '');
+  if (q) {
+    const hitAreas = areas.filter(a => normName(a).includes(q));
+    const hitPlaces = recs.filter(r => !hitAreas.includes(r.area) && (normName(r.name).includes(q) || normName(r.desc).includes(q)) && (th === 'all' || r.theme === th));
+    let h = hitAreas.map(a => areaByCategory(t, a, recs, th)).join('');
+    if (hitPlaces.length) h += '<p class="sec" style="margin-top:8px">장소 이름으로 찾은 곳</p><div class="list">' + hitPlaces.map(r => recItemHTML(t, r).replace('</span><span class="item-sub" style="display:block">', '</span><span class="item-sub" style="display:block">' + esc(r.area) + ' · ')).join('') + '</div>';
+    if (!h) {
+      const g = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(S.recQ + ' ' + t.city + ' 가볼 만한 곳');
+      h = '<div class="card empty"><p>‘' + esc(S.recQ) + '’ 추천이 아직 없어요.</p><a class="btn small" href="' + esc(g) + '" target="_blank" rel="noopener">구글맵에서 찾아보기 ↗</a></div>';
+    }
+    return h;
+  }
+  const ar = S.recArea && areas.includes(S.recArea) ? S.recArea : 'all';
+  if (ar !== 'all') return areaByCategory(t, ar, recs, th) || '<div class="card empty"><p>이 조건의 추천이 없어요.</p></div>';
+  // 전체 지역: 지역별로 묶어서
+  const out = areas.map(a => {
+    const items = fitFirst(t, recs.filter(r => r.area === a && (th === 'all' || r.theme === th)));
+    return items.length ? areaHead(t, a, items) + '<div class="list">' + items.map(r => recItemHTML(t, r)).join('') + '</div>' : '';
+  }).join('');
+  return out || '<div class="card empty"><p>이 조건의 추천이 없어요.</p></div>';
+}
 function recView(t) {
   const recs = recsFor(t);
   const more = '<div class="chips">' + THEMES.map(([k, n]) =>
     '<a class="chip" href="' + esc(themeSearch(t, k)) + '" target="_blank" rel="noopener">' + n + ' 더보기 ↗</a>').join('') + '</div>';
   if (!recs) return '<section class="card stack"><p class="eyebrow">' + esc(t.city) + ' 추천</p><p style="margin:0">' + esc(t.city) + ' 추천 목록은 아직 없어요. 구글맵에서 테마별로 찾아보세요.</p>' + more + '</section>';
-  const areas = [...new Set(recs.map(r => r.area))];
+  const areas = [...new Set(recs.filter(r => styleOK(t, r)).map(r => r.area))];
   const th = S.recTheme || 'all', ar = S.recArea && areas.includes(S.recArea) ? S.recArea : 'all';
-  const list = recs.filter(r => styleOK(t, r) && (th === 'all' || r.theme === th) && (ar === 'all' || r.area === ar));
-  // 여행 타입에 맞는 곳을 동네 안에서 먼저
-  if (STYLE_PREF[t.style]) {
-    const order = [...new Set(list.map(r => r.area))];
-    list.sort((a, b) => order.indexOf(a.area) - order.indexOf(b.area) || styleFit(t, b) - styleFit(t, a));
-  }
-  let h = '<section class="card stack"><div class="row" style="justify-content:space-between"><p class="eyebrow">' + esc(t.city) + ' · 평점·후기 좋은 곳</p>' +
+  const h = '<section class="card stack"><div class="row" style="justify-content:space-between"><p class="eyebrow">' + esc(t.city) + ' · 평점·후기 좋은 곳</p>' +
     '<button class="chip sm" data-act="edit-style">' + (t.style && t.style !== 'solo' ? esc(STYLE_N[t.style]) + ' 맞춤' : '여행 타입') + ' ▾</button></div>' +
-    '<div class="chips scroll">' + [['all', '전체 지역']].concat(areas.map(a => [a, a])).map(([k, n]) =>
+    '<div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>' +
+      '<input id="recQ" type="search" inputmode="search" enterkeyhint="search" autocomplete="off" placeholder="지역 검색 (예: 시부야, 신주쿠)" value="' + esc(S.recQ || '') + '">' +
+      (S.recQ ? '<button class="x" type="button" data-act="rec-q-clear" aria-label="검색어 지우기">×</button>' : '') + '</div>' +
+    '<div class="chips scroll" id="recAreas"' + (S.recQ ? ' hidden' : '') + '>' + [['all', '전체 지역']].concat(areas.map(a => [a, a])).map(([k, n]) =>
       '<button class="chip" data-act="rec-area" data-v="' + esc(k) + '" aria-pressed="' + (ar === k) + '">' + esc(n) + '</button>').join('') + '</div>' +
     '<div class="chips scroll">' + [['all', '전체']].concat(THEMES.map(([k, n]) => [k, n])).map(([k, n]) =>
       '<button class="chip sm" data-act="rec-theme" data-v="' + k + '" aria-pressed="' + (th === k) + '">' + n + '</button>').join('') + '</div></section>';
-  if (!list.length) return h + '<div class="card empty"><p>이 조건의 추천이 없어요.</p></div>';
-  const groups = [];
-  list.forEach(r => { const g = groups[groups.length - 1]; if (g && g.area === r.area) g.items.push(r); else groups.push({ area: r.area, items: [r] }); });
-  groups.forEach(g => {
-    const unsaved = g.items.filter(r => !recSaved(t, r)).length;
-    h += '<div class="day-h"><span><b>' + esc(g.area) + '</b> · ' + g.items.length + '곳</span><span class="row" style="gap:2px">' +
-      '<button class="text-btn" data-act="route-open" data-v="' + esc(g.area) + '">지도·동선</button>' +
-      (unsaved > 1 ? '<button class="text-btn" data-act="rec-add-all" data-v="' + esc(g.area) + '">모두 담기</button>' : '') + '</span></div>';
-    h += '<div class="list">' + g.items.map(r => {
-      const saved = recSaved(t, r);
-      return '<div class="item"><span class="cat-dot" style="background:' + THEME[r.theme].g + '" title="' + THEME[r.theme].n + '">' + THEME[r.theme].n[0] + '</span>' +
-        '<span class="item-main"><span class="item-title" style="display:block">' + esc(r.name) + (styleFit(t, r) ? ' <span class="tag">' + esc(STYLE_N[t.style]) + ' 추천</span>' : '') + '</span><span class="item-sub" style="display:block">' + esc(r.desc) + '</span></span>' +
-        mapBtn({ name: r.name, area: r.area.replace(/ ?\(.*\)$/, '').split('·')[0] }, t) +
-        (saved ? '<span class="add-btn on" aria-label="담음">' + ICON.check + '</span>'
-               : '<button class="add-btn" data-act="rec-add" data-id="' + r.id + '" aria-label="' + esc(r.name) + ' 담기">+</button>') + '</div>';
-    }).join('') + '</div>';
-  });
-  return h + '<section class="card stack"><p class="hint">지도 버튼으로 실제 평점·영업시간을 확인하세요. 더 찾고 싶으면:</p>' + more + '</section>';
+  return h + '<div id="recResults" class="stack">' + recResultsHTML(t) + '</div>' +
+    '<section class="card stack"><p class="hint">지도 버튼으로 실제 평점·영업시간을 확인하세요. 더 찾고 싶으면:</p>' + more + '</section>';
 }
 function placeView(t) {
   const done = t.places.filter(p => p.done).length;
@@ -1989,7 +2033,7 @@ function placeView(t) {
       '<button class="check' + (p.done ? ' on' : '') + '" data-act="place-toggle" data-id="' + p.id + '" aria-label="' + esc(p.name) + (p.done ? ' 방문 취소' : ' 방문 체크') + '">' + ICON.check + '</button>' +
       '<button class="item-main" style="border:0;background:none;text-align:left;padding:0" data-act="place-edit" data-id="' + p.id + '"><span class="item-title" style="display:block">' + esc(p.name) + '</span>' +
         (p.area || p.memo ? '<span class="item-sub" style="display:block">' + esc([p.area, p.memo].filter(Boolean).join(' · ')) + '</span>' : '') +
-        (p.done ? '<span class="stamp" style="display:inline-block;margin-top:6px">VISITED ' + (p.doneAt ? fmtMD(p.doneAt) : '') + '</span>' : '') + '</button>' +
+        (p.done ? '<span class="stamp" style="display:inline-block;margin-top:6px">VISITED</span>' : '') + '</button>' +
       photoSlot('place', p, p.done) + mapBtn(p, t) +
     '</div>').join('') + '</div>';
   return h;
@@ -3191,7 +3235,7 @@ const ACT = {
     if (navigator.share) { navigator.share({ title: '여행 수첩', text: '여행 예산·지출·방문지·맛집 기록 앱', url }).catch(() => {}); return; }
     try { navigator.clipboard.writeText(url).then(() => toast('앱 링크를 복사했어요'), () => toast(url)); } catch (e) { toast(url); }
   },
-  'open-trip': (a, id) => { S.pfTouched = false; S.recTheme = 'all'; S.recArea = 'all'; S.placeFilter = 'todo'; S.tripId = id; S.view = 'trip'; S.tab = 'sum'; S.game = freshGame(); window.scrollTo(0, 0); render(); refreshRate(cur()); },
+  'open-trip': (a, id) => { S.pfTouched = false; S.recTheme = 'all'; S.recArea = 'all'; S.recQ = ''; S.placeFilter = 'todo'; S.tripId = id; S.view = 'trip'; S.tab = 'sum'; S.game = freshGame(); window.scrollTo(0, 0); render(); refreshRate(cur()); },
   'rate-refresh': () => refreshRate(cur(), true),
   'home': () => { if (S.game.busy) return; S.view = 'home'; render(); window.scrollTo(0, 0); },
   'edit-trip': () => tripSheet(cur()),
@@ -3212,6 +3256,7 @@ const ACT = {
     if (addRec(t, r)) { commit(t); toast('‘' + r.name + '’을 ' + (r.theme === 'food' || r.theme === 'cafe' ? '맛집 위시' : '가볼 곳') + '에 담았어요'); }
   },
   'rec-area': a => { S.recArea = a.dataset.v; render(); },
+  'rec-q-clear': () => { S.recQ = ''; render(); const el = $('#recQ'); if (el) el.focus(); },
   'rec-add-all': a => {
     const t = cur(), th = S.recTheme || 'all', area = a.dataset.v;
     const list = (recsFor(t) || []).filter(r => (th === 'all' || r.theme === th) && r.area === area);
@@ -3318,6 +3363,18 @@ document.addEventListener('click', ev => {
   const fn = ACT[a.dataset.act];
   if (fn) fn(a, a.dataset.id, ev);
 });
+// 지역 검색: 입력할 때마다 결과만 다시 그려요 (입력창 포커스 유지)
+document.addEventListener('input', ev => {
+  if (ev.target.id !== 'recQ') return;
+  S.recQ = ev.target.value.trim();
+  const box = $('#recResults'); if (box) box.innerHTML = recResultsHTML(cur());
+  const chips = $('#recAreas'); if (chips) chips.hidden = !!S.recQ;
+  const bar = ev.target.parentElement, x = $('.x', bar);
+  if (S.recQ && !x) bar.insertAdjacentHTML('beforeend', '<button class="x" type="button" data-act="rec-q-clear" aria-label="검색어 지우기">×</button>');
+  if (!S.recQ && x) x.remove();
+  hydratePhotos();
+});
+document.addEventListener('keydown', ev => { if (ev.target.id === 'recQ' && ev.key === 'Enter') ev.target.blur(); });
 document.addEventListener('toggle', ev => {
   const d = ev.target; if (d && d.matches && d.matches('details[data-fold]')) { S.fold = S.fold || {}; S.fold[d.dataset.fold] = d.open; }
 }, true);
