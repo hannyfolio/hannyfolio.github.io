@@ -524,6 +524,86 @@ a.chip { text-decoration: none; color: var(--ink); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* ---------- 다듬기: 테두리 대신 부드러운 그림자, 묶음 목록, 차분한 위계 ---------- */
+:root {
+  --bg: #f3f4f7; --line: #e7e9ef; --sub: #687083; --r: 18px; --soft: #eceef3;
+  --shadow: 0 1px 2px rgba(17, 24, 39, .04), 0 4px 14px rgba(17, 24, 39, .05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #0b0e14; --card: #151a23; --line: #242b38; --soft: #1e2431; --shadow: none; }
+}
+:root[data-theme="dark"] { --bg: #0b0e14; --card: #151a23; --line: #242b38; --soft: #1e2431; --shadow: none; }
+body { -webkit-font-smoothing: antialiased; letter-spacing: -.01em; }
+.shell { padding-bottom: 132px; }
+.stack { gap: 14px; }
+.card, .stat, .pass { border: 0; border-radius: var(--r); box-shadow: var(--shadow); }
+.card { padding: 18px; }
+.hdr { padding-block: 14px 8px; gap: 12px; }
+.hdr-title b { font-size: 18px; font-weight: 700; }
+.icon-btn { border: 0; background: var(--card); box-shadow: var(--shadow); border-radius: 12px; }
+.wordmark small { font-weight: 500; }
+.sec { font-size: 15px; font-weight: 700; color: var(--ink); letter-spacing: -.02em; }
+.eyebrow { font-size: 12.5px; font-weight: 500; letter-spacing: 0; }
+.hero-num { font-weight: 800; letter-spacing: -.035em; }
+.meter { height: 6px; background: var(--soft); }
+.chip { border: 0; background: var(--soft); color: var(--ink); font-weight: 500; padding: 7px 13px; }
+.chip.off { background: transparent; box-shadow: inset 0 0 0 1px var(--line); }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.seg { border: 0; background: var(--soft); border-radius: 12px; }
+.seg button[aria-pressed="true"] { box-shadow: 0 1px 3px rgba(17, 24, 39, .1); }
+.btn { border: 0; background: var(--soft); color: var(--ink); }
+.btn.primary { background: var(--accent); color: var(--accent-ink); }
+.btn.ghost, .btn.danger { background: transparent; }
+.text-btn { font-size: 13.5px; }
+/* 묶음 목록: 하나의 카드 안에 줄로 구분 */
+.list { gap: 0; background: var(--card); border-radius: var(--r); box-shadow: var(--shadow); overflow: hidden; }
+.list > .item { border: 0; border-radius: 0; background: transparent; box-shadow: none; position: relative; padding: 13px 14px 13px 16px; min-height: 64px; }
+.list > .item + .item::before { content: ""; position: absolute; top: 0; right: 0; left: 62px; border-top: 1px solid var(--line); }
+button.item:active, .list > button.item:active { background: var(--soft); }
+.cat-dot { width: 32px; height: 32px; border-radius: 10px; font-size: 12.5px; }
+.item-title { font-weight: 600; letter-spacing: -.015em; }
+.item-amt b { font-weight: 700; }
+.day-h { padding: 10px 4px 0; margin-bottom: -6px; font-size: 13px; }
+.day-h b { font-weight: 700; }
+.map-btn, .add-btn, .check { box-shadow: none; }
+.map-btn { border: 0; background: var(--soft); width: 38px; height: 38px; }
+.map-btn.saved { background: var(--accent-soft); }
+.add-btn { width: 38px; height: 38px; border-width: 1.5px; }
+.stamp { border-width: 1px; transform: rotate(-4deg); }
+/* 요약 */
+.stat { padding: 14px 12px; }
+.stat .l { font-size: 12px; }
+.stat .v { font-size: 17px; font-weight: 800; letter-spacing: -.025em; margin-top: 2px; }
+.hbar .fill { height: 10px; border-radius: 0 6px 6px 0; }
+.col i { border-radius: 6px 6px 0 0; }
+.rate-card { padding-block: 12px; }
+.rate-main b { font-size: 16px; font-weight: 700; }
+.fold-sum { font-weight: 700; }
+.duty { background: var(--soft); border-radius: 14px; }
+.duty.over { background: color-mix(in srgb, var(--danger) 9%, var(--card)); }
+.new-pass { border: 1.5px dashed var(--line); background: transparent; color: var(--accent); }
+.pass-status { border-width: 1px; border-radius: 999px; padding: 4px 10px; }
+.perf { border-top-color: var(--line); }
+.perf::before, .perf::after { border: 0; }
+/* 하단 탭·버튼 */
+.nav { background: color-mix(in srgb, var(--card) 86%, transparent); -webkit-backdrop-filter: saturate(180%) blur(18px); backdrop-filter: saturate(180%) blur(18px); border-top: 1px solid var(--line); }
+.nav button { font-weight: 500; gap: 3px; }
+.nav button[aria-current="page"] { font-weight: 700; }
+.fab { padding: 13px 18px; font-size: 15px; box-shadow: 0 8px 22px color-mix(in srgb, var(--accent) 35%, transparent); }
+/* 입력 창 */
+.sheet { border-radius: 24px 24px 0 0; }
+.sheet-h h2 { font-size: 19px; letter-spacing: -.02em; }
+.form input:not([type="checkbox"]), .form select, .form textarea { border: 0; background: var(--soft); }
+.form input:focus, .form select:focus, .form textarea:focus { outline: 2px solid var(--accent); outline-offset: 0; }
+.sheet .list { box-shadow: none; background: var(--bg); }
+.search { border: 0; background: var(--soft); }
+.toast { border-radius: 14px; box-shadow: 0 8px 24px rgba(0, 0, 0, .18); }
+/* 내보내기 */
+.export-opt { display: flex; gap: 12px; align-items: center; width: 100%; text-align: left; border: 0; background: var(--soft); border-radius: 16px; padding: 14px; }
+.export-opt .ico { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; flex: none; color: #fff; font-weight: 800; font-size: 13px; }
+.export-opt b { display: block; }
+.export-opt span { font-size: 13px; color: var(--sub); }
 </style>
 <!-- /A:HEAD -->
 </head>
@@ -1292,7 +1372,7 @@ function expView(t) {
   let list = t.expenses.slice();
   if (S.expFilter !== 'all') list = list.filter(e => e.cat === S.expFilter);
   const sum = list.reduce((s, e) => s + expKRW(t, e), 0);
-  let h = '<section class="card"><p class="eyebrow">' + (S.expFilter === 'all' ? '총 지출' : CAT[S.expFilter].n) + '</p><button class="hero-num link-num" style="font-size:32px" data-act="spent" data-v="' + (S.expFilter === 'all' ? 'all' : 'cat:' + S.expFilter) + '">' + won(sum) + ' ›</button>' +
+  let h = '<section class="card"><div class="row" style="justify-content:space-between"><p class="eyebrow">' + (S.expFilter === 'all' ? '총 지출' : CAT[S.expFilter].n) + '</p><button class="chip sm" data-act="export">내보내기</button></div><button class="hero-num link-num" style="font-size:32px" data-act="spent" data-v="' + (S.expFilter === 'all' ? 'all' : 'cat:' + S.expFilter) + '">' + won(sum) + ' ›</button>' +
     (S.expFilter === 'all' ? '<p class="hint">여행비 ' + won(st.spent) + ' · 쇼핑 ' + won(st.shopSpent) + '</p>' : '') + '</section>';
   h += '<div class="chips scroll">' + [['all', '전체']].concat(CATS.map(c => [c.k, c.n])).map(([k, n]) =>
     '<button class="chip" data-act="exp-filter" data-v="' + k + '" aria-pressed="' + (S.expFilter === k) + '">' + n + '</button>').join('') + '</div>';
@@ -1303,19 +1383,19 @@ function expView(t) {
   list.sort((a, b) => b.date.localeCompare(a.date) || (b.ts || 0) - (a.ts || 0));
   const groups = [];
   list.forEach(e => { const g = groups[groups.length - 1]; if (g && g.date === e.date) g.items.push(e); else groups.push({ date: e.date, items: [e] }); });
-  h += '<div class="list">';
   groups.forEach(g => {
     const tot = g.items.reduce((s, e) => s + expKRW(t, e), 0);
     const dn = g.date >= t.start && g.date <= t.end ? ' · DAY ' + (diffDays(t.start, g.date) + 1) : g.date < t.start ? ' · 출발 전' : ' · 귀국 후';
-    h += '<div class="day-h"><span><b>' + fmtMDW(g.date) + '</b>' + dn + '</span><span class="num">' + won(tot) + '</span></div>';
+    h += '<div class="day-h"><span><b>' + fmtMDW(g.date) + '</b>' + dn + '</span><span class="num">' + won(tot) + '</span></div><div class="list">';
     g.items.forEach(e => {
       const c = CAT[e.cat] || CAT.etc;
       h += '<button class="item" data-act="exp-edit" data-id="' + e.id + '"><span class="cat-dot" style="background:' + c.g + '">' + c.n[0] + '</span>' +
         '<span class="item-main"><span class="item-title">' + esc(e.memo || c.n) + '</span><span class="item-sub" style="display:block">' + c.n + ' · ' + (e.pay === 'cash' ? '현금' : '카드') + '</span></span>' +
         '<span class="item-amt"><b>' + esc(money(e.amt, e.cur)) + '</b>' + (e.cur !== 'KRW' ? '<span>' + won(expKRW(t, e)) + '</span>' : '') + '</span></button>';
     });
+    h += '</div>';
   });
-  return h + '</div>';
+  return h;
 }
 
 /* 방문지 */
@@ -2941,6 +3021,113 @@ function tripSheet(t) {
   });
 }
 
+/* ---------- 비용 내보내기: 엑셀 파일 · 구글 시트 ---------- */
+const SHEET_KEY = 'travel-sheet-url';
+const sheetURL = () => { try { return localStorage.getItem(SHEET_KEY) || ''; } catch (e) { return ''; } };
+const validSheetURL = u => /^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(u || '');
+function exportData(t) {
+  const st = stats(t), c = customs(t);
+  const abroad = t.cur !== 'KRW' || (t.country && t.country !== '한국');
+  const title = t.city + ' ' + fmtMD(t.start) + '~' + fmtMD(t.end);
+  const dayOf = d => d < t.start ? '출발 전' : d > t.end ? '귀국 후' : 'DAY ' + (diffDays(t.start, d) + 1);
+  const exps = t.expenses.slice().sort((a, b) => a.date.localeCompare(b.date) || (a.ts || 0) - (b.ts || 0));
+  const rows = exps.map(e => [e.date, dayOf(e.date), (CAT[e.cat] || CAT.etc).n, isShopE(e) ? '쇼핑' : '여행비', e.memo || '', e.pay === 'cash' ? '현금' : '카드',
+    e.amt, e.cur, e.cur === 'KRW' ? 1 : +(Number(e.rate) || Number(t.rate) || 0).toFixed(4), Math.round(expKRW(t, e))]);
+  const r0 = v => v ? Math.round(v) : '';
+  const summary = [
+    ['여행', (t.country ? t.country + ' ' : '') + t.city],
+    ['기간', t.start + ' ~ ' + t.end + ' (' + st.days + '일)'],
+    ['여행 타입', STYLE_N[t.style] || '혼자'],
+    ['환율', t.cur === 'KRW' ? '-' : rateText(t)],
+    [],
+    ['구분', '예산(원)', '사용(원)', '남음(원)'],
+    ['여행비', r0(st.budget), Math.round(st.spent), st.budget ? Math.round(st.budget - st.spent) : ''],
+    ['쇼핑비', r0(st.shopBudget), Math.round(st.shopSpent), st.shopBudget ? Math.round(st.shopBudget - st.shopSpent) : ''],
+    ['합계', r0(st.budget + st.shopBudget), Math.round(st.allSpent), st.budget || st.shopBudget ? Math.round(st.budget + st.shopBudget - st.allSpent) : '']
+  ];
+  if (abroad) summary.push([], ['쇼핑 합계(USD)', Math.round(c.usd)], ['관세 예상(원)', c.overUSD > 0 ? c.tax : 0], ['자진신고 시(원)', c.overUSD > 0 ? c.selfTax : 0]);
+  const cats = CATS.map(k => { const v = exps.filter(e => (CAT[e.cat] ? e.cat : 'etc') === k.k).reduce((a, e) => a + expKRW(t, e), 0); return [k.n, Math.round(v), st.allSpent ? Math.round(v / st.allSpent * 1000) / 10 : 0]; }).filter(x => x[1] > 0).sort((a, b) => b[1] - a[1]);
+  const dates = [...new Set(exps.map(e => e.date))];
+  const daily = dates.map(d => {
+    const tv = exps.filter(e => e.date === d && !isShopE(e)).reduce((a, e) => a + expKRW(t, e), 0);
+    const sv = exps.filter(e => e.date === d && isShopE(e)).reduce((a, e) => a + expKRW(t, e), 0);
+    return [d, dayOf(d), Math.round(tv), Math.round(sv), Math.round(tv + sv)];
+  });
+  const overview = [title, t.start + ' ~ ' + t.end, r0(st.budget), Math.round(st.spent), Math.round(st.shopSpent), Math.round(st.allSpent), abroad && c.overUSD > 0 ? c.tax : 0];
+  const fileName = '여행경비_' + t.city.replace(/[\\/:*?"<>|\s]+/g, '') + '_' + t.start + '.xlsx';
+  return { id: t.id, title, summary, cats, rows, daily, overview, fileName, cur: t.cur };
+}
+let xlsxP = null;
+function loadXLSX() {
+  if (window.XLSX) return Promise.resolve(window.XLSX);
+  if (!xlsxP) xlsxP = new Promise((res, rej) => {
+    const sc = document.createElement('script'); sc.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+    sc.onload = () => res(window.XLSX); sc.onerror = () => { xlsxP = null; rej(new Error('xlsx')); };
+    document.head.appendChild(sc);
+  });
+  return xlsxP;
+}
+function sheetOf(X, aoa, widths, numCols) {
+  const ws = X.utils.aoa_to_sheet(aoa);
+  ws['!cols'] = widths.map(w => ({ wch: w }));
+  const range = X.utils.decode_range(ws['!ref']);
+  for (let R = range.s.r; R <= range.e.r; R++) Object.entries(numCols || {}).forEach(([C, z]) => {
+    const cell = ws[X.utils.encode_cell({ r: R, c: +C })];
+    if (cell && cell.t === 'n') cell.z = z;
+  });
+  return ws;
+}
+async function exportXLSX(t) {
+  if (window.claude) return toast('엑셀 내보내기는 사이트 버전에서 돼요');
+  const d = exportData(t);
+  toast('엑셀 파일 만드는 중…');
+  let X;
+  try { X = await loadXLSX(); } catch (e) { return toast('엑셀 도구를 불러오지 못했어요. 인터넷 연결을 확인해 주세요.'); }
+  const wb = X.utils.book_new();
+  X.utils.book_append_sheet(wb, sheetOf(X, [[d.title + ' 여행 경비'], []].concat(d.summary, [[], ['분류', '금액(원)', '비율(%)']], d.cats), [16, 16, 14, 14], { 1: '#,##0', 2: '#,##0.#', 3: '#,##0' }), '요약');
+  X.utils.book_append_sheet(wb, sheetOf(X, [['날짜', 'DAY', '분류', '구분', '내용', '결제', '금액', '통화', '환율(1단위=원)', '원화']].concat(d.rows), [11, 8, 10, 7, 24, 6, 11, 6, 13, 12], { 6: '#,##0.##', 8: '0.####', 9: '#,##0' }), '지출 내역');
+  X.utils.book_append_sheet(wb, sheetOf(X, [['날짜', 'DAY', '여행비(원)', '쇼핑(원)', '합계(원)']].concat(d.daily), [11, 8, 13, 13, 13], { 2: '#,##0', 3: '#,##0', 4: '#,##0' }), '날짜별');
+  const buf = X.write(wb, { bookType: 'xlsx', type: 'array' });
+  const type = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+  const blob = new Blob([buf], { type });
+  // 휴대폰: 공유 창(‘Google Sheets’로 열기 가능), 컴퓨터: 바로 다운로드
+  try {
+    const file = new File([blob], d.fileName, { type });
+    const touch = window.matchMedia && matchMedia('(pointer: coarse)').matches;
+    if (touch && navigator.canShare && navigator.canShare({ files: [file] })) { await navigator.share({ files: [file], title: d.title + ' 여행 경비' }); return; }
+  } catch (e) { if (e && e.name === 'AbortError') return; }
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = d.fileName;
+  document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 2000);
+  toast('엑셀 파일을 저장했어요');
+}
+async function exportToSheet(t) {
+  const url = sheetURL();
+  if (!validSheetURL(url)) return exportSheet(t, true);
+  const d = exportData(t);
+  toast('구글 시트로 보내는 중…');
+  try {
+    const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(Object.assign({ action: 'trip' }, d)) });
+    const j = await res.json();
+    if (!j.ok) throw new Error(j.error || 'fail');
+    S.lastSheet = j.url;
+    closeSheet();
+    openSheet('구글 시트로 보냈어요', '<div class="stack"><p style="margin:0">‘여행 경비’ 스프레드시트의 <b>' + esc(d.title) + '</b> 탭에 요약·분류별 합계·지출 내역을 정리했어요. 다시 보내면 최신 내용으로 바뀌어요.</p>' +
+      (j.url ? '<a class="btn primary block" href="' + esc(j.url) + '" target="_blank" rel="noopener">시트 열기 ↗</a>' : '') + '</div>');
+  } catch (e) { toast('보내지 못했어요. 연결 주소와 인터넷을 확인해 주세요.'); }
+}
+function exportSheet(t, focusSetup) {
+  const url = sheetURL(), ok = validSheetURL(url);
+  const body = '<div class="stack">' +
+    '<button class="export-opt" type="button" data-act="export-xlsx"><span class="ico" style="background:#1f7a4d">XLSX</span><span><b>엑셀 파일로 내보내기</b><span>요약 · 지출 내역 · 날짜별 3개 시트. 휴대폰에선 공유 창에서 ‘Google Sheets’를 고르면 바로 스프레드시트로 열려요.</span></span></button>' +
+    '<button class="export-opt" type="button" data-act="export-sheet"' + (ok ? '' : ' disabled style="opacity:.55"') + '><span class="ico" style="background:#0f9d58">G</span><span><b>구글 시트로 바로 보내기</b><span>' + (ok ? '내 ‘여행 경비’ 스프레드시트에 이 여행 탭으로 정리돼요.' : '아래에서 한 번만 연결하면 버튼 하나로 보내져요.') + '</span></span></button>' +
+    '<details class="fold-cat"' + (focusSetup || !ok ? ' open' : '') + '><summary><b>구글 시트 연결' + (ok ? ' (연결됨)' : '') + '</b><span class="chev">▾</span></summary><div class="stack" style="padding-top:8px">' +
+      '<ol class="hint" style="margin:0;padding-left:18px;display:grid;gap:4px"><li>PC에서 <b>hannyfolio@gmail.com</b>으로 script.google.com → 새 프로젝트</li>' +
+      '<li><a href="apps-script.txt" target="_blank" rel="noopener">이 스크립트</a>를 통째로 붙여넣고 저장</li><li>함수 <b>setup</b> 실행 → 권한 허용 (드라이브에 ‘여행 경비’ 시트 생성)</li>' +
+      '<li>배포 → 새 배포 → 웹 앱 · 실행: 나 · 액세스: 모든 사용자 → 배포</li><li>나온 웹 앱 주소(…/exec)를 아래에 붙여넣기</li></ol>' +
+      '<div class="addrow"><input id="sheetUrl" inputmode="url" autocomplete="off" placeholder="https://script.google.com/macros/s/…/exec" value="' + esc(url) + '"><button class="btn" type="button" data-act="sheet-url-save">저장</button></div>' +
+      '<p class="hint">연결 주소는 이 휴대폰에만 저장돼요. 앱을 같이 쓰는 친구는 각자 연결해야 해요.</p></div></details></div>';
+  openSheet('비용 내보내기', body);
+}
 /* 예산 */
 function budgetSheet(t) {
   const loc = t.cur !== 'KRW';
@@ -3307,6 +3494,15 @@ const ACT = {
   },
   'spin': spin,
   'budget': () => budgetSheet(cur()),
+  'export': () => exportSheet(cur()),
+  'export-xlsx': () => { closeSheet(); exportXLSX(cur()); },
+  'export-sheet': () => exportToSheet(cur()),
+  'sheet-url-save': () => {
+    const v = ($('#sheetUrl') || {}).value; const u = String(v || '').trim();
+    if (u && !validSheetURL(u)) return toast('주소는 https://script.google.com/macros/s/…/exec 형태여야 해요');
+    try { if (u) localStorage.setItem(SHEET_KEY, u); else localStorage.removeItem(SHEET_KEY); } catch (e) {}
+    toast(u ? '구글 시트를 연결했어요' : '연결을 해제했어요'); closeSheet(); exportSheet(cur());
+  },
   'spent': a => spentSheet(cur(), a.dataset.v),
   'edit-style': () => {
     const t = cur();

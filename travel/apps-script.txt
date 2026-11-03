@@ -1,0 +1,145 @@
+/**
+ * 여행 수첩 → 구글 시트 연결 스크립트
+ *
+ * 설치 (처음 한 번, PC 추천)
+ * 1. 내 구글 계정으로 script.google.com → 새 프로젝트
+ * 2. 원래 있던 코드를 지우고 이 파일 내용을 통째로 붙여넣고 저장
+ * 3. 위쪽 함수 선택에서 setup → 실행 → 권한 허용
+ *    ("확인되지 않은 앱" 경고가 나오면 고급 → (안전하지 않음)으로 이동. 내가 만든 스크립트라 괜찮아요.)
+ *    → 드라이브에 "여행 경비" 스프레드시트가 생겨요 (실행 로그에 주소가 나와요)
+ * 4. 배포 → 새 배포 → 톱니바퀴에서 웹 앱
+ *    - 실행 사용자: 나 / 액세스 권한: 모든 사용자 → 배포
+ * 5. 나온 웹 앱 주소(https://script.google.com/macros/s/…/exec)를
+ *    여행 수첩 앱 → 지출 → 내보내기 → 구글 시트 연결 에 붙여넣기
+ *
+ * 스크립트를 고치면 배포 → 배포 관리 → ✏️ → 버전: 새 버전 → 배포 (주소는 그대로)
+ */
+const BOOK_NAME = '여행 경비';
+const OVERVIEW = '전체 여행';
+
+function setup() {
+  const ss = book_();
+  Logger.log('여행 경비 시트: ' + ss.getUrl());
+}
+
+function book_() {
+  const props = PropertiesService.getScriptProperties();
+  const id = props.getProperty('BOOK_ID');
+  let ss = null;
+  if (id) { try { ss = SpreadsheetApp.openById(id); } catch (e) { ss = null; } }
+  if (!ss) {
+    ss = SpreadsheetApp.create(BOOK_NAME);
+    props.setProperty('BOOK_ID', ss.getId());
+    const sh = ss.getSheets()[0];
+    sh.setName(OVERVIEW);
+    sh.getRange(1, 1, 1, 9).setValues([['여행', '기간', '여행비 예산', '여행비 사용', '쇼핑 사용', '총 지출', '관세 예상', '업데이트', 'ID']])
+      .setFontWeight('bold').setBackground('#eef1f6');
+    sh.setFrozenRows(1);
+    sh.setColumnWidth(1, 160); sh.setColumnWidth(2, 190);
+  }
+  return ss;
+}
+
+function doGet() {
+  return out_({ ok: true, app: 'travel-sheet' });
+}
+
+function doPost(e) {
+  const lock = LockService.getScriptLock();
+  try {
+    lock.waitLock(20000);
+    const d = JSON.parse(e.postData.contents);
+    if (d.action !== 'trip') return out_({ ok: false, error: 'unknown action' });
+    const ss = book_();
+    const sh = tripSheet_(ss, d);
+    writeTrip_(sh, d);
+    upsertOverview_(ss, d);
+    return out_({ ok: true, url: ss.getUrl() + '#gid=' + sh.getSheetId() });
+  } catch (err) {
+    return out_({ ok: false, error: String(err) });
+  } finally {
+    try { lock.releaseLock(); } catch (e) {}
+  }
+}
+
+// 같은 여행(ID)이면 같은 탭을 다시 써요. 제목이 바뀌면 탭 이름도 바꿔요.
+function tripSheet_(ss, d) {
+  const props = PropertiesService.getScriptProperties();
+  const key = 'TAB_' + String(d.id || '').replace(/[^\w-]/g, '');
+  const name = safeName_(d.title);
+  let sh = null;
+  const gid = props.getProperty(key);
+  if (gid) sh = ss.getSheets().filter(function (s) { return String(s.getSheetId()) === gid; })[0] || null;
+  if (!sh) sh = ss.getSheetByName(name) || ss.insertSheet(name);
+  if (sh.getName() !== name && !ss.getSheetByName(name)) sh.setName(name);
+  props.setProperty(key, String(sh.getSheetId()));
+  return sh;
+}
+
+function writeTrip_(sh, d) {
+  sh.clear();
+  let r = 1;
+  sh.getRange(r, 1).setValue(d.title + ' 여행 경비').setFontSize(15).setFontWeight('bold');
+  r += 2;
+
+  // 요약 (행마다 칸 수가 달라서 4칸으로 맞춰요)
+  const sum = (d.summary || []).map(function (row) { const x = (row || []).slice(0, 4); while (x.length < 4) x.push(''); return x; });
+  if (sum.length) {
+    sh.getRange(r, 1, sum.length, 4).setValues(sum);
+    sum.forEach(function (row, i) {
+      if (row[0] === '구분') sh.getRange(r + i, 1, 1, 4).setFontWeight('bold').setBackground('#eef1f6');
+      else if (row[0]) sh.getRange(r + i, 1).setFontWeight('bold');
+    });
+    sh.getRange(r, 2, sum.length, 3).setNumberFormat('#,##0');
+    r += sum.length + 1;
+  }
+
+  // 분류별 합계
+  const cats = d.cats || [];
+  sh.getRange(r, 1, 1, 3).setValues([['분류', '금액(원)', '비율(%)']]).setFontWeight('bold').setBackground('#eef1f6');
+  if (cats.length) {
+    sh.getRange(r + 1, 1, cats.length, 3).setValues(cats);
+    sh.getRange(r + 1, 2, cats.length, 1).setNumberFormat('#,##0');
+    sh.getRange(r + 1, 3, cats.length, 1).setNumberFormat('0.0');
+  }
+  r += cats.length + 2;
+
+  // 지출 내역
+  const head = [['날짜', 'DAY', '분류', '구분', '내용', '결제', '금액', '통화', '환율(1단위=원)', '원화']];
+  sh.getRange(r, 1, 1, 10).setValues(head).setFontWeight('bold').setBackground('#eef1f6');
+  const rows = d.rows || [];
+  if (rows.length) {
+    sh.getRange(r + 1, 1, rows.length, 10).setValues(rows);
+    sh.getRange(r + 1, 1, rows.length, 1).setNumberFormat('@');
+    sh.getRange(r + 1, 7, rows.length, 1).setNumberFormat('#,##0.##');
+    sh.getRange(r + 1, 9, rows.length, 1).setNumberFormat('0.####');
+    sh.getRange(r + 1, 10, rows.length, 1).setNumberFormat('#,##0');
+    const total = r + rows.length + 1;
+    sh.getRange(total, 9, 1, 2).setValues([['합계', '=SUM(J' + (r + 1) + ':J' + (r + rows.length) + ')']]).setFontWeight('bold');
+    sh.getRange(total, 10).setNumberFormat('#,##0');
+  }
+  sh.setColumnWidths(1, 10, 92);
+  sh.setColumnWidth(1, 120); sh.setColumnWidth(5, 200);
+}
+
+function upsertOverview_(ss, d) {
+  const sh = ss.getSheetByName(OVERVIEW) || ss.insertSheet(OVERVIEW, 0);
+  const row = (d.overview || []).slice(0, 7);
+  while (row.length < 7) row.push('');
+  row.push(new Date(), d.id);
+  const last = sh.getLastRow();
+  const ids = last > 1 ? sh.getRange(2, 9, last - 1, 1).getValues().map(function (x) { return String(x[0]); }) : [];
+  const at = ids.indexOf(String(d.id));
+  const target = at >= 0 ? at + 2 : last + 1;
+  sh.getRange(target, 1, 1, 9).setValues([row]);
+  sh.getRange(target, 3, 1, 5).setNumberFormat('#,##0');
+  sh.getRange(target, 8).setNumberFormat('yyyy-mm-dd hh:mm');
+}
+
+function safeName_(s) {
+  return String(s || '여행').replace(/[\[\]\*\?\/\\:]/g, ' ').slice(0, 90);
+}
+
+function out_(o) {
+  return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON);
+}
